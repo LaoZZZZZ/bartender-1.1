@@ -3,7 +3,6 @@
 
 #include "sequence.h"
 
-
 #include <boost/regex.hpp>
 #include <cassert>
 #include <iostream>

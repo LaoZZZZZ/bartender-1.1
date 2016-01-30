@@ -9,7 +9,6 @@
 
 #include "barcodetabledumper.hpp"
 #include "barcodepool.hpp"
-#include "rawdatainfo.hpp"
 
 #include <string>
 #include <vector>

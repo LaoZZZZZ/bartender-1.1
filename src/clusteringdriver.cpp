@@ -17,6 +17,8 @@
 #include "meanestimator.hpp"
 #include "meansequentialestimator.h"
 #include "seedselector.hpp"
+#include "clusterThreadBatcher.hpp"
+
 #include "timer.h"
 #include "typdefine.h"
 
@@ -30,13 +32,15 @@ using namespace std;
 namespace barcodeSpace {
     ClusteringDriver::ClusteringDriver(size_t barcode_length,
                                        size_t seed_len,
+                                       size_t num_threads,
                                        double error_rate,
                                        double zvalue,
                                        TESTSTRATEGY test_method,
                                        double trim,
                                        double stopThres):
     _barcode_length(barcode_length), _seed_length(seed_len),
-    _error_rate(error_rate),_zvalue(zvalue), _pool(test_method),
+    _num_threads(num_threads), _error_rate(error_rate),
+    _zvalue(zvalue), _pool(test_method),
     _trim(trim), _stopThres(stopThres)
     {
         assert(this->_stopThres < 1);
@@ -55,7 +59,7 @@ namespace barcodeSpace {
             assert(_pool == ONEPROPORTION);
             _tester.reset(new ClusterMergerOneSampleTester(_zvalue, _error_rate));
         }
-
+        generateBucketRange();
     }
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
 
@@ -121,16 +125,32 @@ namespace barcodeSpace {
     void ClusteringDriver::crossBinClustering(const vector<list<shared_ptr<BarcodeCluster>>>& cbins){
         if(!this->_clusters.empty()){
             this->_clusters.clear();
-            
-            clusterAlgorithm* temp = new ClusteringWithTest(this->_splitThreshold,_barcode_length, _dist_threshold, _tester);
-            
-            std::shared_ptr<clusterAlgorithm> ptemp(temp);
-            for(auto iter = cbins.begin(); iter != cbins.end(); iter++){
-                if(iter->size()){
-                    ptemp->clusterImp(*iter);
-                    this->_clusters.insert(this->_clusters.end(),ptemp->clusters().begin(),ptemp->clusters().end());
-                }
+            vector<std::shared_ptr<ClusterThreadBatcher>> batchers;
+            for (size_t i = 0; i < _bucket_ranges.size(); ++i) {
+                clusterAlgorithm* temp = new ClusteringWithTest(_splitThreshold,_barcode_length,
+                    _dist_threshold,_tester);
+                std::shared_ptr<clusterAlgorithm> ptem(temp);
+                std::shared_ptr<ClusterThreadBatcher> batcher(new ClusterThreadBatcher(ptem,_bucket_ranges[i],cbins));
+                batchers.push_back(batcher);
+                batchers.back()->start();
             }
+            for (const auto& b : batchers) {
+                b->join();
+                this->_clusters.insert(this->_clusters.end(),b->clusters().begin(),b->clusters().end());
+            }
+        }
+    }
+    void ClusteringDriver::generateBucketRange() {
+        size_t total = static_cast<size_t>(pow(4,_seed_length));
+        size_t range_size = total / _num_threads;
+        if (total % _num_threads) {
+            range_size += 1;
+        }
+        size_t start = 0;
+        while (start < total) {
+            size_t end = min(total, start + range_size);
+            _bucket_ranges.push_back({start, end});
+            start = end;
         }
     }
 

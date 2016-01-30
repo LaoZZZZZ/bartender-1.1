@@ -39,6 +39,7 @@ void drive(std::string barcodefile,  // original read file
            size_t freq_cutoff,   // frequency cutoff
            double error_rate,
            size_t seedlen,      // seed len
+	   size_t num_threads,
            std::string outprefix,
            double entropy_threshold, // Entopy value for considering as mixture position
            size_t maximum_centers, // The maximum centers for each cluster
@@ -75,7 +76,7 @@ void drive(std::string barcodefile,  // original read file
                                  error_rate);
     for (size_t blen = barcode_length_range.first; blen <= barcode_length_range.second; ++ blen) {
 	cout << "Start to clustering barcode with length " << blen << endl;
-        ClusteringDriver cluster_drive(blen, seedlen, error_rate, zvalue, test_method);
+        ClusteringDriver cluster_drive(blen, seedlen, num_threads, error_rate, zvalue, test_method);
         cluster_drive.clusterDrive(BarcodePool::getAutoInstance());
         
         std::list<std::shared_ptr<BarcodeCluster>> cur_clusters = cluster_drive.clusters();
@@ -137,30 +138,32 @@ int main(int argc,char* argv[])
         zvalue = atof(argv[5]);
     }
 
-       
-    
     size_t seedlen = 5;
     if(argc >= 7)
         seedlen = atoi(argv[6]);
-    
+    size_t num_threads = 1;
+    if (argc >= 8)
+	num_threads = atoi(argv[7]); 
+
     TESTSTRATEGY pool = TWOPROPORTIONUNPOOLED;
-    if (argc >= 8) {
-        pool = static_cast<TESTSTRATEGY>(atoi(argv[7]));
+    if (argc >= 9) {
+        pool = static_cast<TESTSTRATEGY>(atoi(argv[8]));
     }
 
     double entropy_threshold = 0.33;
-    if (argc >= 9) {
-        entropy_threshold = atof(argv[8]);
+    if (argc >= 10) {
+        entropy_threshold = atof(argv[9]);
     }
     
     size_t maximum_centers = 4;
-    if (argc >= 10) {
-        maximum_centers = atoi(argv[9]);
+    if (argc >= 11) {
+        maximum_centers = atoi(argv[10]);
     }
     drive(sequencefile,
           freq_cutoff,
           error_rate,
           seedlen,
+	  num_threads,
           outprefix,
           entropy_threshold,
           maximum_centers,

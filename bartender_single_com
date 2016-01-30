@@ -10,13 +10,14 @@ print p
 sys.path.append(p)
 '''
 def usage():
-	print "\tthere are 5 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
+	print "\tthere are 6 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
 	print " \t -f the input fastq file "
 	print "\t -o the output prefix"
 	print "\t -c the frequency cutoff. All clusters with size less then this threshold will not included in the result."
 	print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
 	print "\t -z The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged"
 	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"
+	print "\t -t The number of threads. The default value is 1."
 def driver():
 	inputfile = ''
 	outprefix = ''
@@ -24,8 +25,9 @@ def driver():
 	error_rate = 0.01
 	zvalue = 4.0
 	seed_len = 5
+	num_threads = 1
     	try:
-        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:h",["help"])
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:h",["help"])
     	except getopt.error,msg:
 		print("Invalid parameters!")
         	usage()
@@ -47,6 +49,13 @@ def driver():
 				assert(freq_cutoff > 0)
 			except Exception as err:
                 		print "Frequency cutoff " + a + " is not a valid input!\n"
+                		sys.exit(2)
+        	elif o == '-t':
+			try:
+				num_threads = int(a)
+				assert(num_threads > 0)
+			except Exception as err:
+                		print "Threads parameter " + a + " is not a valid input!\n"
                 		sys.exit(2)
         	elif o == '-l':
 			try:
@@ -85,7 +94,7 @@ def driver():
 		print "There is no output file specified"
 		sys.exit(0)
 			
-	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len))
+	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(num_threads))
 if __name__=="__main__":
 	print('Running bartender')
 	driver()

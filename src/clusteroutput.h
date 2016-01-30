@@ -4,7 +4,6 @@
 #include "csvoutput.h"
 #include "barcodecluster.hpp"
 #include "barcodepool.hpp"
-#include "rawdatainfo.hpp"
 
 
 #include <list>

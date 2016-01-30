@@ -11,7 +11,6 @@
 
 #include "barcodepool.hpp"
 #include "csvoutput.h"
-#include "rawdatainfo.hpp"
 
 #include <list>
 #include <string>
