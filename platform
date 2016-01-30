@@ -1,0 +1,14 @@
+CC	= g++
+CFLAGS	= -std=c++11 -fPIC -w 
+LDFLAGS	= 
+PROG	= run
+
+
+# command
+
+RM	=rm
+CP	=cp
+CD	=cd
+MV	=mv
+
+	

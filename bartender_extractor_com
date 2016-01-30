@@ -1,0 +1,190 @@
+#!/usr/bin/python
+import os
+import sys
+import getopt
+
+
+
+def generateRexImp(sequence,start, mismatch, result):
+	if mismatch == 0:
+		result = [ r + sequence[start:] for r in result]
+	else:
+		if mismatch == len(sequence) - start:
+			result = [r + '.' * mismatch for r in result]
+		elif len(sequence) - start > mismatch:
+			exact = [r + sequence[start] for r in result] 
+			inexact = [r + '.' for r in result]
+			if start + 1 < len(sequence):
+				result = generateRexImp(sequence, start + 1, mismatch, exact)
+				result += generateRexImp(sequence, start + 1, mismatch - 1, inexact)
+			else:
+				result = exact
+				result += inexact
+		else:
+			result = []
+	return result					
+		
+def generateRex(sequence, mismatch):
+	if mismatch == 0:
+		return [sequence]
+	result = ['']
+	result = generateRexImp(sequence, 0, mismatch, result)
+	pattern = [] 
+	if result:
+		pattern += '('
+		for m in result:
+			pattern += m
+			pattern += '|'
+		pattern[-1] = ')'	
+	return ''.join(pattern)
+
+# Supported pattern: ACTAG[4-7]AA[4-7]CC[4-7]TT[4-7]ACTA	
+# Another example: TAA[7]AA[7]CC[7]TT[4-7]CTA	
+# Another example: ACT[4-9]TT[9]CC[4-7]TTA
+# The pattern should obey the following rules:
+# 1. It could only DNA sequence, numerical value, brackets and '-'
+# 2. All DNA sequence before the first numeric value or bracket is viewed as proceedings
+# 3. All DNA sequence right after the last numeric value or bracket is viewed as the succeedings
+# 4. The range specified by the numeric values within each pair of brackets specifies the random positions at that positions 
+def parsePattern(pattern, mismatches):
+	import re
+	# Return values
+	preceedings = ''
+	succeedings = ''
+	result_pattern = '\"'
+	total_sub_expressions = 0 
+
+	candidates = '[ATCGN]'
+	
+	# check preceeding and succeeding.
+	parts = re.split('\[|\]', pattern)
+	preceedings = parts[0]
+	if preceedings:
+		if len(preceedings) > 5:
+			print("The length of preceeding sequence exceeds the maximum length(5)")
+			sys.exit(2)
+		if mismatches == 1:
+			mutations = generateRex(preceedings, mismatches)
+			mismatches = 0	
+		else:
+			mutations = generateRex(preceedings, mismatches/2)
+			mismatches -= mismatches/2
+		result_pattern += mutations
+		total_sub_expressions += 1
+	# check succeeding
+	last = ''
+	if parts[-1]:
+		if re.search(r'\d',parts[-1]):
+			numeric_range = ','.joinparts[-1].strip().split('-')
+			last += '(' + candidates
+			last += '{' + numeric_range + '})'	
+		else:
+			succeedings = parts[-1]
+			
+			if len(succeedings) > 5:
+				print("The length of succeeding sequence exceeds the maximum length(5)")
+				sys.exit(2)
+			last += generateRex(succeedings, mismatches)		
+		total_sub_expressions += 1
+	for p in parts[1:len(parts) - 1]:
+		if re.search(r'\d', p):
+			numeric_range = ','.join(p.strip().split('-'))
+			result_pattern += '(' + candidates
+			result_pattern += '{' + numeric_range + '})'	
+		else:
+			result_pattern += '(' + p + ')'
+		total_sub_expressions += 1
+	
+	result_pattern += last
+	result_pattern += '\"'			 	
+
+	return (preceedings, succeedings, total_sub_expressions, result_pattern)
+
+def usage():
+	print("\tThere are 7 options, the first 3 is required, the remainings are optional,for help use -h or --help:")
+	print( " \t -f: the input fastq file(required)")
+	print("\t -o: the output prefix(required)")
+	print("\t -q: the quality threshold(optional. default is 0). Only those barcode that has average quality no less than this threshold will be kept.")
+	print("\t -p: the barcode pattern(required). Please follow the instruction in the readme to set up the barcode pattern.")
+	print("\t -l: the preceeding sequence of the barcode(optional. default is TACC. The maximum length is 5.)") 
+	print("\t -r: the succeeding sequence of the barcode(optional. default is ATAA. The maximum length is 5.)") 
+	print("\t -m: the total number of mismatches allowed in the preceeding and suceeding sequence(optional, default is 2. The mismatches will be evenly distributed to two parts.)")
+def driver():
+	inputfile = ''
+	outprefix = ''
+	qual_cutoff = 0 
+	preceeding = 'TACC'
+	succeeding = 'ATAA' 
+	parts = 0
+	mismatches = 2
+    	try:
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:q:p:l:r:m:h",["help"])
+    	except getopt.error,msg:
+        	usage()
+        	sys.exit(2)
+    	for o,a in opt:
+        	if o == '-f':
+            		inputfile = a
+            		if not os.path.isfile(inputfile):
+                		print(inputfile + " probably is not a valid file!\n")
+                		sys.exit(2)
+        	elif o == '-p':
+            		pattern = a 
+			if not pattern:
+                		print("No barcode pattern was specified!") 
+                		sys.exit(2)
+        	elif o == '-o':
+            		outprefix = a 
+			if not outprefix:
+                		print("No output file was specified!") 
+                		sys.exit(2)
+        	elif o == '-q':
+			try:
+				qual_cutoff = float(a)
+				assert(qual_cutoff > 0)
+			except Exception as err:
+                		print("Quality threshold  " + a + " is not a valid input!\n")
+                		sys.exit(2)
+		elif o == '-m':
+			try:
+				mismatches = int(a)
+				assert(mismatches >= 0)
+				assert(mismatches <= 2)	
+			except Exception as err:
+                		print("The mismatches parameter  " + a + " is not a valid input!\n")
+                		sys.exit(2)
+        	elif o in  ("-h","--help"):
+            		print usage()
+                	sys.exit(0)
+	if not inputfile:
+		print("There is no input sequence file specified")
+		sys.exit(0)
+	if not outprefix:
+		print("There is no output file specified")
+		sys.exit(0)
+	if not pattern:
+		print("No pattern is specified")
+		sys.exit(0)			
+	if pattern:
+		preceeding, succeeding, parts, pattern = parsePattern(pattern, mismatches)
+	else:
+		pattern = "\"(.ACC|T.CC|TA.C|TAC.)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(TT)(A|T|C|G|N){4,7}(.TAA|A.AA|AT.A|ATA.)\""
+	command = 'bartender_extractor ' + inputfile + ' ' + outprefix + ' ' + str(qual_cutoff) + ' ' + pattern + ' ' +  preceeding + ' ' + succeeding + ' ' + str(parts)
+	print(command)
+	os.system(command)
+if __name__=="__main__":
+	print('Running bartender extractor')
+	driver()
+	'''
+	pattern = 'ATCC[4-8]ATAA'
+	mismatches =3 
+	print(parsePattern(pattern, mismatches))	
+	pattern = 'ATC[3]AAA'
+	print(parsePattern(pattern,mismatches))	
+	pattern = 'ATC[3]AA[3-4]TT[1]AAA'
+	print(parsePattern(pattern,mismatches))	
+	pattern = '[3]AA[3-4]TT[1]AAA'
+	print(parsePattern(pattern,mismatches ))	
+	pattern = '[3]AA[3-4]TT[1]'
+	print(parsePattern(pattern,mismatches))	
+	'''	

@@ -1,0 +1,28 @@
+#ifndef PAIRBARCODEEXTRACTOR_H
+#define PAIRBARCODEEXTRACTOR_H
+
+namespace prefixMatching {
+// This class is used for extracting paired end barcode.
+// The following are possible situations:
+// Case 1: Both reads have valid barcode, 
+// then this forms a valid pair of barcode.
+// case 2: One read have valid barcode but the other one does not have,
+// then this pair of read will be discarded.
+// case 3: Neither of the read has valid barcode,
+// then then same with case 2.
+class PairBarcodeExtractor {
+ public:
+  typedef boost::regex regrex;
+  PairBarcodeExtractor(const string &sequence_file_prefix,
+                       const regex &left_pattern,
+                       const regex &right_pattern,);
+  const unordered_map<size_t,std::shared_ptr<barcodeCounting>> &bins() const {return this->_stats;}                                                               
+  int totalReads() const {return this->_totalReads;}
+  int totalValid() const {return this->_totalValid;}
+  ~barcodeExtractor();
+ private:
+
+
+};
+}  // namespace prefixMatching
+#endif // PAIRBARCODEEXTRACTOR_H

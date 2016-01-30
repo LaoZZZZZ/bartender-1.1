@@ -1,0 +1,92 @@
+#!/usr/bin/python
+import os
+import sys
+import getopt
+import pdb
+'''
+print("Current path is ")
+p = os.getcwd()
+print p
+sys.path.append(p)
+'''
+def usage():
+	print "\tthere are 5 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
+	print " \t -f the input fastq file "
+	print "\t -o the output prefix"
+	print "\t -c the frequency cutoff. All clusters with size less then this threshold will not included in the result."
+	print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
+	print "\t -z The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged"
+	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"
+def driver():
+	inputfile = ''
+	outprefix = ''
+	freq_cutoff = 1 
+	error_rate = 0.01
+	zvalue = 4.0
+	seed_len = 5
+    	try:
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:h",["help"])
+    	except getopt.error,msg:
+		print("Invalid parameters!")
+        	usage()
+        	sys.exit(2)
+    	for o,a in opt:
+        	if o == '-f':
+            		inputfile = a
+            		if not os.path.isfile(inputfile):
+                		print inputfile + " probably is not a valid file!\n"
+                		sys.exit(2)
+        	elif o == '-o':
+            		outprefix = a 
+			if not outprefix:
+                		print "No output file was specified!" 
+                		sys.exit(2)
+        	elif o == '-c':
+			try:
+				freq_cutoff = int(a)
+				assert(freq_cutoff > 0)
+			except Exception as err:
+                		print "Frequency cutoff " + a + " is not a valid input!\n"
+                		sys.exit(2)
+        	elif o == '-l':
+			try:
+				seed_len = int(a)
+				if seed_len < 3:
+					print("Invalid seed length!Seed length is setted as 3! ")
+					seed_len = 4
+				if seed_len > 8:
+					print("Invalid seed length!Seed length is setted as 8! ")
+					seed_len = 8
+			except Exception as err:
+                		print "Seed length " + a + " is not a valid input!\n"
+                		sys.exit(2)
+		elif o == '-e':
+			try:
+				error_rate = float(a)
+				assert(error_rate <= 1)
+				assert(error_rate >=0)
+			except Exception as err:
+				print("Invalid error rate specified!\n")
+				sys.exit(2)
+		elif o == '-z':
+			try:
+				zvalue = float(a)
+				assert(zvalue >= 0)
+			except Exception as err:
+				print("Invalid zvalue!\n")
+				sys.exit(2)
+        	elif o in  ("-h","--help"):
+            		print usage()
+                	sys.exit(0)
+	if not inputfile:
+		print "There is no input sequence file specified"
+		sys.exit(0)
+	if not outprefix:
+		print "There is no output file specified"
+		sys.exit(0)
+			
+	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len))
+if __name__=="__main__":
+	print('Running bartender')
+	driver()
+

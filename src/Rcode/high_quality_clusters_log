@@ -1,0 +1,115 @@
+nohup: ignoring input
+ [1] "single_end_data_16_bp_frequency.csv" "single_end_data_17_bp_frequency.csv"
+ [3] "single_end_data_18_bp_frequency.csv" "single_end_data_19_bp_frequency.csv"
+ [5] "single_end_data_20_bp_frequency.csv" "single_end_data_21_bp_frequency.csv"
+ [7] "single_end_data_22_bp_frequency.csv" "single_end_data_23_bp_frequency.csv"
+ [9] "single_end_data_24_bp_frequency.csv" "single_end_data_25_bp_frequency.csv"
+[11] "single_end_data_26_bp_frequency.csv" "single_end_data_27_bp_frequency.csv"
+[13] "single_end_data_28_bp_frequency.csv"
+[1] "2015-09-20 07:15:30 EDT"
+                          entropy_table_files 
+"single_end_data_16_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_16_cluster.csv" 
+                              frequency_files 
+        "single_end_data_16_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_16" 
+                          entropy_table_files 
+"single_end_data_17_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_17_cluster.csv" 
+                              frequency_files 
+        "single_end_data_17_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_17" 
+                          entropy_table_files 
+"single_end_data_18_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_18_cluster.csv" 
+                              frequency_files 
+        "single_end_data_18_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_18" 
+                          entropy_table_files 
+"single_end_data_19_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_19_cluster.csv" 
+                              frequency_files 
+        "single_end_data_19_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_19" 
+                          entropy_table_files 
+"single_end_data_20_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_20_cluster.csv" 
+                              frequency_files 
+        "single_end_data_20_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_20" 
+                          entropy_table_files 
+"single_end_data_21_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_21_cluster.csv" 
+                              frequency_files 
+        "single_end_data_21_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_21" 
+                          entropy_table_files 
+"single_end_data_22_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_22_cluster.csv" 
+                              frequency_files 
+        "single_end_data_22_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_22" 
+                          entropy_table_files 
+"single_end_data_23_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_23_cluster.csv" 
+                              frequency_files 
+        "single_end_data_23_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_23" 
+                          entropy_table_files 
+"single_end_data_24_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_24_cluster.csv" 
+                              frequency_files 
+        "single_end_data_24_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_24" 
+                          entropy_table_files 
+"single_end_data_25_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_25_cluster.csv" 
+                              frequency_files 
+        "single_end_data_25_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_25" 
+                          entropy_table_files 
+"single_end_data_26_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_26_cluster.csv" 
+                              frequency_files 
+        "single_end_data_26_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_26" 
+                          entropy_table_files 
+"single_end_data_27_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_27_cluster.csv" 
+                              frequency_files 
+        "single_end_data_27_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_27" 
+                          entropy_table_files 
+"single_end_data_28_bp_frequency_entropy.csv" 
+                                cluster_files 
+             "single_end_data_28_cluster.csv" 
+                              frequency_files 
+        "single_end_data_28_bp_frequency.csv" 
+                                  outputfiles 
+                            "high_quality_28" 
+NULL
+[1] "2015-09-20 07:16:58 EDT"

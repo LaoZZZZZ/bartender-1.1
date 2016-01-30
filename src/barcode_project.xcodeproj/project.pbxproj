@@ -1,0 +1,645 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		321F57CF1C35C83C003F9EFC /* sequencecounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321F57CD1C35C83C003F9EFC /* sequencecounter.cpp */; };
+		321F57D21C371A5A003F9EFC /* singlereadsprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321F57D01C371A5A003F9EFC /* singlereadsprocessor.cpp */; };
+		321F57D41C37849B003F9EFC /* bartender_extractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321F57D31C37849B003F9EFC /* bartender_extractor.cpp */; };
+		325EDC201C46B6A8005F7B27 /* clustermergeronesampletester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EDC1E1C46B6A8005F7B27 /* clustermergeronesampletester.cpp */; };
+		325EDC231C46B810005F7B27 /* oneproportiontest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EDC211C46B810005F7B27 /* oneproportiontest.cpp */; };
+		325EDC281C47082E005F7B27 /* testSimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EDC261C47082E005F7B27 /* testSimulation.cpp */; };
+		325EDC2B1C4AC483005F7B27 /* clusterpruner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EDC291C4AC483005F7B27 /* clusterpruner.cpp */; };
+		325EDC2E1C4B1176005F7B27 /* meanestimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EDC2C1C4B1176005F7B27 /* meanestimator.cpp */; };
+		32738EC21C1F06280073C048 /* barcodecounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E501C1F06280073C048 /* barcodecounter.cpp */; };
+		32738EC31C1F06280073C048 /* barcodeextractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E521C1F06280073C048 /* barcodeextractor.cpp */; };
+		32738EC41C1F06280073C048 /* barcodemutationgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E541C1F06280073C048 /* barcodemutationgenerator.cpp */; };
+		32738EC71C1F06280073C048 /* centerclustermapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E5A1C1F06280073C048 /* centerclustermapper.cpp */; };
+		32738EC81C1F06280073C048 /* centerclustermapperiterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E5C1C1F06280073C048 /* centerclustermapperiterator.cpp */; };
+		32738EC91C1F06280073C048 /* centerhistogramgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E5E1C1F06280073C048 /* centerhistogramgenerator.cpp */; };
+		32738ECA1C1F06280073C048 /* centerrecalibrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E601C1F06280073C048 /* centerrecalibrator.cpp */; };
+		32738ECC1C1F06280073C048 /* clusteralgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E651C1F06280073C048 /* clusteralgorithm.cpp */; };
+		32738ECD1C1F06280073C048 /* clustercenterlinkgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E671C1F06280073C048 /* clustercenterlinkgenerator.cpp */; };
+		32738ECE1C1F06280073C048 /* clusteringwithtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E691C1F06280073C048 /* clusteringwithtest.cpp */; };
+		32738ED01C1F06280073C048 /* clusterloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E6D1C1F06280073C048 /* clusterloader.cpp */; };
+		32738ED11C1F06280073C048 /* clustermergerpooltester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E6F1C1F06280073C048 /* clustermergerpooltester.cpp */; };
+		32738ED21C1F06280073C048 /* clustermergertester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E711C1F06280073C048 /* clustermergertester.cpp */; };
+		32738ED31C1F06280073C048 /* clustermergerunpooltester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E731C1F06280073C048 /* clustermergerunpooltester.cpp */; };
+		32738ED41C1F06280073C048 /* clusteroutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E751C1F06280073C048 /* clusteroutput.cpp */; };
+		32738ED61C1F06280073C048 /* clustersplitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E791C1F06280073C048 /* clustersplitter.cpp */; };
+		32738EDB1C1F06280073C048 /* distanceselector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E831C1F06280073C048 /* distanceselector.cpp */; };
+		32738EDD1C1F06280073C048 /* errorrateestimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E881C1F06280073C048 /* errorrateestimator.cpp */; };
+		32738EDE1C1F06280073C048 /* fastapattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E8A1C1F06280073C048 /* fastapattern.cpp */; };
+		32738EDF1C1F06280073C048 /* fastqpattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E8C1C1F06280073C048 /* fastqpattern.cpp */; };
+		32738EE01C1F06280073C048 /* hypothesistester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E901C1F06280073C048 /* hypothesistester.cpp */; };
+		32738EE11C1F06280073C048 /* idgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E921C1F06280073C048 /* idgenerator.cpp */; };
+		32738EE21C1F06280073C048 /* kmer_freq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E941C1F06280073C048 /* kmer_freq.cpp */; };
+		32738EE41C1F06280073C048 /* kmers_bitwisetransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E981C1F06280073C048 /* kmers_bitwisetransform.cpp */; };
+		32738EE51C1F06280073C048 /* kmers_dictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E9A1C1F06280073C048 /* kmers_dictionary.cpp */; };
+		32738EE71C1F06280073C048 /* meansequentialestimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738E9E1C1F06280073C048 /* meansequentialestimator.cpp */; };
+		32738EE81C1F06280073C048 /* mergebycenters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EA01C1F06280073C048 /* mergebycenters.cpp */; };
+		32738EE91C1F06280073C048 /* mixturebptester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EA31C1F06280073C048 /* mixturebptester.cpp */; };
+		32738EEA1C1F06280073C048 /* multipletimepointsprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EA51C1F06280073C048 /* multipletimepointsprocessor.cpp */; };
+		32738EEB1C1F06280073C048 /* pattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EA71C1F06280073C048 /* pattern.cpp */; };
+		32738EEC1C1F06280073C048 /* proportionpooltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EAA1C1F06280073C048 /* proportionpooltest.cpp */; };
+		32738EED1C1F06280073C048 /* proportiontest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EAC1C1F06280073C048 /* proportiontest.cpp */; };
+		32738EEF1C1F06280073C048 /* sequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EB01C1F06280073C048 /* sequence.cpp */; };
+		32738EF01C1F06280073C048 /* singleendbarcodeprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EB21C1F06280073C048 /* singleendbarcodeprocessor.cpp */; };
+		32738EF41C1F06280073C048 /* timepointsmerger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EBC1C1F06280073C048 /* timepointsmerger.cpp */; };
+		32738EF51C1F06280073C048 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EC01C1F06280073C048 /* util.cpp */; };
+		32738EFC1C1F6C590073C048 /* rawbarcodeprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738EFA1C1F6C590073C048 /* rawbarcodeprocessor.cpp */; };
+		32738F051C223F930073C048 /* rawreadsprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32738F031C223F930073C048 /* rawreadsprocessor.cpp */; };
+		327A19851C512A3400E5F976 /* barcodetableloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A19831C512A3400E5F976 /* barcodetableloader.cpp */; };
+		327A19881C54753300E5F976 /* pcrprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A19861C54753300E5F976 /* pcrprocessor.cpp */; };
+		327A198E1C58253000E5F976 /* rawbarcodeloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A198C1C58253000E5F976 /* rawbarcodeloader.cpp */; };
+		327A19911C59482800E5F976 /* barcodeindexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A198F1C59482800E5F976 /* barcodeindexer.cpp */; };
+		327A19941C5954B800E5F976 /* clustersbucketer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A19921C5954B800E5F976 /* clustersbucketer.cpp */; };
+		327A19971C59656000E5F976 /* barcodecluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A19951C59656000E5F976 /* barcodecluster.cpp */; };
+		327A199A1C597AC100E5F976 /* barcodepool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A19981C597AC100E5F976 /* barcodepool.cpp */; };
+		327A199D1C59B08100E5F976 /* clusteringdriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327A199B1C59B08100E5F976 /* clusteringdriver.cpp */; };
+		329BF88D1C3B6A1C00897F16 /* bartender_single.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BF88C1C3B6A1C00897F16 /* bartender_single.cpp */; };
+		32E40D281C1E64300049DAA0 /* seedselector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32E40D261C1E64300049DAA0 /* seedselector.cpp */; };
+		32E40D2B1C1E78550049DAA0 /* kmerdecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32E40D291C1E78550049DAA0 /* kmerdecoder.cpp */; };
+		32E9D2781C2868B600621FDC /* clustertabledumper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32E9D2771C2868B600621FDC /* clustertabledumper.cpp */; };
+		32E9D27B1C28765000621FDC /* qualitytabledumper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32E9D2791C28765000621FDC /* qualitytabledumper.cpp */; };
+		32E9D27E1C287DB400621FDC /* barcodetabledumper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32E9D27C1C287DB400621FDC /* barcodetabledumper.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		32E40C721C1E578D0049DAA0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		321F57CD1C35C83C003F9EFC /* sequencecounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sequencecounter.cpp; sourceTree = "<group>"; };
+		321F57CE1C35C83C003F9EFC /* sequencecounter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sequencecounter.hpp; sourceTree = "<group>"; };
+		321F57D01C371A5A003F9EFC /* singlereadsprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singlereadsprocessor.cpp; sourceTree = "<group>"; };
+		321F57D11C371A5A003F9EFC /* singlereadsprocessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = singlereadsprocessor.hpp; sourceTree = "<group>"; };
+		321F57D31C37849B003F9EFC /* bartender_extractor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bartender_extractor.cpp; sourceTree = "<group>"; };
+		325EDC1E1C46B6A8005F7B27 /* clustermergeronesampletester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustermergeronesampletester.cpp; sourceTree = "<group>"; };
+		325EDC1F1C46B6A8005F7B27 /* clustermergeronesampletester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clustermergeronesampletester.hpp; sourceTree = "<group>"; };
+		325EDC211C46B810005F7B27 /* oneproportiontest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = oneproportiontest.cpp; sourceTree = "<group>"; };
+		325EDC221C46B810005F7B27 /* oneproportiontest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = oneproportiontest.hpp; sourceTree = "<group>"; };
+		325EDC261C47082E005F7B27 /* testSimulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testSimulation.cpp; sourceTree = "<group>"; };
+		325EDC271C47082E005F7B27 /* testSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testSimulation.h; sourceTree = "<group>"; };
+		325EDC291C4AC483005F7B27 /* clusterpruner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusterpruner.cpp; sourceTree = "<group>"; };
+		325EDC2A1C4AC483005F7B27 /* clusterpruner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clusterpruner.hpp; sourceTree = "<group>"; };
+		325EDC2C1C4B1176005F7B27 /* meanestimator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meanestimator.cpp; sourceTree = "<group>"; };
+		325EDC2D1C4B1176005F7B27 /* meanestimator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meanestimator.hpp; sourceTree = "<group>"; };
+		32738E501C1F06280073C048 /* barcodecounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodecounter.cpp; sourceTree = "<group>"; };
+		32738E511C1F06280073C048 /* barcodecounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = barcodecounter.h; sourceTree = "<group>"; };
+		32738E521C1F06280073C048 /* barcodeextractor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodeextractor.cpp; sourceTree = "<group>"; };
+		32738E531C1F06280073C048 /* barcodeextractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = barcodeextractor.h; sourceTree = "<group>"; };
+		32738E541C1F06280073C048 /* barcodemutationgenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodemutationgenerator.cpp; sourceTree = "<group>"; };
+		32738E551C1F06280073C048 /* barcodemutationgenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = barcodemutationgenerator.h; sourceTree = "<group>"; };
+		32738E5A1C1F06280073C048 /* centerclustermapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centerclustermapper.cpp; sourceTree = "<group>"; };
+		32738E5B1C1F06280073C048 /* centerclustermapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerclustermapper.h; sourceTree = "<group>"; };
+		32738E5C1C1F06280073C048 /* centerclustermapperiterator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centerclustermapperiterator.cpp; sourceTree = "<group>"; };
+		32738E5D1C1F06280073C048 /* centerclustermapperiterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerclustermapperiterator.h; sourceTree = "<group>"; };
+		32738E5E1C1F06280073C048 /* centerhistogramgenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centerhistogramgenerator.cpp; sourceTree = "<group>"; };
+		32738E5F1C1F06280073C048 /* centerhistogramgenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerhistogramgenerator.h; sourceTree = "<group>"; };
+		32738E601C1F06280073C048 /* centerrecalibrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centerrecalibrator.cpp; sourceTree = "<group>"; };
+		32738E611C1F06280073C048 /* centerrecalibrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerrecalibrator.h; sourceTree = "<group>"; };
+		32738E621C1F06280073C048 /* centerstracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerstracker.h; sourceTree = "<group>"; };
+		32738E651C1F06280073C048 /* clusteralgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusteralgorithm.cpp; sourceTree = "<group>"; };
+		32738E661C1F06280073C048 /* clusteralgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clusteralgorithm.h; sourceTree = "<group>"; };
+		32738E671C1F06280073C048 /* clustercenterlinkgenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustercenterlinkgenerator.cpp; sourceTree = "<group>"; };
+		32738E681C1F06280073C048 /* clustercenterlinkgenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clustercenterlinkgenerator.h; sourceTree = "<group>"; };
+		32738E691C1F06280073C048 /* clusteringwithtest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusteringwithtest.cpp; sourceTree = "<group>"; };
+		32738E6A1C1F06280073C048 /* clusteringwithtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clusteringwithtest.h; sourceTree = "<group>"; };
+		32738E6D1C1F06280073C048 /* clusterloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusterloader.cpp; sourceTree = "<group>"; };
+		32738E6E1C1F06280073C048 /* clusterloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clusterloader.h; sourceTree = "<group>"; };
+		32738E6F1C1F06280073C048 /* clustermergerpooltester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustermergerpooltester.cpp; sourceTree = "<group>"; };
+		32738E701C1F06280073C048 /* clustermergerpooltester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clustermergerpooltester.h; sourceTree = "<group>"; };
+		32738E711C1F06280073C048 /* clustermergertester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustermergertester.cpp; sourceTree = "<group>"; };
+		32738E721C1F06280073C048 /* clustermergertester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clustermergertester.h; sourceTree = "<group>"; };
+		32738E731C1F06280073C048 /* clustermergerunpooltester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustermergerunpooltester.cpp; sourceTree = "<group>"; };
+		32738E741C1F06280073C048 /* clustermergerunpooltester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clustermergerunpooltester.h; sourceTree = "<group>"; };
+		32738E751C1F06280073C048 /* clusteroutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusteroutput.cpp; sourceTree = "<group>"; };
+		32738E761C1F06280073C048 /* clusteroutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clusteroutput.h; sourceTree = "<group>"; };
+		32738E791C1F06280073C048 /* clustersplitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustersplitter.cpp; sourceTree = "<group>"; };
+		32738E7A1C1F06280073C048 /* clustersplitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clustersplitter.h; sourceTree = "<group>"; };
+		32738E7C1C1F06280073C048 /* csvoutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csvoutput.h; sourceTree = "<group>"; };
+		32738E7E1C1F06280073C048 /* csvreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csvreader.h; sourceTree = "<group>"; };
+		32738E831C1F06280073C048 /* distanceselector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = distanceselector.cpp; sourceTree = "<group>"; };
+		32738E841C1F06280073C048 /* distanceselector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = distanceselector.h; sourceTree = "<group>"; };
+		32738E851C1F06280073C048 /* endian_swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = endian_swap.h; sourceTree = "<group>"; };
+		32738E881C1F06280073C048 /* errorrateestimator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = errorrateestimator.cpp; sourceTree = "<group>"; };
+		32738E891C1F06280073C048 /* errorrateestimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errorrateestimator.h; sourceTree = "<group>"; };
+		32738E8A1C1F06280073C048 /* fastapattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fastapattern.cpp; sourceTree = "<group>"; };
+		32738E8B1C1F06280073C048 /* fastapattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastapattern.h; sourceTree = "<group>"; };
+		32738E8C1C1F06280073C048 /* fastqpattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fastqpattern.cpp; sourceTree = "<group>"; };
+		32738E8D1C1F06280073C048 /* fastqpattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastqpattern.h; sourceTree = "<group>"; };
+		32738E8E1C1F06280073C048 /* filebuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filebuf.h; sourceTree = "<group>"; };
+		32738E8F1C1F06280073C048 /* formats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = formats.h; sourceTree = "<group>"; };
+		32738E901C1F06280073C048 /* hypothesistester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hypothesistester.cpp; sourceTree = "<group>"; };
+		32738E911C1F06280073C048 /* hypothesistester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hypothesistester.h; sourceTree = "<group>"; };
+		32738E921C1F06280073C048 /* idgenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idgenerator.cpp; sourceTree = "<group>"; };
+		32738E931C1F06280073C048 /* idgenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idgenerator.h; sourceTree = "<group>"; };
+		32738E941C1F06280073C048 /* kmer_freq.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kmer_freq.cpp; sourceTree = "<group>"; };
+		32738E951C1F06280073C048 /* kmer_freq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmer_freq.h; sourceTree = "<group>"; };
+		32738E981C1F06280073C048 /* kmers_bitwisetransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kmers_bitwisetransform.cpp; sourceTree = "<group>"; };
+		32738E991C1F06280073C048 /* kmers_bitwisetransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmers_bitwisetransform.h; sourceTree = "<group>"; };
+		32738E9A1C1F06280073C048 /* kmers_dictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kmers_dictionary.cpp; sourceTree = "<group>"; };
+		32738E9B1C1F06280073C048 /* kmers_dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmers_dictionary.h; sourceTree = "<group>"; };
+		32738E9E1C1F06280073C048 /* meansequentialestimator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meansequentialestimator.cpp; sourceTree = "<group>"; };
+		32738E9F1C1F06280073C048 /* meansequentialestimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meansequentialestimator.h; sourceTree = "<group>"; };
+		32738EA01C1F06280073C048 /* mergebycenters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mergebycenters.cpp; sourceTree = "<group>"; };
+		32738EA11C1F06280073C048 /* mergebycenters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mergebycenters.h; sourceTree = "<group>"; };
+		32738EA21C1F06280073C048 /* minicsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = minicsv.h; sourceTree = "<group>"; };
+		32738EA31C1F06280073C048 /* mixturebptester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mixturebptester.cpp; sourceTree = "<group>"; };
+		32738EA41C1F06280073C048 /* mixturebptester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mixturebptester.h; sourceTree = "<group>"; };
+		32738EA51C1F06280073C048 /* multipletimepointsprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multipletimepointsprocessor.cpp; sourceTree = "<group>"; };
+		32738EA61C1F06280073C048 /* multipletimepointsprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multipletimepointsprocessor.h; sourceTree = "<group>"; };
+		32738EA71C1F06280073C048 /* pattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pattern.cpp; sourceTree = "<group>"; };
+		32738EA81C1F06280073C048 /* pattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pattern.h; sourceTree = "<group>"; };
+		32738EA91C1F06280073C048 /* patternparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = patternparser.h; sourceTree = "<group>"; };
+		32738EAA1C1F06280073C048 /* proportionpooltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proportionpooltest.cpp; sourceTree = "<group>"; };
+		32738EAB1C1F06280073C048 /* proportionpooltest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proportionpooltest.h; sourceTree = "<group>"; };
+		32738EAC1C1F06280073C048 /* proportiontest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proportiontest.cpp; sourceTree = "<group>"; };
+		32738EAD1C1F06280073C048 /* proportiontest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proportiontest.h; sourceTree = "<group>"; };
+		32738EB01C1F06280073C048 /* sequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sequence.cpp; sourceTree = "<group>"; };
+		32738EB11C1F06280073C048 /* sequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sequence.h; sourceTree = "<group>"; };
+		32738EB21C1F06280073C048 /* singleendbarcodeprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singleendbarcodeprocessor.cpp; sourceTree = "<group>"; };
+		32738EB31C1F06280073C048 /* singleendbarcodeprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleendbarcodeprocessor.h; sourceTree = "<group>"; };
+		32738EB81C1F06280073C048 /* split_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = split_util.h; sourceTree = "<group>"; };
+		32738EB91C1F06280073C048 /* suffix_commons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = suffix_commons.h; sourceTree = "<group>"; };
+		32738EBC1C1F06280073C048 /* timepointsmerger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timepointsmerger.cpp; sourceTree = "<group>"; };
+		32738EBD1C1F06280073C048 /* timepointsmerger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timepointsmerger.h; sourceTree = "<group>"; };
+		32738EBE1C1F06280073C048 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		32738EBF1C1F06280073C048 /* typdefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typdefine.h; sourceTree = "<group>"; };
+		32738EC01C1F06280073C048 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
+		32738EC11C1F06280073C048 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		32738EF61C1F06300073C048 /* assert_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert_helpers.h; sourceTree = "<group>"; };
+		32738EFA1C1F6C590073C048 /* rawbarcodeprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rawbarcodeprocessor.cpp; sourceTree = "<group>"; };
+		32738EFB1C1F6C590073C048 /* rawbarcodeprocessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rawbarcodeprocessor.hpp; sourceTree = "<group>"; };
+		32738F011C221E970073C048 /* inputprocessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = inputprocessor.hpp; sourceTree = "<group>"; };
+		32738F031C223F930073C048 /* rawreadsprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rawreadsprocessor.cpp; sourceTree = "<group>"; };
+		32738F041C223F930073C048 /* rawreadsprocessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rawreadsprocessor.hpp; sourceTree = "<group>"; };
+		32738F0A1C2486B90073C048 /* rawdatainfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rawdatainfo.hpp; sourceTree = "<group>"; };
+		327A19831C512A3400E5F976 /* barcodetableloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodetableloader.cpp; sourceTree = "<group>"; };
+		327A19841C512A3400E5F976 /* barcodetableloader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = barcodetableloader.hpp; sourceTree = "<group>"; };
+		327A19861C54753300E5F976 /* pcrprocessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pcrprocessor.cpp; sourceTree = "<group>"; };
+		327A19871C54753300E5F976 /* pcrprocessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pcrprocessor.hpp; sourceTree = "<group>"; };
+		327A198C1C58253000E5F976 /* rawbarcodeloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rawbarcodeloader.cpp; sourceTree = "<group>"; };
+		327A198D1C58253000E5F976 /* rawbarcodeloader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rawbarcodeloader.hpp; sourceTree = "<group>"; };
+		327A198F1C59482800E5F976 /* barcodeindexer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodeindexer.cpp; sourceTree = "<group>"; };
+		327A19901C59482800E5F976 /* barcodeindexer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = barcodeindexer.hpp; sourceTree = "<group>"; };
+		327A19921C5954B800E5F976 /* clustersbucketer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustersbucketer.cpp; sourceTree = "<group>"; };
+		327A19931C5954B800E5F976 /* clustersbucketer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clustersbucketer.hpp; sourceTree = "<group>"; };
+		327A19951C59656000E5F976 /* barcodecluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodecluster.cpp; sourceTree = "<group>"; };
+		327A19961C59656000E5F976 /* barcodecluster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = barcodecluster.hpp; sourceTree = "<group>"; };
+		327A19981C597AC100E5F976 /* barcodepool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodepool.cpp; sourceTree = "<group>"; };
+		327A19991C597AC100E5F976 /* barcodepool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = barcodepool.hpp; sourceTree = "<group>"; };
+		327A199B1C59B08100E5F976 /* clusteringdriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clusteringdriver.cpp; sourceTree = "<group>"; };
+		327A199C1C59B08100E5F976 /* clusteringdriver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clusteringdriver.hpp; sourceTree = "<group>"; };
+		329BF88C1C3B6A1C00897F16 /* bartender_single.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bartender_single.cpp; sourceTree = "<group>"; };
+		32E40C741C1E578D0049DAA0 /* barcode_project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = barcode_project; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E40D261C1E64300049DAA0 /* seedselector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = seedselector.cpp; sourceTree = "<group>"; };
+		32E40D271C1E64300049DAA0 /* seedselector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = seedselector.hpp; sourceTree = "<group>"; };
+		32E40D291C1E78550049DAA0 /* kmerdecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kmerdecoder.cpp; sourceTree = "<group>"; };
+		32E40D2A1C1E78550049DAA0 /* kmerdecoder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kmerdecoder.hpp; sourceTree = "<group>"; };
+		32E40D2D1C1E786C0049DAA0 /* sequenceencoder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sequenceencoder.hpp; sourceTree = "<group>"; };
+		32E9D2751C284DE600621FDC /* clustertabledumper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clustertabledumper.hpp; sourceTree = "<group>"; };
+		32E9D2771C2868B600621FDC /* clustertabledumper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clustertabledumper.cpp; sourceTree = "<group>"; };
+		32E9D2791C28765000621FDC /* qualitytabledumper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = qualitytabledumper.cpp; sourceTree = "<group>"; };
+		32E9D27A1C28765000621FDC /* qualitytabledumper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = qualitytabledumper.hpp; sourceTree = "<group>"; };
+		32E9D27C1C287DB400621FDC /* barcodetabledumper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = barcodetabledumper.cpp; sourceTree = "<group>"; };
+		32E9D27D1C287DB400621FDC /* barcodetabledumper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = barcodetabledumper.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32E40C711C1E578D0049DAA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		32E40C6B1C1E578D0049DAA0 = {
+			isa = PBXGroup;
+			children = (
+				327A199B1C59B08100E5F976 /* clusteringdriver.cpp */,
+				327A199C1C59B08100E5F976 /* clusteringdriver.hpp */,
+				327A19981C597AC100E5F976 /* barcodepool.cpp */,
+				327A19991C597AC100E5F976 /* barcodepool.hpp */,
+				327A19951C59656000E5F976 /* barcodecluster.cpp */,
+				327A19961C59656000E5F976 /* barcodecluster.hpp */,
+				327A19921C5954B800E5F976 /* clustersbucketer.cpp */,
+				327A19931C5954B800E5F976 /* clustersbucketer.hpp */,
+				327A198F1C59482800E5F976 /* barcodeindexer.cpp */,
+				327A19901C59482800E5F976 /* barcodeindexer.hpp */,
+				327A198C1C58253000E5F976 /* rawbarcodeloader.cpp */,
+				327A198D1C58253000E5F976 /* rawbarcodeloader.hpp */,
+				327A19861C54753300E5F976 /* pcrprocessor.cpp */,
+				327A19871C54753300E5F976 /* pcrprocessor.hpp */,
+				327A19831C512A3400E5F976 /* barcodetableloader.cpp */,
+				327A19841C512A3400E5F976 /* barcodetableloader.hpp */,
+				325EDC2C1C4B1176005F7B27 /* meanestimator.cpp */,
+				325EDC2D1C4B1176005F7B27 /* meanestimator.hpp */,
+				325EDC291C4AC483005F7B27 /* clusterpruner.cpp */,
+				325EDC2A1C4AC483005F7B27 /* clusterpruner.hpp */,
+				325EDC261C47082E005F7B27 /* testSimulation.cpp */,
+				325EDC271C47082E005F7B27 /* testSimulation.h */,
+				325EDC211C46B810005F7B27 /* oneproportiontest.cpp */,
+				325EDC221C46B810005F7B27 /* oneproportiontest.hpp */,
+				325EDC1E1C46B6A8005F7B27 /* clustermergeronesampletester.cpp */,
+				325EDC1F1C46B6A8005F7B27 /* clustermergeronesampletester.hpp */,
+				329BF88C1C3B6A1C00897F16 /* bartender_single.cpp */,
+				321F57D31C37849B003F9EFC /* bartender_extractor.cpp */,
+				321F57D01C371A5A003F9EFC /* singlereadsprocessor.cpp */,
+				321F57D11C371A5A003F9EFC /* singlereadsprocessor.hpp */,
+				321F57CD1C35C83C003F9EFC /* sequencecounter.cpp */,
+				321F57CE1C35C83C003F9EFC /* sequencecounter.hpp */,
+				32E9D27C1C287DB400621FDC /* barcodetabledumper.cpp */,
+				32E9D27D1C287DB400621FDC /* barcodetabledumper.hpp */,
+				32E9D2791C28765000621FDC /* qualitytabledumper.cpp */,
+				32E9D27A1C28765000621FDC /* qualitytabledumper.hpp */,
+				32E9D2771C2868B600621FDC /* clustertabledumper.cpp */,
+				32E9D2751C284DE600621FDC /* clustertabledumper.hpp */,
+				32738F0A1C2486B90073C048 /* rawdatainfo.hpp */,
+				32738F031C223F930073C048 /* rawreadsprocessor.cpp */,
+				32738F041C223F930073C048 /* rawreadsprocessor.hpp */,
+				32738F011C221E970073C048 /* inputprocessor.hpp */,
+				32738EFA1C1F6C590073C048 /* rawbarcodeprocessor.cpp */,
+				32738EFB1C1F6C590073C048 /* rawbarcodeprocessor.hpp */,
+				32738EF61C1F06300073C048 /* assert_helpers.h */,
+				32738E501C1F06280073C048 /* barcodecounter.cpp */,
+				32738E511C1F06280073C048 /* barcodecounter.h */,
+				32738E521C1F06280073C048 /* barcodeextractor.cpp */,
+				32738E531C1F06280073C048 /* barcodeextractor.h */,
+				32738E541C1F06280073C048 /* barcodemutationgenerator.cpp */,
+				32738E551C1F06280073C048 /* barcodemutationgenerator.h */,
+				32738E5A1C1F06280073C048 /* centerclustermapper.cpp */,
+				32738E5B1C1F06280073C048 /* centerclustermapper.h */,
+				32738E5C1C1F06280073C048 /* centerclustermapperiterator.cpp */,
+				32738E5D1C1F06280073C048 /* centerclustermapperiterator.h */,
+				32738E5E1C1F06280073C048 /* centerhistogramgenerator.cpp */,
+				32738E5F1C1F06280073C048 /* centerhistogramgenerator.h */,
+				32738E601C1F06280073C048 /* centerrecalibrator.cpp */,
+				32738E611C1F06280073C048 /* centerrecalibrator.h */,
+				32738E621C1F06280073C048 /* centerstracker.h */,
+				32738E651C1F06280073C048 /* clusteralgorithm.cpp */,
+				32738E661C1F06280073C048 /* clusteralgorithm.h */,
+				32738E671C1F06280073C048 /* clustercenterlinkgenerator.cpp */,
+				32738E681C1F06280073C048 /* clustercenterlinkgenerator.h */,
+				32738E691C1F06280073C048 /* clusteringwithtest.cpp */,
+				32738E6A1C1F06280073C048 /* clusteringwithtest.h */,
+				32738E6D1C1F06280073C048 /* clusterloader.cpp */,
+				32738E6E1C1F06280073C048 /* clusterloader.h */,
+				32738E6F1C1F06280073C048 /* clustermergerpooltester.cpp */,
+				32738E701C1F06280073C048 /* clustermergerpooltester.h */,
+				32738E711C1F06280073C048 /* clustermergertester.cpp */,
+				32738E721C1F06280073C048 /* clustermergertester.h */,
+				32738E731C1F06280073C048 /* clustermergerunpooltester.cpp */,
+				32738E741C1F06280073C048 /* clustermergerunpooltester.h */,
+				32738E751C1F06280073C048 /* clusteroutput.cpp */,
+				32738E761C1F06280073C048 /* clusteroutput.h */,
+				32738E791C1F06280073C048 /* clustersplitter.cpp */,
+				32738E7A1C1F06280073C048 /* clustersplitter.h */,
+				32738E7C1C1F06280073C048 /* csvoutput.h */,
+				32738E7E1C1F06280073C048 /* csvreader.h */,
+				32738E831C1F06280073C048 /* distanceselector.cpp */,
+				32738E841C1F06280073C048 /* distanceselector.h */,
+				32738E851C1F06280073C048 /* endian_swap.h */,
+				32738E881C1F06280073C048 /* errorrateestimator.cpp */,
+				32738E891C1F06280073C048 /* errorrateestimator.h */,
+				32738E8A1C1F06280073C048 /* fastapattern.cpp */,
+				32738E8B1C1F06280073C048 /* fastapattern.h */,
+				32738E8C1C1F06280073C048 /* fastqpattern.cpp */,
+				32738E8D1C1F06280073C048 /* fastqpattern.h */,
+				32738E8E1C1F06280073C048 /* filebuf.h */,
+				32738E8F1C1F06280073C048 /* formats.h */,
+				32738E901C1F06280073C048 /* hypothesistester.cpp */,
+				32738E911C1F06280073C048 /* hypothesistester.h */,
+				32738E921C1F06280073C048 /* idgenerator.cpp */,
+				32738E931C1F06280073C048 /* idgenerator.h */,
+				32738E941C1F06280073C048 /* kmer_freq.cpp */,
+				32738E951C1F06280073C048 /* kmer_freq.h */,
+				32738E981C1F06280073C048 /* kmers_bitwisetransform.cpp */,
+				32738E991C1F06280073C048 /* kmers_bitwisetransform.h */,
+				32738E9A1C1F06280073C048 /* kmers_dictionary.cpp */,
+				32738E9B1C1F06280073C048 /* kmers_dictionary.h */,
+				32738E9E1C1F06280073C048 /* meansequentialestimator.cpp */,
+				32738E9F1C1F06280073C048 /* meansequentialestimator.h */,
+				32738EA01C1F06280073C048 /* mergebycenters.cpp */,
+				32738EA11C1F06280073C048 /* mergebycenters.h */,
+				32738EA21C1F06280073C048 /* minicsv.h */,
+				32738EA31C1F06280073C048 /* mixturebptester.cpp */,
+				32738EA41C1F06280073C048 /* mixturebptester.h */,
+				32738EA51C1F06280073C048 /* multipletimepointsprocessor.cpp */,
+				32738EA61C1F06280073C048 /* multipletimepointsprocessor.h */,
+				32738EA71C1F06280073C048 /* pattern.cpp */,
+				32738EA81C1F06280073C048 /* pattern.h */,
+				32738EA91C1F06280073C048 /* patternparser.h */,
+				32738EAA1C1F06280073C048 /* proportionpooltest.cpp */,
+				32738EAB1C1F06280073C048 /* proportionpooltest.h */,
+				32738EAC1C1F06280073C048 /* proportiontest.cpp */,
+				32738EAD1C1F06280073C048 /* proportiontest.h */,
+				32738EB01C1F06280073C048 /* sequence.cpp */,
+				32738EB11C1F06280073C048 /* sequence.h */,
+				32738EB21C1F06280073C048 /* singleendbarcodeprocessor.cpp */,
+				32738EB31C1F06280073C048 /* singleendbarcodeprocessor.h */,
+				32738EB81C1F06280073C048 /* split_util.h */,
+				32738EB91C1F06280073C048 /* suffix_commons.h */,
+				32738EBC1C1F06280073C048 /* timepointsmerger.cpp */,
+				32738EBD1C1F06280073C048 /* timepointsmerger.h */,
+				32738EBE1C1F06280073C048 /* timer.h */,
+				32738EBF1C1F06280073C048 /* typdefine.h */,
+				32738EC01C1F06280073C048 /* util.cpp */,
+				32738EC11C1F06280073C048 /* util.h */,
+				32E40D2D1C1E786C0049DAA0 /* sequenceencoder.hpp */,
+				32E40D291C1E78550049DAA0 /* kmerdecoder.cpp */,
+				32E40D2A1C1E78550049DAA0 /* kmerdecoder.hpp */,
+				32E40D261C1E64300049DAA0 /* seedselector.cpp */,
+				32E40D271C1E64300049DAA0 /* seedselector.hpp */,
+				32E40C761C1E578D0049DAA0 /* barcode_project */,
+				32E40C751C1E578D0049DAA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		32E40C751C1E578D0049DAA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32E40C741C1E578D0049DAA0 /* barcode_project */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32E40C761C1E578D0049DAA0 /* barcode_project */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = barcode_project;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		32E40C731C1E578D0049DAA0 /* barcode_project */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32E40C7B1C1E578D0049DAA0 /* Build configuration list for PBXNativeTarget "barcode_project" */;
+			buildPhases = (
+				32E40C701C1E578D0049DAA0 /* Sources */,
+				32E40C711C1E578D0049DAA0 /* Frameworks */,
+				32E40C721C1E578D0049DAA0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = barcode_project;
+			productName = barcode_project;
+			productReference = 32E40C741C1E578D0049DAA0 /* barcode_project */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		32E40C6C1C1E578D0049DAA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = luzhao;
+				TargetAttributes = {
+					32E40C731C1E578D0049DAA0 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 32E40C6F1C1E578D0049DAA0 /* Build configuration list for PBXProject "barcode_project" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 32E40C6B1C1E578D0049DAA0;
+			productRefGroup = 32E40C751C1E578D0049DAA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32E40C731C1E578D0049DAA0 /* barcode_project */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		32E40C701C1E578D0049DAA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325EDC2B1C4AC483005F7B27 /* clusterpruner.cpp in Sources */,
+				32738EC71C1F06280073C048 /* centerclustermapper.cpp in Sources */,
+				329BF88D1C3B6A1C00897F16 /* bartender_single.cpp in Sources */,
+				32738EF41C1F06280073C048 /* timepointsmerger.cpp in Sources */,
+				32738EE91C1F06280073C048 /* mixturebptester.cpp in Sources */,
+				32738EE01C1F06280073C048 /* hypothesistester.cpp in Sources */,
+				32738EE11C1F06280073C048 /* idgenerator.cpp in Sources */,
+				327A19881C54753300E5F976 /* pcrprocessor.cpp in Sources */,
+				32738EEC1C1F06280073C048 /* proportionpooltest.cpp in Sources */,
+				32738EC81C1F06280073C048 /* centerclustermapperiterator.cpp in Sources */,
+				321F57D41C37849B003F9EFC /* bartender_extractor.cpp in Sources */,
+				32738EEF1C1F06280073C048 /* sequence.cpp in Sources */,
+				32738ED41C1F06280073C048 /* clusteroutput.cpp in Sources */,
+				32E40D281C1E64300049DAA0 /* seedselector.cpp in Sources */,
+				32738EC31C1F06280073C048 /* barcodeextractor.cpp in Sources */,
+				32E9D2781C2868B600621FDC /* clustertabledumper.cpp in Sources */,
+				32738EEA1C1F06280073C048 /* multipletimepointsprocessor.cpp in Sources */,
+				32738EE71C1F06280073C048 /* meansequentialestimator.cpp in Sources */,
+				32E40D2B1C1E78550049DAA0 /* kmerdecoder.cpp in Sources */,
+				327A19971C59656000E5F976 /* barcodecluster.cpp in Sources */,
+				327A198E1C58253000E5F976 /* rawbarcodeloader.cpp in Sources */,
+				32738ECA1C1F06280073C048 /* centerrecalibrator.cpp in Sources */,
+				32738EE41C1F06280073C048 /* kmers_bitwisetransform.cpp in Sources */,
+				32738ED21C1F06280073C048 /* clustermergertester.cpp in Sources */,
+				32738EC21C1F06280073C048 /* barcodecounter.cpp in Sources */,
+				327A199D1C59B08100E5F976 /* clusteringdriver.cpp in Sources */,
+				32738ED31C1F06280073C048 /* clustermergerunpooltester.cpp in Sources */,
+				32738EDD1C1F06280073C048 /* errorrateestimator.cpp in Sources */,
+				32738EE21C1F06280073C048 /* kmer_freq.cpp in Sources */,
+				325EDC281C47082E005F7B27 /* testSimulation.cpp in Sources */,
+				32738EDB1C1F06280073C048 /* distanceselector.cpp in Sources */,
+				32738EC41C1F06280073C048 /* barcodemutationgenerator.cpp in Sources */,
+				32738EF51C1F06280073C048 /* util.cpp in Sources */,
+				321F57D21C371A5A003F9EFC /* singlereadsprocessor.cpp in Sources */,
+				32738ECC1C1F06280073C048 /* clusteralgorithm.cpp in Sources */,
+				32738F051C223F930073C048 /* rawreadsprocessor.cpp in Sources */,
+				32738EC91C1F06280073C048 /* centerhistogramgenerator.cpp in Sources */,
+				325EDC2E1C4B1176005F7B27 /* meanestimator.cpp in Sources */,
+				32738EF01C1F06280073C048 /* singleendbarcodeprocessor.cpp in Sources */,
+				32738ED01C1F06280073C048 /* clusterloader.cpp in Sources */,
+				325EDC231C46B810005F7B27 /* oneproportiontest.cpp in Sources */,
+				32E9D27E1C287DB400621FDC /* barcodetabledumper.cpp in Sources */,
+				32738EDE1C1F06280073C048 /* fastapattern.cpp in Sources */,
+				32E9D27B1C28765000621FDC /* qualitytabledumper.cpp in Sources */,
+				32738EE81C1F06280073C048 /* mergebycenters.cpp in Sources */,
+				32738ED61C1F06280073C048 /* clustersplitter.cpp in Sources */,
+				327A19911C59482800E5F976 /* barcodeindexer.cpp in Sources */,
+				321F57CF1C35C83C003F9EFC /* sequencecounter.cpp in Sources */,
+				32738ECE1C1F06280073C048 /* clusteringwithtest.cpp in Sources */,
+				32738EFC1C1F6C590073C048 /* rawbarcodeprocessor.cpp in Sources */,
+				32738EEB1C1F06280073C048 /* pattern.cpp in Sources */,
+				327A199A1C597AC100E5F976 /* barcodepool.cpp in Sources */,
+				32738ECD1C1F06280073C048 /* clustercenterlinkgenerator.cpp in Sources */,
+				32738EDF1C1F06280073C048 /* fastqpattern.cpp in Sources */,
+				32738EE51C1F06280073C048 /* kmers_dictionary.cpp in Sources */,
+				32738ED11C1F06280073C048 /* clustermergerpooltester.cpp in Sources */,
+				32738EED1C1F06280073C048 /* proportiontest.cpp in Sources */,
+				327A19941C5954B800E5F976 /* clustersbucketer.cpp in Sources */,
+				325EDC201C46B6A8005F7B27 /* clustermergeronesampletester.cpp in Sources */,
+				327A19851C512A3400E5F976 /* barcodetableloader.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		32E40C791C1E578D0049DAA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		32E40C7A1C1E578D0049DAA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		32E40C7C1C1E578D0049DAA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				GCC_WARN_PEDANTIC = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.59.0/include;
+				"LD_MAP_FILE_PATH[arch=*]" = "-L/usr/local/Cellar/boost/1.59.0/lib";
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.59.0/lib/;
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "-std=c++11";
+				OTHER_LDFLAGS = "-lboost_regex";
+				"OTHER_LIBTOOLFLAGS[arch=*]" = "-lboost_regex";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		32E40C7D1C1E578D0049DAA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				GCC_WARN_PEDANTIC = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.59.0/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.59.0/lib/;
+				OTHER_LDFLAGS = "-lboost_regex";
+				"OTHER_LIBTOOLFLAGS[arch=*]" = "-lboost_regex";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32E40C6F1C1E578D0049DAA0 /* Build configuration list for PBXProject "barcode_project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32E40C791C1E578D0049DAA0 /* Debug */,
+				32E40C7A1C1E578D0049DAA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32E40C7B1C1E578D0049DAA0 /* Build configuration list for PBXNativeTarget "barcode_project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32E40C7C1C1E578D0049DAA0 /* Debug */,
+				32E40C7D1C1E578D0049DAA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 32E40C6C1C1E578D0049DAA0 /* Project object */;
+}
