@@ -1,4 +1,4 @@
-# bartender-1.0
+# bartender-1.1
 
 # What's bartender?
 
@@ -13,9 +13,11 @@ It currently has two functionalities.
 It will be able to handle multiple time points and estimate the trajectory in the next version.
 
 # Installation
- Bartender requires boost library and gcc compiler which should be no older than gcc47. Installation is simple.
- 1. make all
- 2. sudo make install
+ Bartender gcc compiler which should be no older than gcc47. If you want use the extraction components, boost library should be installed prior installing bartender. Installation is simple.
+ 1.To build bartender_single: make bartender_single
+ 2.To build bartender_extractor: make bartender_extractor
+ 3.To build two components in one batch: make all
+ 4.To install: sudo make install
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
 
