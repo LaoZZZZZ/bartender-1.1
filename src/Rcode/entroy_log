@@ -1,5 +1,0 @@
-nohup: ignoring input
-Loading required package: methods
-Warning message:
-In cbind(frequency_table[, 1], entropy_result) :
-  number of rows of result is not a multiple of vector length (arg 1)
