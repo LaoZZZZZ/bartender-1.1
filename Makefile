@@ -1,6 +1,6 @@
 CC	= g++
-CFLAGS	= -fPIC -w -O3 -std=c++11  -I${BOOST_INSTALL_DIR}/include
-LDFLAGS	= -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams 
+CFLAGS	= -Wl,--as-needed -O3 -std=c++11 -pthread  -I${BOOST_INSTALL_DIR}/include
+LDFLAGS	= -Wl,--as-needed -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams -pthread
 
 SINGLE	= bartender_single
 EXTRACTOR = bartender_extractor
@@ -41,7 +41,7 @@ clean:
 	$(RM) $(SINGLE)
 	$(RM) $(EXTRACTOR)
 $(SINGLE): $(BARTENDERSINGLEOBJECTS) 
-	$(CC) $(BARTENDERSINGLEOBJECTS) -o $@ 
+	$(CC) $(BARTENDERSINGLEOBJECTS) -o $@ $(LDFLAGS)
 $(EXTRACTOR): $(BARTENDEREXTRACTOROBJECTS) 
 	$(CC) $(BARTENDEREXTRACTOROBJECTS) -o $@ $(LDFLAGS) 
 .cpp.o:

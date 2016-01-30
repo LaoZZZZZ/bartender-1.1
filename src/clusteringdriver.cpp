@@ -125,6 +125,7 @@ namespace barcodeSpace {
     void ClusteringDriver::crossBinClustering(const vector<list<shared_ptr<BarcodeCluster>>>& cbins){
         if(!this->_clusters.empty()){
             this->_clusters.clear();
+	   /*
             vector<std::shared_ptr<ClusterThreadBatcher>> batchers;
             for (size_t i = 0; i < _bucket_ranges.size(); ++i) {
                 clusterAlgorithm* temp = new ClusteringWithTest(_splitThreshold,_barcode_length,
@@ -133,11 +134,23 @@ namespace barcodeSpace {
                 std::shared_ptr<ClusterThreadBatcher> batcher(new ClusterThreadBatcher(ptem,_bucket_ranges[i],cbins));
                 batchers.push_back(batcher);
                 batchers.back()->start();
+		cout << batchers.back()->self() << endl;
             }
             for (const auto& b : batchers) {
                 b->join();
                 this->_clusters.insert(this->_clusters.end(),b->clusters().begin(),b->clusters().end());
+            }*/
+ 
+            clusterAlgorithm* temp = new ClusteringWithTest(this->_splitThreshold,_barcode_length, _dist_threshold, _tester);
+            
+            std::shared_ptr<clusterAlgorithm> ptemp(temp);
+            for(auto iter = cbins.begin(); iter != cbins.end(); iter++){
+                if(iter->size()){
+                    ptemp->clusterImp(*iter);
+                    this->_clusters.insert(this->_clusters.end(),ptemp->clusters().begin(),ptemp->clusters().end());
+                }
             }
+
         }
     }
     void ClusteringDriver::generateBucketRange() {
