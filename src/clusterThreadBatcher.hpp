@@ -23,7 +23,7 @@ namespace barcodeSpace {
         ClusterThreadBatcher(std::shared_ptr<clusterAlgorithm>& engine,
                              std::pair<size_t, size_t>& bucket_range,
                              const Bucket& bucket);
-        std::list<std::shared_ptr<BarcodeCluster>> clusters()const {return _clusters;}
+        const std::list<std::shared_ptr<BarcodeCluster>>& clusters()const {return _clusters;}
     private:
         void run();
         

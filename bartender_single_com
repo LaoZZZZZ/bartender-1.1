@@ -10,10 +10,10 @@ print p
 sys.path.append(p)
 '''
 def usage():
-	print "\tthere are 6 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
+	print "\tthere are 7 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
 	print " \t -f the input fastq file "
 	print "\t -o the output prefix"
-	print "\t -c the frequency cutoff. All clusters with size less then this threshold will not included in the result."
+	print "\t -c the frequency cutoff. The default value is 1.  All clusters with size less then this threshold will not included in the result."
 	print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
 	print "\t -z The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged"
 	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"

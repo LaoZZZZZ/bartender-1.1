@@ -24,6 +24,7 @@ namespace barcodeSpace {
             this->_inRunning = true;
             this->_joinable = true;
             this->_pThread.reset(new thread(runThread,(void*)this));
+	    this->finish();
         }
     }
     /** get the thread ID*/
@@ -45,7 +46,7 @@ namespace barcodeSpace {
         throw 1;
     }
     ThreadWrapper::~ThreadWrapper(){
-        if (_joinable && !_inRunning) {
+        if (_joinable) {
             _pThread->join();
         }
 

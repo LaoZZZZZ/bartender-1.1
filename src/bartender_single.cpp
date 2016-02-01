@@ -66,6 +66,7 @@ void drive(std::string barcodefile,  // original read file
     std::pair<size_t, size_t> barcode_length_range = loader.lengthRange();
     BarcodePool::createInstance(loader.barcodeTable());
     std::shared_ptr<BarcodePool> barcode_pool = BarcodePool::getAutoInstance();
+    loader.clear();
     std::list<shared_ptr<BarcodeCluster>> clusters;
     BarcodeCluster::setBarcodePool(barcode_pool);
     ClusterPruner cluster_pruner(entropy_threshold,

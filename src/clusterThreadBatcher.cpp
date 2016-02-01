@@ -9,11 +9,15 @@
 #include "clusterThreadBatcher.hpp"
 
 #include <cassert>
+#include <memory>
+#include <vector>
+
+using namespace std;
 namespace barcodeSpace {
     ClusterThreadBatcher::ClusterThreadBatcher(
                 std::shared_ptr<clusterAlgorithm>& engine,
                 std::pair<size_t, size_t>& range,
-                const Bucket& bucket) :
+                const Bucket& bucket) : ThreadWrapper(),
     _cluster_engine(engine), _bucket_range(range), _buckets(bucket){
         assert(engine.get());
     }

@@ -1,6 +1,6 @@
 CC	= g++
-CFLAGS	= -Wl,--as-needed -O3 -std=c++11 -pthread  -I${BOOST_INSTALL_DIR}/include
-LDFLAGS	= -Wl,--as-needed -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams -pthread
+CFLAGS	= -O3 -std=c++11 -pthread  -I${BOOST_INSTALL_DIR}/include
+LDFLAGS	= -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams -pthread
 
 SINGLE	= bartender_single
 EXTRACTOR = bartender_extractor
