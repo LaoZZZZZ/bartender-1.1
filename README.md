@@ -125,18 +125,14 @@ No. BC with insertino and deletion will form a cluster by themselves. Of course,
 
 ##What's the center in the cluster?
 
-A center is the consensus barcode of all barcodes within that barcode.
+A center is the consensus barcode of all barcodes within that cluster.
 
 ##I had hard time to compile bartender due to the boost installation.
 
-First, download and install boost by following the instructions in boost official webpage. Remember specify the installation directory by setting the prefix. 
+First, download and install boost by following the instructions in boost official webpage http://www.boost.org/. Remember to specify the installation directory by setting the prefix. 
 
 On OSX, use one of the following commands: 
-brew install boost 
-
+brew install boost;
 sudo port install boost 
-Second, export BOOST_INSTALL_DIR=install directory. The install directory should be the direct parent directory of "lib" and "include" folder.  
 
-
-
-# bartender-1.1
+Second, export BOOST_INSTALL_DIR=prefix directory that is the prefix specified when installing the boost.
