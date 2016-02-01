@@ -137,6 +137,3 @@ brew install boost
 sudo port install boost 
 Second, export BOOST_INSTALL_DIR=install directory. The install directory should be the direct parent directory of "lib" and "include" folder.  
 
-
-
-# bartender-1.1
