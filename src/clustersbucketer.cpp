@@ -9,6 +9,7 @@
 #include "clustersbucketer.hpp"
 #include "barcodeindexer.hpp"
 
+#include <cassert>
 #include <math.h>
 #include <vector>
 using namespace std;

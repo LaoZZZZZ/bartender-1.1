@@ -10,12 +10,12 @@ namespace barcodeSpace{
          memset(_complement, 0, 256);
          _asc2dna[67] = 1;
          _asc2dna[71] = 2;
-         _asc2dna[78] = 4;
+         //_asc2dna[78] = 4 ;
          _asc2dna[84] = 3;
 
          _asc2dna[99] = 1;
          _asc2dna[103] = 2;
-         _asc2dna[110] = 4;
+         //_asc2dna[110] = 4;
          _asc2dna[116] = 3;
 
          _complement[65] = 84;

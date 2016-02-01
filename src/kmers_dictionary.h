@@ -21,6 +21,7 @@ public:
     // Converts 0 , 1, 2, 3, 4 to 'A', 'C', 'G', 'T', 'N'.
     char dna2asc(int c)const { return _dna2asc[c];}
     // Converts 'A', 'C', 'G', 'T', 'N'  to 0,1,2,3,4.
+    // current N will be viewed as A
     UINT8 asc2dna(int c)const {return _asc2dna[c];}
     char complement(int c)const {return _complement[c];}
 protected:
