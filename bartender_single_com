@@ -11,7 +11,7 @@ sys.path.append(p)
 '''
 def usage():
 	print "\tthere are 7 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
-	print " \t -f the input fastq file "
+	print " \t -f the input barcode file "
 	print "\t -o the output prefix"
 	print "\t -c the frequency cutoff. The default value is 1.  All clusters with size less then this threshold will not included in the result."
 	print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
