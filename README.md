@@ -129,11 +129,10 @@ A center is the consensus barcode of all barcodes within that cluster.
 
 ##I had hard time to compile bartender due to the boost installation.
 
-First, download and install boost by following the instructions in boost official webpage http://www.boost.org/. Remember specify the installation directory by setting the prefix. 
+First, download and install boost by following the instructions in boost official webpage http://www.boost.org/. Remember to specify the installation directory by setting the prefix. 
 
 On OSX, use one of the following commands: 
-brew install boost 
-
+brew install boost;
 sudo port install boost 
-Second, export BOOST_INSTALL_DIR=install directory. The install directory should be the direct parent directory of "lib" and "include" folder.  
 
+Second, export BOOST_INSTALL_DIR=prefix directory that is the prefix specified when installing the boost.
