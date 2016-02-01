@@ -30,7 +30,7 @@ This components takes a reads file and outputs the extracted barcode. Currently 
 
 -o: the output prefix(required). The output filename will be output prefix + "_barcode.txt"
 
--q: the quality threshold(optional). Only those barcode that has average quality no less than this threshold will be kept. This threshold is the corresponding ascii value. Different formats might have different ranges, please check relevant reference to determine the value. The default value is 0. That is it will accept all valid barcode.
+-q: the quality threshold(optional). Only those barcode that has average quality no less than this threshold will be kept. This threshold is the corresponding ascii value. Different formats might have different ranges, please check relevant reference to determine the value. The default value is 0. That is it will accept all valid barcode.  We typically use a cutoff of 30, which is 63, using the current Illumina FASTQ output. Please EITHER CHANGE THE DEFAULT TO 30 OR GIVE THEM THE CORRESPONING ASCII VALUE. 
 
  
 -m: the total number of mismatches allowed in the preceeding and suceeding sequence(optional). Default value is 2. The mismatches will be evenly distributed to two parts.
@@ -60,7 +60,7 @@ ATTTCAT[3-4]ATC: the length of preceeding sequence exceeds 5.
 ATC[3-]TAC: the numerical range is not valid.
 
 ###Output
-One output file will be generated. It has two columns. The first column is the extracted barcode(Only random parts are kept). The second column is the original line number in the reads file. So it should be easy to use this component to process paired-end reads. Just get the extracted barcode from each file and pair these two files by the line number. Of course, extra care needs to be taken when one side has valid barcode and the other corresponding line does not.
+One output file will be generated. It is in csv format and has two columns. The first column is the extracted barcode(Only random parts are kept). The second column is the original line number in the reads file. We include this line number for use in more complex situations (for example double barcodes or UMIs). 
 
 Please check the test_extractor.sh under the example folder for more example.
 
@@ -68,11 +68,26 @@ Please check the test_extractor.sh under the example folder for more example.
 
 # Input:
 
- Currently it only accepts input format that is consistent with the output of extraction components.
+ Currently it accepts input format that is consistent with the output of extraction components. The second column in the input file does not needs to be the line number. It could be anything that is associated with the corresponding extracted barcode, i.e UMI. The first column could be the combined barcode for the double barcodes design.
 
 # Usage
 
-The command name is bartender_single_com, which is a python file. Use "bartender_single_com -h" for help. There are only 4 options and is very easy to use(See test_clustering.sh file under the example folder).
+The command name is bartender_single_com, which is a python file. Use "bartender_single_com -h" for help. There are 7 options and is very easy to use.
+
+-f: the input fastq file 
+
+-o: the output prefix
+
+-c: the frequency cutoff. All clusters with size less then this threshold will not included in the result.
+
+-e: the sequencing error. The default value is 0.01. Could be obtained by running the extraction components.
+
+-z: The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged
+
+-l: The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!
+
+-t: The number of threads. The default value is 1.
+
 
 # Output:
 Bartender outputs three files. 
@@ -83,7 +98,7 @@ This file contains general information of each cluster. It has at least four col
   1. Cluster.ID: the unique ID of the cluster.
   2. Center: the center of this cluster. The center is the representative sequence of all original barcodes that belong to this cluster. Typically the center will be viewed as the true barcode in the downstream analysis.
   3. Cluster.Score: the score measures the quality of the cluster. The lower the score is, the higher the cluster quality is. The score is calculated based on the entropy of binary variable using the Position Weight Matrix(PWM). Here is a brief explanation. Each cluster will have a PWM, which has the frequency of each nucleotide at each position. Based on the PWM, pick up the majority nucleotide and calculate its percentage(P). then the entropy value of each position is -P*log2(P) - (1 - P)*log2(1-P) . The score is the maximum value of entropy values among all positions.
-  4. The remaining columns are the cluster size at each time point. The overall size is the sum of these remaing columns. For single time point case, the fourth column is the size of the cluster
+  4. The remaining columns are the cluster size at each time point. The overall size is the sum of these remainng columns. For single time point case, the fourth column is the size of the cluster.
 
 ## b.Quality file.
 
@@ -94,8 +109,8 @@ From cluster aspect, each cluster will take four lines. Each line represents eac
 ## c.Barcode file.
 
 This file is used to keep track the assignment of each raw barcode with respect to the cluster. It has three columns.
-  1. Line.Number: the line number in the raw input file.
-  2. Barcode.Sequence: the extracted barcode from the that line. This barcode only contains base pairs in all random positions and all spacers are removed. So it should be different from the original barcode unless the input barcode already has spacers removed.
+  1. Unique.reads: the extracted barcode from the raw read.
+  2. Frequency: the raw count of this unique read.
   3. Cluster.ID: the cluster id which this barcode belongs to.
  
 # Problems and questions
@@ -114,11 +129,14 @@ A center is the consensus barcode of all barcodes within that barcode.
 
 ##I had hard time to compile bartender due to the boost installation.
 
-First, download and install boost by following the instructions in boost official webpage. Remember specify the installation directory by setting the prefix.
+First, download and install boost by following the instructions in boost official webpage. Remember specify the installation directory by setting the prefix. 
 
+On OSX, use one of the following commands: 
+brew install boost 
+
+sudo port install boost 
 Second, export BOOST_INSTALL_DIR=install directory. The install directory should be the direct parent directory of "lib" and "include" folder.  
 
-In this way, the problem should be solved.
 
 
 # bartender-1.1
