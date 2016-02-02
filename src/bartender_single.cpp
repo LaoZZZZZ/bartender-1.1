@@ -39,6 +39,7 @@ void drive(std::string barcodefile,  // original read file
            size_t freq_cutoff,   // frequency cutoff
            double error_rate,
            size_t seedlen,      // seed len
+	   size_t step,		// the distance between two adjacent seeds
 	   size_t num_threads,
            std::string outprefix,
            double entropy_threshold, // Entopy value for considering as mixture position
@@ -77,9 +78,8 @@ void drive(std::string barcodefile,  // original read file
                                  error_rate);
     for (size_t blen = barcode_length_range.first; blen <= barcode_length_range.second; ++ blen) {
 	cout << "Start to clustering barcode with length " << blen << endl;
-        ClusteringDriver cluster_drive(blen, seedlen, num_threads, error_rate, zvalue, test_method);
+        ClusteringDriver cluster_drive(blen, seedlen, step,num_threads, error_rate, zvalue, test_method);
         cluster_drive.clusterDrive(BarcodePool::getAutoInstance());
-        
         std::list<std::shared_ptr<BarcodeCluster>> cur_clusters = cluster_drive.clusters();
         cluster_pruner.prune(cur_clusters);
 	cout << "Identified " << cluster_pruner.prunedClusters().size() << " barcodes with length " << blen << endl;
@@ -90,14 +90,6 @@ void drive(std::string barcodefile,  // original read file
     }
     
     if (!clusters.empty()) {
-        std::shared_ptr<ErrorRateEstimator> error_estimator(
-                new ErrorRateEstimator(entropy_threshold_for_error,
-                                       cluster_size_threshold_for_error,
-                                       number_barcode_for_error_estimator));
-        cout << endl << endl;
-        cout << "***(Overall error rate estimated from the clustering result)***" << endl;
-        error_estimator->Estimate(clusters, false);
-        cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
         cout<<"starting to dump clusters to file with prefix "<< outprefix <<endl;
         ClusterOutput out(outprefix);
         // Dumps the cluster information.
@@ -110,7 +102,17 @@ void drive(std::string barcodefile,  // original read file
         pcr_dealer.process(clusters,barcode_pool);
 	cluster_pruner.prune(clusters);
         ClusterOutput out_pcr(outprefix + "_pcr");
+        cout << "***(Overall error rate estimated from the clustering result)***" << endl;
+	std::shared_ptr<ErrorRateEstimator> error_estimator(
+             new ErrorRateEstimator(entropy_threshold_for_error,
+                                    cluster_size_threshold_for_error,
+                                    number_barcode_for_error_estimator));
+	cout << "Total number of clusters after prunning: " << cluster_pruner.prunedClusters().size() << endl;
+        error_estimator->Estimate(cluster_pruner.prunedClusters(), false); // not silent, print out the information
+        cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
+ 
         // Dumps the cluster information.
+        cout<<"starting to dump clusters to file with prefix "<< outprefix + "_pcr"<<endl;
         out_pcr.WriteToFile(cluster_pruner.prunedClusters(), barcode_pool,barcode_length_range.second);
     }
 
@@ -142,28 +144,32 @@ int main(int argc,char* argv[])
     size_t seedlen = 5;
     if(argc >= 7)
         seedlen = atoi(argv[6]);
-    size_t num_threads = 1;
+    size_t step = 1;
     if (argc >= 8)
-	num_threads = atoi(argv[7]); 
+	step = atoi(argv[7]);
+    size_t num_threads = 1;
+    if (argc >= 9)
+	num_threads = atoi(argv[8]); 
 
     TESTSTRATEGY pool = TWOPROPORTIONUNPOOLED;
-    if (argc >= 9) {
-        pool = static_cast<TESTSTRATEGY>(atoi(argv[8]));
+    if (argc >= 10) {
+        pool = static_cast<TESTSTRATEGY>(atoi(argv[9]));
     }
 
     double entropy_threshold = 0.33;
-    if (argc >= 10) {
-        entropy_threshold = atof(argv[9]);
+    if (argc >= 11) {
+        entropy_threshold = atof(argv[10]);
     }
     
     size_t maximum_centers = 4;
-    if (argc >= 11) {
-        maximum_centers = atoi(argv[10]);
+    if (argc >= 12) {
+        maximum_centers = atoi(argv[11]);
     }
     drive(sequencefile,
           freq_cutoff,
           error_rate,
           seedlen,
+	  step,
 	  num_threads,
           outprefix,
           entropy_threshold,
@@ -171,7 +177,9 @@ int main(int argc,char* argv[])
           zvalue,
           pool
           );
-    delete t;
+    cout << "The overall running time ";
+    delete t; 
+    std::cout << " seconds." << endl;
     return 0;
 }
 

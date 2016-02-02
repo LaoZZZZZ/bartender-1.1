@@ -38,8 +38,9 @@ void printFrequency(const vector<array<int,4>>& frequencies) {
 }
 
 int main() {
-   unordered_map<string, vector<string>> raw_barcode({{"AAAAA", {"AAA","AAC", "AAC","AGG", "ATC", "ATC", "ATT"}},{"CAAAA", {"AAA"}},{"AACAT", {"AGG", "ATC","TCA", "TCA", "TCA", "TTC"}}});
-   BarcodePool::createInstance(raw_barcode);
+   //unordered_map<string, vector<string>> raw_barcode({{"AAAAA", {"AAA","AAC", "AAC","AGG", "ATC", "ATC", "ATT"}},{"CAAAA", {"AAA"}},{"AACAT", {"AGG", "ATC","TCA", "TCA", "TCA", "TTC"}}});
+   unordered_map<string, vector<string>> raw_barcode1({{"AAAAA", {"AAA", "TCA"}},{"CAAAA", {"AAA"}},{"AACAT", {"AAA","AGG", "ATC","TCA", "TTC"}}});
+   BarcodePool::createInstance(raw_barcode1);
    std::shared_ptr<BarcodePool> pool = BarcodePool::getAutoInstance();
    cout << pool->NumOfRawBarcode() << '\t' << pool->NumOfReplicates() << endl;
    BarcodeCluster::setBarcodePool(pool);

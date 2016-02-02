@@ -25,6 +25,7 @@ namespace barcodeSpace {
     public:
         ClusteringDriver(size_t barcode_length,
                          size_t seed_len = 5,
+			 size_t step = 1,
                          size_t num_threads = 1,
                          double error_rate = 0.01,
                          double zvalue = 3.08,
@@ -42,6 +43,7 @@ namespace barcodeSpace {
         ////////////////params for shattering the barcode into bins////////////////////////////
         size_t                                          _barcode_length;
         size_t                                          _seed_length;
+        size_t                                          _step;
         size_t                                          _num_threads;
         std::unique_ptr<ClusterBucketer>                _shatter_machine;
         

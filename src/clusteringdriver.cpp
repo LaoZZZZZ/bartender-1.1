@@ -32,6 +32,7 @@ using namespace std;
 namespace barcodeSpace {
     ClusteringDriver::ClusteringDriver(size_t barcode_length,
                                        size_t seed_len,
+				       size_t step,
                                        size_t num_threads,
                                        double error_rate,
                                        double zvalue,
@@ -39,6 +40,7 @@ namespace barcodeSpace {
                                        double trim,
                                        double stopThres):
     _barcode_length(barcode_length), _seed_length(seed_len),
+    _step(step),
     _num_threads(num_threads), _error_rate(error_rate),
     _zvalue(zvalue), _pool(test_method),
     _trim(trim), _stopThres(stopThres)
@@ -68,7 +70,7 @@ namespace barcodeSpace {
         SeedSelector selector(_barcode_length);
         selector.addBarcode(barcode_pool);
         vector<int> seeds_positions = selector.getSeedsPositions();
-        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length));
+        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
         
         std::cout << "transforming the barcodes into clusters" << std::endl;
         // 1. Transform the barcode table into a list of clusters

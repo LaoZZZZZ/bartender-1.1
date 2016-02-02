@@ -33,6 +33,7 @@ namespace barcodeSpace {
             index >>=2;
             return index;
         }
+	const std::vector<int>& seeds()const {return _seed_positions;}
     private:
         std::vector<int> _seed_positions;
         std::shared_ptr<kmersDictionary> _dict;

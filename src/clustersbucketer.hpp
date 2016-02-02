@@ -22,7 +22,9 @@ namespace barcodeSpace {
     typedef std::list< std::shared_ptr<BarcodeCluster> >  CBin;
     public:
         ClusterBucketer(const std::vector<int>& seed_pos,
-                        size_t seed_len);
+                        size_t seed_len,
+			size_t step);
+
         bool done() const { return _cur == _indexers.size();}
         void shatter(const std::list<std::shared_ptr<BarcodeCluster>>& clusters);
         const std::vector<CBin>& Bins() const {return _bins;}
@@ -30,7 +32,7 @@ namespace barcodeSpace {
     private:
         std::vector<int> _seed_positions;
         size_t _seed_len;
-        
+        size_t _step; 
         void splitSeedPositions();
         size_t _cur;
         std::vector<std::unique_ptr<BarcodeIndexer>> _indexers;

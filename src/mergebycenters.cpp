@@ -25,6 +25,7 @@ void MergeByCenters::merge(const std::list<std::shared_ptr<Cluster>>& clusters,
     int max_id = 0;
     for (const auto& c : clusters) {
         max_id = std::max(max_id, c->ClusterID());
+	klen = std::max(klen, c->center().length());
     }
     CenterClusterMapper* temp_mapper = new CenterClusterMapper(max_id + 1);
     assert(temp_mapper != NULL);

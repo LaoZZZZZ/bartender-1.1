@@ -8,12 +8,7 @@
 #include <stdexcept>
 #include <vector>
 
-using std::cerr;
-using std::endl;
-using std::vector;
-using std::stringstream;
-using std::runtime_error;
-
+using namespace std;
 namespace barcodeSpace {
 
 ErrorRateEstimator::ErrorRateEstimator(double entropy_threshold, size_t cluster_size, size_t maximum_barcodes)
@@ -44,7 +39,6 @@ void ErrorRateEstimator::Estimate(const std::list<std::shared_ptr<Cluster>>& clu
             tmp_total_majority += tmp_majority;
             single_total += tmp_total;
         }
-
         // If the maximum entropy is less than the entropy threshold
         // and the cluster size is larger than the cluster size threshold.
         if (total_barcodes < _maximum_barcodes &&

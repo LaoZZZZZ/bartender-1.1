@@ -35,7 +35,7 @@ namespace barcodeSpace {
             b_2_freq[b] = pool->barcodeFrequency(b);
         }
         
-        // ONLY keep one barcode for each
+        // ONLY keep one barcode for each UMI
         for (auto& u_b : u_2_b) {
             size_t max = 0;
             size_t max_size = 0;

@@ -52,7 +52,7 @@ namespace barcodeSpace {
           //  mean_estimator.Add(c->size());
             taken_ids.insert(c->ClusterID());
         }
-        
+	//cout << "splits the clusters" << endl;
         // Only split clusters whose size is above the mean cutoff.
         //size_t mean_cutoff = static_cast<int>(mean_estimator.GetMean());
         std::shared_ptr<IDGenerator> id_pool(new IDGenerator(taken_ids));
@@ -72,6 +72,7 @@ namespace barcodeSpace {
                 }
             }
         }
+	//cout << "merge the clusters" << endl;
         // Merge cluster who has the same centers.
         MergeByCenters merger(_recalibrator);
         merger.merge(_clusters, entropies);
