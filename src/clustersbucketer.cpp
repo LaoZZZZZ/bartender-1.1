@@ -18,7 +18,7 @@ namespace barcodeSpace {
     ClusterBucketer::ClusterBucketer(const std::vector<int>& seed_pos,
                                      size_t seed_len,
 				     size_t step) : _seed_positions(seed_pos), _seed_len(seed_len), _step(step){
-	assert(step < seed_len);
+	assert(step <= seed_len);
         splitSeedPositions();
         size_t total = static_cast<size_t>(pow(4,_seed_len));
         _bins.assign(total,CBin());

@@ -144,7 +144,7 @@ int main(int argc,char* argv[])
     size_t seedlen = 5;
     if(argc >= 7)
         seedlen = atoi(argv[6]);
-    size_t step = 1;
+    size_t step = seedlen;
     if (argc >= 8)
 	step = atoi(argv[7]);
     size_t num_threads = 1;
