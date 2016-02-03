@@ -53,8 +53,7 @@ void MultipleTimePointsProcessor::process() {
         for (const auto& clusters : new_clusters) {
             _error_estimator->Estimate(clusters.second, false);
             _original_error_rates[clusters.first].push_back(_error_estimator->ErrorRate());
-            _link_generator->Generate(clusters.second,
-                                      _error_estimator->Entropies());
+            _link_generator->Generate(clusters.second);
 
             single_link[clusters.first] = _link_generator->CenterClusterLink();
         }
@@ -71,8 +70,7 @@ void MultipleTimePointsProcessor::process() {
             mediate_clusters[batch.first] = _center_merger->clusters();
             _error_estimator->Estimate(_center_merger->clusters(), false);
 
-            _link_generator->Generate(_center_merger->clusters(),
-                                      _error_estimator->Entropies());
+            _link_generator->Generate(_center_merger->clusters());
 
             combined_link[batch.first] = _link_generator->CenterClusterLink();
             if (_combined_error_rates.count(batch.first)) {
@@ -96,8 +94,7 @@ void MultipleTimePointsProcessor::process() {
                 mediate_clusters[batch.first] = _center_merger->clusters();
                 _error_estimator->Estimate(_center_merger->clusters(), false);
 
-                _link_generator->Generate(_center_merger->clusters(),
-                                          _error_estimator->Entropies());
+                _link_generator->Generate(_center_merger->clusters());
 
                 combined_link[batch.first] = _link_generator->CenterClusterLink();
                 if (_combined_error_rates.count(batch.first)) {
