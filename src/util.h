@@ -10,7 +10,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "kmer_freq.h"
+//#include "kmer_freq.h"
 #include "kmers_dictionary.h"
 #include "typdefine.h"
 
@@ -42,7 +42,7 @@ size_t kmerDistance(const kmer&,const kmer&,size_t);
 /**
   * Calculates the the similarity score by doing pair comparison.
 */
-double similarityScore(const kmer&, const std::list<kmers_freq>&,size_t);
+//double similarityScore(const kmer&, const std::list<kmers_freq>&,size_t);
 
 /**
   * Calculates the similarity score using the frequency table,

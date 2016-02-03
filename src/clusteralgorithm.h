@@ -4,7 +4,7 @@
 
 #include "barcodecluster.hpp"
 #include "formats.h"
-#include "kmer_freq.h"
+//#include "kmer_freq.h"
 #include "util.h"
 
 #include <list>

@@ -81,6 +81,7 @@ size_t kmerDistance(const kmer& k1, const kmer& k2, size_t klen) {
     return total;
 }
 
+/*
 double similarityScore(const kmer& k, const list<kmers_freq>& barcodes, size_t klen){
 
     double result(0);
@@ -88,7 +89,7 @@ double similarityScore(const kmer& k, const list<kmers_freq>& barcodes, size_t k
         result += kmerDistance(it->_key,k,klen)*it->_freq;
     }
     return result;
-}
+}*/
 double similarityScore(const kmer& center,
                        const std::vector<std::array<int, 4>>& frequency_table) {
     size_t total = 0;
