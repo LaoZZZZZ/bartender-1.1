@@ -26,7 +26,9 @@ public:
     typedef std::unordered_map<kmer, std::vector<std::string>> barcode2Sequence;
     
     ClusterOutput(const std::string& filename);
-
+    
+    void WriteToFile(const std::list<std::shared_ptr<Cluster>>& clusters,
+                     size_t max_barcode_length);
     void WriteToFile(const std::list<std::shared_ptr<Cluster>>& clusters,
                      const std::shared_ptr<BarcodePool>& barcocde_pool,
                      size_t max_barcode_length);

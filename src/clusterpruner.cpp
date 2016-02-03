@@ -72,10 +72,10 @@ namespace barcodeSpace {
                 }
             }
         }
-	//cout << "merge the clusters" << endl;
+	    //cout << "merge the clusters" << endl;
         // Merge cluster who has the same centers.
-        MergeByCenters merger(_recalibrator);
-        merger.merge(_clusters, entropies);
+        MergeByCenters merger;
+        merger.merge(_clusters);
         _clusters = merger.clusters();
         // Filter out cluster
         // 3.Remove those clusters whose size is below the cutoff.

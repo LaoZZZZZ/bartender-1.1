@@ -1,0 +1,62 @@
+#!/usr/bin/python
+import os
+import sys
+import getopt
+
+def usage():
+	print "\tthere are 3 parameters and all are required. For help -h or -help"
+	print "\t -c the cutoff that all clusters below this threshold will be removed from the result. "
+	print "\t -o the output prefix"
+	print "\t -f the cluster results files from different time points. Only the cluster and quality files should be included. The files should be separated by comma"
+def driver():
+	inputfile = ''
+	outprefix = ''
+	freq_cutoff = 1 
+        cluster_files = ''
+	outprefix = ''
+    	try:
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:h",["help"])
+    	except getopt.error,msg:
+		print("Invalid parameters!")
+        	usage()
+        	sys.exit(2)
+    	for o,a in opt:
+        	if o == '-f':
+            		inputfile = a.strip().split(',')
+			if len(inputfile) % 2:
+				print "The number of input files are not correct!"
+				sys.exit(2)
+			for f in inputfile:
+            			if not os.path.isfile(f):
+                			print(f + " probably is not a valid file!\n")
+                			sys.exit(2)
+			inputfile = ' '.join(inputfile)
+        	elif o == '-o':
+            		outprefix = a 
+			if not outprefix:
+                		print "No output file was specified!" 
+                		sys.exit(2)
+        	elif o == '-c':
+			try:
+				freq_cutoff = int(a)
+				assert(freq_cutoff > 0)
+			except Exception as err:
+                		print "Frequency cutoff " + a + " is not a valid input!\n"
+                		sys.exit(2)
+        	elif o in  ("-h","--help"):
+            		print usage()
+                	sys.exit(0)
+	if not inputfile:
+		print "There is no inputfile specified"
+		print usage()
+		sys.exit(0)
+	if not outprefix:
+		print "There is no output file specified"
+		print usage()
+		sys.exit(0)
+			
+	os.system('bartender_combiner ' + str(freq_cutoff) + ' ' + outprefix + ' ' + inputfile)
+if __name__=="__main__":
+	print('Running bartender_combiner')
+	driver()
+

@@ -5,6 +5,7 @@
 #include "clustercenterlinkgenerator.h"
 #include "errorrateestimator.h"
 #include "mergebycenters.h"
+#include "typdefine.h"
 
 #include <list>
 #include <memory>
