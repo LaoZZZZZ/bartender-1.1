@@ -7,7 +7,7 @@
 #include "errorrateestimator.h"
 #include "formats.h"
 #include "inputprocessor.hpp"
-#include "rawbarcodeprocessor.hpp"
+//#include "rawbarcodeprocessor.hpp"
 #include "pcrprocessor.hpp"
 #include "mergebycenters.h"
 #include "timer.h"
