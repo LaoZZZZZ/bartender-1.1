@@ -57,9 +57,13 @@ namespace barcodeSpace {
                 ++iter;
             }
         }
-        // used to combine two clusters from two time points.
+        // Used to combine two clusters from two time points.
         void combine(const std::shared_ptr<BarcodeCluster>& c) {
-            merge(c);
+	     _size += c->size();
+            AddFrequency(c->bpFrequency());
+            updateCenter();
+            _raw_barcodes.insert(_raw_barcodes.end(), c->barcodes().begin(), c->barcodes().end());
+            //merge(c);
             _time_points.push_front(c);
             _size_at_time.insert(_size_at_time.begin(),c->size());
         }
