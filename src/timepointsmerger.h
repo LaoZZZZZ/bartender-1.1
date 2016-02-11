@@ -4,6 +4,7 @@
 #include "barcodemutationgenerator.h"
 #include "barcodecluster.hpp"
 #include "centerclustermapper.h"
+#include "clustermergertester.h"
 #include "typdefine.h"
 
 #include <list>

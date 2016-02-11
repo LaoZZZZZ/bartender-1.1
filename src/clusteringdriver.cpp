@@ -37,13 +37,14 @@ namespace barcodeSpace {
                                        double error_rate,
                                        double zvalue,
                                        TESTSTRATEGY test_method,
+				       size_t distance,
                                        double trim,
                                        double stopThres):
     _barcode_length(barcode_length), _seed_length(seed_len),
     _step(step),
     _num_threads(num_threads), _error_rate(error_rate),
     _zvalue(zvalue), _pool(test_method),
-    _trim(trim), _stopThres(stopThres)
+    _trim(trim), _stopThres(stopThres), _dist_threshold(distance)
     {
         assert(this->_stopThres < 1);
         init();
@@ -97,10 +98,10 @@ namespace barcodeSpace {
             cout<<"Clustering iteration "<<total<<endl;
             _shatter_machine->shatter(_clusters);
             this->crossBinClustering(_shatter_machine->Bins());
-            size_t tmp(this->_clusters.size());
-            if(static_cast<double>(sz - tmp)/sz < this->_stopThres)
-                break;
-            sz = tmp;
+            //size_t tmp(this->_clusters.size());
+            //if(static_cast<double>(sz - tmp)/sz < this->_stopThres)
+            //    break;
+           // sz = tmp;
         }
 
         std::cout<<"Clustering took  ";
@@ -121,8 +122,8 @@ namespace barcodeSpace {
             _clusters.push_back(ptemp);
         }
 
-        DistanceSelector selector(_error_rate, 0.5, _barcode_length);
-        _dist_threshold = selector.calculateDistance(max_size) + 1;
+        //DistanceSelector selector(_error_rate, 0.5, _barcode_length);
+        //_dist_threshold = selector.calculateDistance(max_size) + 1;
     }
     void ClusteringDriver::crossBinClustering(const vector<list<shared_ptr<BarcodeCluster>>>& cbins){
         if(!this->_clusters.empty()){

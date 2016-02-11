@@ -76,25 +76,33 @@ void TimePointsMerger::merge() {
         const std::shared_ptr<Cluster> cl = iter_1.next();
         assert(cl.get());
         _mutator.mutateCenterInplace(cl->center(), mutated_center);
-        list<std::shared_ptr<Cluster>> matched_clusters_from_t2;
+        double ratio = 0;
+        double sz = cl->size();
+        std::shared_ptr<Cluster> matched_cluster_from_t2;
         for (const auto& center : mutated_center) {
             if (_t2_center_cluster_linker->hasCenter(center)) {
+                /*
                 matched_clusters_from_t2.push_back(_t2_center_cluster_linker->getClusterByCenter(center));
                 // remove the cluster immediately in case it is matched by multiple times
-                _t2_center_cluster_linker->removeCluster(matched_clusters_from_t2.back()->ClusterID());
+                _t2_center_cluster_linker->removeCluster(matched_clusters_from_t2.back()->ClusterID());*/
+                double tmp_sz = _t2_center_cluster_linker->getClusterByCenter(center)->size();
+                if (tmp_sz > sz) {
+                    std::swap(tmp_sz, sz);
+                }
+                if ( sz/tmp_sz > ratio) {
+                    matched_cluster_from_t2 = _t2_center_cluster_linker->getClusterByCenter(center);
+                }
+                sz = cl->size();
             }
         }
         _t1_center_cluster_linker->removeCluster(cl->ClusterID());
-        if (!matched_clusters_from_t2.empty()) {
-            auto m_cl = matched_clusters_from_t2.front();
-            matched_clusters_from_t2.pop_front();
-            while (!matched_clusters_from_t2.empty()) {
-                m_cl->merge(matched_clusters_from_t2.front());
-                matched_clusters_from_t2.pop_front();
-            }
-            cl->combine(m_cl);
+        if (matched_cluster_from_t2.get()) {
+            cl->combine(matched_cluster_from_t2);
+            _t2_center_cluster_linker->removeCluster(matched_cluster_from_t2->ClusterID());
             _result.push_back(cl);
         } else if (cl->size() >= _filter_csize_threshold){
+            // add dummy time point to those unmatched high
+            // frequent clusters to t1 time points.
             std::vector<size_t> my_timepoints = cl->columns();
             assert(my_timepoints.size() == _num_time_points);
             my_timepoints.push_back(0);

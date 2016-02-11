@@ -30,6 +30,7 @@ namespace barcodeSpace {
                          double error_rate = 0.01,
                          double zvalue = 3.08,
                          TESTSTRATEGY test_method = TWOPROPORTIONUNPOOLED,
+			 size_t distance = 2,
                          double trim = 0.02,
                          double stopThres = 0.01
                          );
@@ -54,7 +55,7 @@ namespace barcodeSpace {
         size_t                                          _dist_threshold; // used to define whether two barcodes are similar.
         double                                          _zvalue; //used for merge test
         TESTSTRATEGY                                    _pool; // indicate whether use the pooled test or indepedent test.
-        std::shared_ptr<ClusterMergerTester>             _tester;
+        std::shared_ptr<ClusterMergerTester>            _tester;
         // the cluster size difference between current clustring step with the previous step
         // if the difference/previous cluster size smaller than this threshold
         // the clustering algorithm stop

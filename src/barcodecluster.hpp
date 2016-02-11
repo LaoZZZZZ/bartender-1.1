@@ -18,6 +18,7 @@
 #include <array>
 #include <list>
 #include <memory>
+#include <numeric>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -67,6 +68,7 @@ namespace barcodeSpace {
         void SetClusterID(int id) {_cid = id;}
         void SetTimePointFrequency(const std::vector<size_t>& size_time_point) {
             _size_at_time = size_time_point;
+            _size = std::accumulate(_size_at_time.begin(), _size_at_time.end(), 0);
         }
     private:
         //void updateFrequency(const kmers_freq&);

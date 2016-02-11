@@ -24,6 +24,7 @@ MultipleTimePointsProcessor::MultipleTimePointsProcessor(const InputFile& cluste
                                                          std::shared_ptr<ErrorRateEstimator> error_estimator,
                                                          std::shared_ptr<ClusterCenterLinkGenerator> link_generator,
                                                          std::shared_ptr<MergeByCenters>    center_merger,
+
                                                          size_t csize_filter) :
     _cluster_result_files(cluster_result_files),
     _error_estimator(error_estimator), _link_generator(link_generator),
@@ -32,6 +33,18 @@ MultipleTimePointsProcessor::MultipleTimePointsProcessor(const InputFile& cluste
     assert(error_estimator.get());
     assert(link_generator.get());
     assert(center_merger.get());
+}
+bool MultipleTimePointsProcessor::isValidTrajectory(const std::vector<size_t>& traj) {
+	bool found_zero = false;
+	for (const auto& t : traj) {
+		if (t != 0 && found_zero) {
+			return false;	
+		}
+		else if (t == 0) {
+			found_zero = true;
+		}
+	}	
+	return true;
 }
 void MultipleTimePointsProcessor::process() {
     // key is the barcode length
@@ -64,11 +77,10 @@ void MultipleTimePointsProcessor::process() {
                     batch.first, num_time_points, _csize_filter);
             merger.merge();
             const list<shared_ptr<Cluster>>& merged_clusters = merger.mergedClusters();
+            _center_merger->merge(merged_clusters);
 
-            _error_estimator->Estimate(merged_clusters, false);
-            _center_merger->merge(merged_clusters, _error_estimator->Entropies());
-            mediate_clusters[batch.first] = _center_merger->clusters();
             _error_estimator->Estimate(_center_merger->clusters(), false);
+            mediate_clusters[batch.first] = _center_merger->clusters();
 
             _link_generator->Generate(_center_merger->clusters());
 
@@ -86,11 +98,11 @@ void MultipleTimePointsProcessor::process() {
         // keep those barcode whose length does not show up in the previously combined result.
         for (const auto& batch: single_link) {
             if (0 == combined_link.count(batch.first)) {
-                TimePointsMerger merger(NULL, batch.second ,batch.first, num_time_points,1);
+                TimePointsMerger merger(NULL, batch.second ,batch.first, num_time_points, 1);
                 merger.merge();
                 const list<shared_ptr<Cluster>>& merged_clusters = merger.mergedClusters();
+                _center_merger->merge(merged_clusters);
                 _error_estimator->Estimate(merged_clusters, false);
-                _center_merger->merge(merged_clusters, _error_estimator->Entropies());
                 mediate_clusters[batch.first] = _center_merger->clusters();
                 _error_estimator->Estimate(_center_merger->clusters(), false);
 
@@ -112,11 +124,16 @@ void MultipleTimePointsProcessor::process() {
     for (const auto& clusters : mediate_clusters) {
         std::list<std::shared_ptr<Cluster>> cluster_result;
         for (const auto& c : clusters.second) {
+	    if(c->size() >= _csize_filter) {
+		cluster_result.push_back(c);
+	    } 
+	    /*
             const vector<freq>& columns = c->columns();
             if ((columns.size() == 1 && c->size() >= _csize_filter)
                   || (columns.size() > 1 && columns[columns.size() - 2] > 0)) {
                 cluster_result.push_back(c);
             }
+	    */
         }
         //_error_estimator->Estimate(clusters.second);
         //_combined_error_rates[clusters.first].push_back(_error_estimator->ErrorRate());
