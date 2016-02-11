@@ -19,17 +19,14 @@ void MergeByCenters::merge(const std::list<std::shared_ptr<Cluster>>& clusters) 
         return;
     }
     size_t klen = 0;
-    klen = clusters.front()->center().length();
     int max_id = 0;
     for (const auto& c : clusters) {
         max_id = std::max(max_id, c->ClusterID());
-	klen = std::max(klen, c->center().length());
     }
     CenterClusterMapper* temp_mapper = new CenterClusterMapper(max_id + 1);
     assert(temp_mapper != NULL);
     _linker.reset(temp_mapper);
 
-    std::vector<double> temp_entropies(klen, 0);
     for (auto& c :  clusters) {
 
         std::shared_ptr<BarcodeCluster> matched_cluster;
@@ -42,6 +39,7 @@ void MergeByCenters::merge(const std::list<std::shared_ptr<Cluster>>& clusters) 
             if (!matched_cluster.get())
                 break;
             c->merge(matched_cluster);
+	    matched_cluster.reset();
         }
         _linker->removeCluster(c->ClusterID());
         _linker->addPair(c, {c->center()});

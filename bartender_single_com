@@ -19,6 +19,7 @@ def usage():
 	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"
 	print "\t -t The number of threads. The default value is 1."
 	print "\t -s The distance between two adjacent seeds. The default value is 1. if step value equals to or larger than seed length, then there will be no overlap!"
+	print "\t -d The hamming distance threshold. The default value is 2. if the distance between two sequences is within this threshold, these two sequences are viewed as similar and might be merged in the clustering process!"
 def driver():
 	inputfile = ''
 	outprefix = ''
@@ -28,8 +29,9 @@ def driver():
 	seed_len = 5
 	num_threads = 1
 	step = 1
+	distance = 2
     	try:
-        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:h",["help"])
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help"])
     	except getopt.error,msg:
 		print("Invalid parameters!")
         	usage()
@@ -51,6 +53,13 @@ def driver():
 				assert(freq_cutoff > 0)
 			except Exception as err:
                 		print "Frequency cutoff " + a + " is not a valid input!\n"
+                		sys.exit(2)
+        	elif o == '-d':
+			try:
+				distance = int(a)
+				assert(distance > 0)
+			except Exception as err:
+                		print "The distance " + a + " is not a valid input!\n"
                 		sys.exit(2)
         	elif o == '-s':
 			try:
@@ -103,7 +112,7 @@ def driver():
 		print "There is no output file specified"
 		sys.exit(0)
 			
-	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads))
+	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance))
 if __name__=="__main__":
 	print('Running bartender')
 	driver()

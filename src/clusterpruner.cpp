@@ -43,8 +43,7 @@ namespace barcodeSpace {
     void ClusterPruner::prune(const std::list<std::shared_ptr<Cluster> > &clusters) {
         
         _clusters.clear();
-        
-        
+//        _clusters.assign(clusters.begin(), clusters.end()); 
         // Calculate the mean size of clusters.
         //MeanSequentialEstimator mean_estimator;
         std::set<int>   taken_ids;
@@ -72,7 +71,7 @@ namespace barcodeSpace {
                 }
             }
         }
-	    //cout << "merge the clusters" << endl;
+        //cout << "merge the clusters" << endl;
         // Merge cluster who has the same centers.
         MergeByCenters merger;
         merger.merge(_clusters);

@@ -36,6 +36,7 @@ public:
     const std::unordered_map<int, std::vector<double>>&  singleErrorRate() const {return _original_error_rates;}
 private:
     void SanityCheck(const std::unordered_map<int, std::list<std::shared_ptr<Cluster>>>&);
+    bool isValidTrajectory(const std::vector<size_t>& traj);
     std::vector<std::pair<std::string, std::string>>    _cluster_result_files;
     std::shared_ptr<ErrorRateEstimator> _error_estimator;
     std::shared_ptr<ClusterCenterLinkGenerator> _link_generator;

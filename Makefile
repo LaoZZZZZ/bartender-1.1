@@ -29,7 +29,7 @@ BARTENDEREXTRACTOROBJECTS=$(BARTENDEREXTRACTORSOURCES:.cpp=.o)
 COMBINERSOURCES	= ./src/bartender_combiner.cpp ./src/kmers_dictionary.cpp ./src/util.cpp ./src/barcodecluster.cpp ./src/clusteroutput.cpp ./src/testSimulation.cpp ./src/timepointsmerger.cpp ./src/multipletimepointsprocessor.cpp ./src/centerclustermapper.cpp ./src/centerclustermapperiterator.cpp ./src/errorrateestimator.cpp ./src/clusterloader.cpp ./src/clustercenterlinkgenerator.cpp ./src/idgenerator.cpp ./src/mergebycenters.cpp ./src/barcodemutationgenerator.cpp ./src/barcodetabledumper.cpp ./src/clustertabledumper.cpp ./src/qualitytabledumper.cpp ./src/barcodepool.cpp ./src/kmers_bitwisetransform.cpp
 COMBINEROBJECTS	= $(COMBINERSOURCES:.cpp=.o)
 
-all: $(BARTENDERSINGLESOURCES) $(SINGLE) $(EXTRACTOR)
+all: $(BARTENDERSINGLESOURCES) $(SINGLE) $(COMBINER) $(EXTRACTOR)
 install:
 	
 	$(CP) $(SINGLE)	$(INSTALLDIR)/ 

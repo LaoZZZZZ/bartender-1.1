@@ -34,6 +34,18 @@ MultipleTimePointsProcessor::MultipleTimePointsProcessor(const InputFile& cluste
     assert(link_generator.get());
     assert(center_merger.get());
 }
+bool MultipleTimePointsProcessor::isValidTrajectory(const std::vector<size_t>& traj) {
+	bool found_zero = false;
+	for (const auto& t : traj) {
+		if (t != 0 && found_zero) {
+			return false;	
+		}
+		else if (t == 0) {
+			found_zero = true;
+		}
+	}	
+	return true;
+}
 void MultipleTimePointsProcessor::process() {
     // key is the barcode length
     // value is the clusters in this length.
@@ -112,11 +124,16 @@ void MultipleTimePointsProcessor::process() {
     for (const auto& clusters : mediate_clusters) {
         std::list<std::shared_ptr<Cluster>> cluster_result;
         for (const auto& c : clusters.second) {
+	    if(c->size() >= _csize_filter) {
+		cluster_result.push_back(c);
+	    } 
+	    /*
             const vector<freq>& columns = c->columns();
             if ((columns.size() == 1 && c->size() >= _csize_filter)
                   || (columns.size() > 1 && columns[columns.size() - 2] > 0)) {
                 cluster_result.push_back(c);
             }
+	    */
         }
         //_error_estimator->Estimate(clusters.second);
         //_combined_error_rates[clusters.first].push_back(_error_estimator->ErrorRate());
