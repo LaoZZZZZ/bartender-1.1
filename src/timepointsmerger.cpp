@@ -103,9 +103,11 @@ void TimePointsMerger::merge() {
         } else if (cl->size() >= _filter_csize_threshold){
             // add dummy time point to those unmatched high
             // frequent clusters to t1 time points.
-            std::vector<size_t> my_timepoints = cl->columns();
-            assert(my_timepoints.size() == _num_time_points);
-            my_timepoints.push_back(0);
+	    std::vector<size_t> my_timepoints = {0};
+	    my_timepoints.insert(my_timepoints.end(), cl->columns().begin(), cl->columns().end());
+            //std::vector<size_t> my_timepoints = cl->columns();
+            assert(my_timepoints.size() == _num_time_points + 1);
+            //my_timepoints.push_front(0);
             cl->SetTimePointFrequency(my_timepoints);
             _result.push_back(cl);
         }
@@ -121,7 +123,7 @@ void TimePointsMerger::merge() {
         if (_num_time_points > 0) {
             std::vector<freq> dummy_time_points(_num_time_points, 0);
             const std::vector<freq>& my_freq = cl->columns();
-            dummy_time_points.insert(dummy_time_points.end(), my_freq.begin(), my_freq.end());
+            dummy_time_points.insert(dummy_time_points.begin(), my_freq.begin(), my_freq.end());
             cl->SetTimePointFrequency(dummy_time_points);
         }
         _result.push_back(cl);

@@ -58,7 +58,7 @@ void MultipleTimePointsProcessor::process() {
     int len = static_cast<int>(_cluster_result_files.size()) - 1;
     for (int i = len; i >= 0; --i) {
 
-        cout << "Current time point " << i << endl;
+        cout << "Current generation " << i << endl;
         ClusterLoader loader(_cluster_result_files[i].first, _cluster_result_files[i].second);
         std::unordered_map<int, list<shared_ptr<Cluster>>> new_clusters;
         loader.LoadClusters(&new_clusters);
@@ -93,7 +93,6 @@ void MultipleTimePointsProcessor::process() {
 
 
         }
-        std::cout << "Finished single time points " << i << std::endl;
 
         // keep those barcode whose length does not show up in the previously combined result.
         for (const auto& batch: single_link) {
@@ -116,7 +115,7 @@ void MultipleTimePointsProcessor::process() {
                 }
             }
         }
-        std::cout << "Finished round " << i << std::endl;
+        std::cout << "Finished merging generation " << i << std::endl;
 
         ++num_time_points;
     }
