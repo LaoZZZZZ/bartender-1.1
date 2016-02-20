@@ -121,6 +121,12 @@ void drive(std::string barcodefile,  // original read file
             out_pcr.WriteToFile(merger.clusters(), barcode_pool,barcode_length_range.second);
         } else {
             cout << "There is no pcr effects in the original data" << endl;
+	    std::shared_ptr<ErrorRateEstimator> error_estimator(
+                 new ErrorRateEstimator(entropy_threshold_for_error,
+                                        cluster_size_threshold_for_error,
+                                        number_barcode_for_error_estimator));
+            error_estimator->Estimate(clusters, false); // not silent, print out the information
+            cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
         }
     }
 
