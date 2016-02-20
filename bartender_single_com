@@ -28,7 +28,7 @@ def driver():
 	zvalue = 4.0
 	seed_len = 5
 	num_threads = 1
-	step = 1
+	step = 5 
 	distance = 2
     	try:
         	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help"])
