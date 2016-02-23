@@ -19,7 +19,7 @@ using namespace std;
 namespace barcodeSpace {
 
 SeedSelector::SeedSelector(size_t barcode_length) : _barcode_length(barcode_length) {
-    _entropy_threshold = Entropy({95,5,0,0});
+    _entropy_threshold = Entropy({80,20,0,0});
     _dict = kmersDictionary::getAutoInstance();
     assert(_dict.get());
     _position_weight_matrix.assign(barcode_length, {0,0,0,0});

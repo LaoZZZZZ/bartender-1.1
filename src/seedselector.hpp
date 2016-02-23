@@ -37,6 +37,7 @@ public:
         SelectSeeds();
         return _seeds;
     }
+    const std::vector<std::array<int,4>>& positionWeightMatrix() const {return _position_weight_matrix;}
 private:
     void CalculatePositionWeightMatrix(const std::shared_ptr<BarcodePool>& barcode_pool);
     void CalculateEntropy();
