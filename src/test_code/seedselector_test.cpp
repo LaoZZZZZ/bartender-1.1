@@ -1,9 +1,14 @@
+#include "../barcodepool.hpp"
 #include "../seedselector.hpp"
 #include "../typdefine.h"
 
 
 #include <iostream>
+#include <memory>
 #include <vector>
+#include <unordered_map>
+#include <string>
+
 using namespace std;
 using namespace barcodeSpace;
 
@@ -14,13 +19,16 @@ int main() {
 		{"GGGGGAATAC", 1},
 		{"GTTTTAAATG", 1},
 		{"GCTAGAACCT", 1}};
-	SeedSelector selector(6,10);
-	for (const auto& seq : barcodes) {
-		selector.addBarcode(seq);
- 	}	
-	vector<std::pair<int, int>> seeds = selector.getSeedsPositions();
+   unordered_map<string, vector<string>> raw_barcode({{"AAAAA", {"AAA","AAC", "AAC","AGG", "ATC", "ATC", "ATT"}},{"AACAA", {"AAA"}},{"AACAT", {"TCA", "TCA", "TCA", "TTC"}},{"AGAAA",{"ATA"}}});
+   BarcodePool::createInstance(raw_barcode);
+   std::shared_ptr<BarcodePool> pool = BarcodePool::getAutoInstance();
+ 
+	SeedSelector selector(5);
+	selector.addBarcode(pool);
+	vector<int> seeds = selector.getSeedsPositions();
 	for (const auto& s : seeds) {
-		cout << s.first << "\t" << s.second << endl;
+		cout << s << '\t';
 	}
+	cout << endl;
 	return 0;
 }

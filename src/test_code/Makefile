@@ -24,7 +24,7 @@ INPUTPROCESSOROBJECTS=$(INPUTPROCESSORSOURCES:.cpp=.o)
 KMERDECODERSOURCES	= ../kmerdecoder.cpp ../kmers_dictionary.cpp ../kmers_bitwisetransform.cpp ./kmerdecoder_test.cpp 
 KMERDECODEROBJECTS=$(KMERDECODERSOURCES:.cpp=.o)
 
-SEEDSELECTORSOURCES	= ../seedselector.cpp ../kmers_dictionary.cpp ./seedselector_test.cpp 
+SEEDSELECTORSOURCES	= ../seedselector.cpp ../kmers_dictionary.cpp ./seedselector_test.cpp ../barcodepool.cpp
 SEEDSELECTOROBJECTS=$(SEEDSELECTORSOURCES:.cpp=.o)
 
 BARCODEEDITORSOURCES	= ../barcodeeditor.cpp ../kmers_dictionary.cpp ../seedselector.cpp ../kmer_freq.cpp ./barcodeeditor_test.cpp ../kmerdecoder.cpp ../kmers_bitwisetransform.cpp

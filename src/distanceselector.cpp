@@ -11,6 +11,7 @@ DistanceSelector::DistanceSelector(double error,double cut_off, size_t klen)
 }
 int DistanceSelector::calculateDistance(size_t max_size) {
 
+    /*
     int distance = 1;
     for (int i = 1; i <= _klen; ++i) {
         double value = max_size * pow(_error, i) * pow(1 - _error, _klen - i);
@@ -19,6 +20,14 @@ int DistanceSelector::calculateDistance(size_t max_size) {
         } else {
             break;
         }
+    }
+    */
+    int distance = 1;
+    while(true) {
+	if (choose(_klen, distance) * pow(_error, distance) * pow(1 - _error, _klen - distance) < _cutoff) {
+		break;
+	} 	
+	++distance;
     }
     return distance;
 }

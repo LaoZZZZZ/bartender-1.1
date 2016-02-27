@@ -51,13 +51,18 @@ void SeedSelector::CalculateEntropy() {
 void SeedSelector::SelectSeeds() {
     _seeds.clear();
     int cur = 0;
+    vector<std::pair<double, int>> qualified_positions;
     while (cur < _barcode_length) {
         if (_entropy[cur] >= _entropy_threshold) {
 	    //std::cout << "seed position: " << cur << endl;
-            _seeds.push_back(cur);
+	    qualified_positions.push_back({-1 * _entropy[cur], cur});
         }
         ++cur;
     }
+    sort(qualified_positions.begin(), qualified_positions.end());
+    for (const auto& p : qualified_positions) {
+		_seeds.push_back(p.second);
+    } 
 }
 // Select consecutive postion based on the entropy value on each position.
 // Currently, each seed ONLY contains consecutive position.

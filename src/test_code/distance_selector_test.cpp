@@ -5,10 +5,10 @@
 using namespace std;
 using namespace barcodeSpace;
 int main() {
-	double error = 0.02;
-	int meansize = 3;
-	size_t klen = 20;
-	DistanceSelector select(error, meansize, klen);
-	cout << select.calculateDistance(603600) + 1 << endl;
+	double error = 0.01;
+	double cutoff = 0.001;
+	size_t klen = 26;
+	DistanceSelector select(error, cutoff, klen);
+	cout << select.calculateDistance(603600) << endl;
 	return 0;
 }
