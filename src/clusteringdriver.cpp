@@ -32,14 +32,15 @@ using namespace std;
 namespace barcodeSpace {
     ClusteringDriver::ClusteringDriver(size_t barcode_length,
                                        size_t seed_len,
-				       size_t step,
+                                       size_t step,
                                        size_t num_threads,
                                        double error_rate,
                                        double zvalue,
                                        TESTSTRATEGY test_method,
-				       size_t distance,
+                                       size_t distance,
                                        double trim,
-                                       double stopThres):
+                                       double stopThres,
+                                       int num_base_pairs):
     _barcode_length(barcode_length), _seed_length(seed_len),
     _step(step),
     _num_threads(num_threads), _error_rate(error_rate),
@@ -110,7 +111,6 @@ namespace barcodeSpace {
     void ClusteringDriver::transform(const std::shared_ptr<BarcodePool>& barcode_pool) {
         _clusters.clear();
         size_t max_size = 0;
-        
         for(size_t index = 0; index < barcode_pool->size(); ++ index){
             
             if (barcode_pool->barcode(index).length() != _barcode_length)

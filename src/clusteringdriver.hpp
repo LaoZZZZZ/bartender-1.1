@@ -25,14 +25,15 @@ namespace barcodeSpace {
     public:
         ClusteringDriver(size_t barcode_length,
                          size_t seed_len = 5,
-			 size_t step = 1,
+                         size_t step = 1,
                          size_t num_threads = 1,
                          double error_rate = 0.01,
                          double zvalue = 3.08,
                          TESTSTRATEGY test_method = TWOPROPORTIONUNPOOLED,
-			 size_t distance = 2,
+                         size_t distance = 2,
                          double trim = 0.02,
-                         double stopThres = 0.01
+                         double stopThres = 0.01,
+                         int num_base_pairs = 1000000 // used to estimate the error rate.
                          );
         bool clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool);
         const std::list<std::shared_ptr<BarcodeCluster>>& clusters(){return this->_clusters;}
@@ -63,6 +64,8 @@ namespace barcodeSpace {
         // used to tell which cluster is low frequency and which is high frequency
         int                                             _splitThreshold;
         std::vector<std::pair<size_t, size_t>>          _bucket_ranges;
+        // Number of base pairs that used to estimate the sequence error.
+        int                                             _num_base_pairs;
     };
 }   // namespace barcodeSpace
 

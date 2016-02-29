@@ -38,9 +38,14 @@ public:
         return _seeds;
     }
     const std::vector<std::array<int,4>>& positionWeightMatrix() const {return _position_weight_matrix;}
+    const std::vector<double>& entropies() const {return _entropy;}
 private:
     void CalculatePositionWeightMatrix(const std::shared_ptr<BarcodePool>& barcode_pool);
+    
     void CalculateEntropy();
+    /** Select the seed position by the entropy values.
+     *  The seed position will be ordered by the entropy value in descending order.
+     */
     void SelectSeeds();
     
     size_t  _barcode_length;
@@ -50,6 +55,7 @@ private:
     std::vector<int>  _seeds;
     double  _entropy_threshold;
     std::shared_ptr<kmersDictionary>    _dict;
+    double _error_rate;
 };
     
 }

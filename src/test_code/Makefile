@@ -1,5 +1,4 @@
 CC	= g++
-#CC	= clang++ 
 CFLAGS	= -g -fPIC -w -O3 -std=c++11 
 LDFLAGS	=  -lboost_regex 
 WRAPPER	= barcode_com
@@ -57,6 +56,13 @@ CENTERTRACKEROBJECTS	= $(CENTERTRACKERSOURCES:.cpp=.o)
 
 BARCODEPOOLSOURCES	= ./barcodepool_test.cpp ../barcodepool.cpp
 BARCODEPOOLOBJECTS	= $(BARCODEPOOLSOURCES:.cpp=.o)
+
+BARCODEPOOLSTATSOURCES	= ./barcodepoolstatistics_test.cpp ../barcodepool.cpp ../barcodepoolstatistics.cpp ../kmers_dictionary.cpp
+BARCODEPOOLSTATOBJECTS	= $(BARCODEPOOLSTATSOURCES:.cpp=.o)
+
+
+POOLERRORSOURCES	= ./poolerrorestimator_test.cpp ../barcodepool.cpp ../barcodepoolstatistics.cpp ../kmers_dictionary.cpp ../errorestimator.cpp
+POOLERROROBJECTS	= $(POOLERRORSOURCES:.cpp=.o)
 
 CLUSTERBUCKETERSOURCES	= ./clusterbucketer_test.cpp ../barcodepool.cpp ../barcodecluster.cpp ../kmers_dictionary.cpp ../clustersbucketer.cpp ../barcodeindexer.cpp
 CLUSTERBUCKETEROBJECTS	= $(CLUSTERBUCKETERSOURCES:.cpp=.o)
@@ -237,5 +243,9 @@ barcodeindexer_test: $(BARCODEINDEXEROBJECTS)
 	$(CC) $(BARCODEINDEXEROBJECTS) -o $@ $(LDFLAGS)
 barcodepool_test: $(BARCODEPOOLOBJECTS)
 	$(CC) $(BARCODEPOOLOBJECTS) -o $@ $(LDFLAGS)
+barcodepoolstatistics_test: $(BARCODEPOOLSTATOBJECTS)
+	$(CC) $(BARCODEPOOLSTATOBJECTS) -o $@ $(LDFLAGS)
 clusterbucketer_test: $(CLUSTERBUCKETEROBJECTS)
 	$(CC) $(CLUSTERBUCKETEROBJECTS) -o $@ $(LDFLAGS)
+poolerror_test: $(POOLERROROBJECTS)
+	$(CC) $(POOLERROROBJECTS) -o $@ $(LDFLAGS)

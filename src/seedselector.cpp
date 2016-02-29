@@ -54,8 +54,7 @@ void SeedSelector::SelectSeeds() {
     vector<std::pair<double, int>> qualified_positions;
     while (cur < _barcode_length) {
         if (_entropy[cur] >= _entropy_threshold) {
-	    //std::cout << "seed position: " << cur << endl;
-	    qualified_positions.push_back({-1 * _entropy[cur], cur});
+            qualified_positions.push_back({-1 * _entropy[cur], cur});
         }
         ++cur;
     }

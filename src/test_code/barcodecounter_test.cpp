@@ -5,6 +5,7 @@
 #include "../barcodecounter.h"
 #include "../sequence.h"
 #include "../typdefine.h"
+
 using std::string;
 using std::vector;
 using std::endl;

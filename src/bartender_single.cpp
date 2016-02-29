@@ -1,10 +1,12 @@
 
 #include "clusteringdriver.hpp"
+#include "barcodepoolstatistics.hpp"
 #include "clusterpruner.hpp"
 #include "clusteralgorithm.h"
 #include "clusteroutput.h"
 #include "csvreader.h"
 #include "errorrateestimator.h"
+#include "errorestimator.hpp"
 #include "formats.h"
 #include "inputprocessor.hpp"
 //#include "rawbarcodeprocessor.hpp"
@@ -12,6 +14,7 @@
 #include "mergebycenters.h"
 #include "timer.h"
 #include "util.h"
+#include "split_util.h"
 #include "rawbarcodeloader.hpp"
 
 #include <algorithm>
@@ -37,11 +40,10 @@ struct CompareObject {
 
 void drive(std::string barcodefile,  // original read file
            size_t freq_cutoff,   // frequency cutoff
-           double error_rate,
            size_t seedlen,      // seed len
-	   size_t step,		// the distance between two adjacent seeds
-	   size_t num_threads, /// number of threads
-	   size_t distance,    // The hamming distance threshold
+           size_t step,		// the distance between two adjacent seeds
+           size_t num_threads, /// number of threads
+           size_t distance,    // The hamming distance threshold
            std::string outprefix, // output prefix
            double entropy_threshold, // Entopy value for considering as mixture position
            size_t maximum_centers, // The maximum centers for each cluster
@@ -51,11 +53,12 @@ void drive(std::string barcodefile,  // original read file
            // The least size of cluster that will be considered as candidate when estimating the sequencing error
            size_t cluster_size_threshold_for_error = 20,
            // The total number of base pair for estimating sequencing error.
-           size_t number_barcode_for_error_estimator = 1000000,
+           int number_barcode_for_error_estimator = 1000000,
            bool head = false){
     
 
     //1. Determine the file format and check its correctness.
+    //   Load the barcode from the input file
     cout << "Loading barcodes from the file" << endl;
     Timer* timer = new realTimer(cout);
     cout << "Load barcode from the file" << endl;
@@ -65,25 +68,58 @@ void drive(std::string barcodefile,  // original read file
     delete timer;
     cout << " to load the barcodes from " << barcodefile << endl;
     
+    //2.Calculate the position weight matrix and the entropy.
+    //  Estimate the sequence error from the spacers.
     std::pair<size_t, size_t> barcode_length_range = loader.lengthRange();
     BarcodePool::createInstance(loader.barcodeTable());
     std::shared_ptr<BarcodePool> barcode_pool = BarcodePool::getAutoInstance();
     loader.clear();
-    std::list<shared_ptr<BarcodeCluster>> clusters;
+    // If the estimated sequence error is larger the default value.
+    // Then the default error rate will be used for the following analysis.
+    // A warning will be emitted in this case.
+    double default_error_rate = 0.01;
+    double error_entropy_threshold = Entropy({90,10,0,0});
     BarcodeCluster::setBarcodePool(barcode_pool);
+    BarcodeStatistics pool_stats(barcode_pool);
+    int largest_barcode_group = 0;
+    int largest_group_size = 0;
+    for (const auto& pwm : pool_stats.AllFullFrequencyTables()) {
+        int temp = std::accumulate(pwm.second[0].begin(), pwm.second[0].end(),0);
+        if (temp > largest_group_size) {
+            largest_group_size = temp;
+            largest_barcode_group = pwm.first;
+        }
+    }
+    ErrorEstimator initial_error_estimator(number_barcode_for_error_estimator,
+                                           error_entropy_threshold);
+    
+    double error_rate =initial_error_estimator.estimate(
+                pool_stats.FullFrequencyTable(largest_barcode_group),
+                                                        pool_stats.FullEntropy(largest_barcode_group));
+    if (error_rate > default_error_rate) {
+        std::cerr << "The estimated error rate(" << error_rate << ") is higher than the normal range" << std:: endl;
+        std::cerr << "There might be some problem in the data and the default error_rate(0.01) will be used in the clustering process!" << std::endl;
+    } else {
+        default_error_rate = error_rate;
+        std::cout << "The estimated sequence error from the spacers is " << error_rate << std::endl;
+    }
+    
+    std::list<shared_ptr<BarcodeCluster>> clusters;
     ClusterPruner cluster_pruner(entropy_threshold,
                                  maximum_centers,
                                  zvalue,
                                  0.1, // percentage which viewed as potential centers.
                                  freq_cutoff,
-                                 error_rate);
+                                 default_error_rate);
+    // Cluster each barcode group.
+    // The group is defined as all barcode with same length.
     for (size_t blen = barcode_length_range.first; blen <= barcode_length_range.second; ++ blen) {
-	cout << "Start to clustering barcode with length " << blen << endl;
-        ClusteringDriver cluster_drive(blen, seedlen, step,num_threads, error_rate, zvalue, test_method, distance,0);
+        cout << "Start to clustering barcode with length " << blen << endl;
+        ClusteringDriver cluster_drive(blen, seedlen, step,num_threads, default_error_rate, zvalue, test_method, distance,0);
         cluster_drive.clusterDrive(BarcodePool::getAutoInstance());
         std::list<std::shared_ptr<BarcodeCluster>> cur_clusters = cluster_drive.clusters();
         cluster_pruner.prune(cur_clusters);
-	cout << "Identified " << cluster_pruner.prunedClusters().size() << " barcodes with length " << blen << endl;
+        cout << "Identified " << cluster_pruner.prunedClusters().size() << " barcodes with length " << blen << endl;
         //merger->merge(cur_clusters, error_estimator->Entropies());
         clusters.insert(clusters.end(),
                         cluster_pruner.prunedClusters().begin(),
@@ -144,50 +180,49 @@ int main(int argc,char* argv[])
     
     if(argc >= 4)
         freq_cutoff = atoi(argv[3]);
-    
-    double error_rate = 0.01;
-    if (argc >= 5) {
-        error_rate = atof(argv[4]);
-    }
 
     double zvalue = 4.0;
-    if (argc >= 6) {
-        zvalue = atof(argv[5]);
+    if (argc >= 5) {
+        zvalue = atof(argv[4]);
     }
 
     size_t seedlen = 5;
-    if(argc >= 7)
-        seedlen = atoi(argv[6]);
+    if(argc >= 6)
+        seedlen = atoi(argv[5]);
+    
     size_t step = seedlen;
-    if (argc >= 8)
-	step = atoi(argv[7]);
+    if (argc >= 7)
+	step = atoi(argv[6]);
+    
     size_t num_threads = 1;
-    if (argc >= 9)
-	num_threads = atoi(argv[8]); 
+    if (argc >= 8)
+	num_threads = atoi(argv[7]);
+    
     size_t distance = 2;
-    if (argc >= 10)
-	distance = atoi(argv[9]);
+    if (argc >= 9)
+	distance = atoi(argv[8]);
+    
     TESTSTRATEGY pool = TWOPROPORTIONUNPOOLED;
-    if (argc >= 11) {
-        pool = static_cast<TESTSTRATEGY>(atoi(argv[10]));
+    if (argc >= 10) {
+        pool = static_cast<TESTSTRATEGY>(atoi(argv[9]));
     }
 
     double entropy_threshold = 0.33;
-    if (argc >= 12) {
-        entropy_threshold = atof(argv[11]);
+    if (argc >= 11) {
+        entropy_threshold = atof(argv[10]);
     }
     
     size_t maximum_centers = 4;
-    if (argc >= 13) {
-        maximum_centers = atoi(argv[12]);
+    if (argc >= 12) {
+        maximum_centers = atoi(argv[11]);
     }
+    
     drive(sequencefile,
           freq_cutoff,
-          error_rate,
           seedlen,
-	  step,
-	  num_threads,
-	  distance,
+          step,
+          num_threads,
+          distance,
           outprefix,
           entropy_threshold,
           maximum_centers,

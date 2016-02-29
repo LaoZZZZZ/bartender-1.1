@@ -1,7 +1,9 @@
 #ifndef SPLIT_UTIL_H
 #define SPLIT_UTIL_H
+
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <numeric>
 inline double Entropy(const std::array<int, 4>& base_freq) {
     double majority = *std::max_element(base_freq.begin(), base_freq.end());

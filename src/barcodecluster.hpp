@@ -24,6 +24,12 @@
 #include <vector>
 
 namespace barcodeSpace {
+    /*
+     * A cluster representative.
+     * It supports basic combine and merge operations.
+     * It also keeps the cluster center, cluster quality as well as the id.
+     *
+     */
     class BarcodeCluster {
     public:
         // used for single time point.
@@ -45,6 +51,7 @@ namespace barcodeSpace {
         const std::string& center() const { return _center;}
         size_t size() const {return _size;}
         int ClusterID() const {return _cid;}
+        
         // Used to merge two clusters from same time point.
         void merge(const std::shared_ptr<BarcodeCluster>& c) {
             _size += c->size();
@@ -57,6 +64,7 @@ namespace barcodeSpace {
                 ++iter;
             }
         }
+        
         // Used to combine two clusters from two time points.
         void combine(const std::shared_ptr<BarcodeCluster>& c) {
 	     _size += c->size();
@@ -67,13 +75,22 @@ namespace barcodeSpace {
             _time_points.push_front(c);
             _size_at_time.insert(_size_at_time.begin(),c->size());
         }
+        // Returns a list of all original unique reads
         const std::vector<size_t>& barcodes() const  {return _raw_barcodes;}
+        
+        // Returns the cluster size at each time point.
         const std::vector<size_t>& columns() const {return _size_at_time;}
+        
+        // Reset the cluster id.
+        // Mainly used when outputing the cluster.
         void SetClusterID(int id) {_cid = id;}
+        
+        // Set the cluster size at each time point
         void SetTimePointFrequency(const std::vector<size_t>& size_time_point) {
             _size_at_time = size_time_point;
             _size = std::accumulate(_size_at_time.begin(), _size_at_time.end(), 0);
         }
+        
     private:
         //void updateFrequency(const kmers_freq&);
         void AddFrequency(const std::vector< std::array<int, 4> >& extra) {
