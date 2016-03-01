@@ -14,7 +14,7 @@ def usage():
 	print " \t -f the input barcode file "
 	print "\t -o the output prefix"
 	print "\t -c the frequency cutoff. The default value is 1.  All clusters with size less then this threshold will not included in the result."
-	print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
+	#print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
 	print "\t -z The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged"
 	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"
 	print "\t -t The number of threads. The default value is 1."
@@ -24,7 +24,7 @@ def driver():
 	inputfile = ''
 	outprefix = ''
 	freq_cutoff = 1 
-	error_rate = 0.01
+	#error_rate = 0.01
 	zvalue = 4.0
 	seed_len = 5
 	num_threads = 1
@@ -87,14 +87,6 @@ def driver():
 			except Exception as err:
                 		print "Seed length " + a + " is not a valid input!\n"
                 		sys.exit(2)
-		elif o == '-e':
-			try:
-				error_rate = float(a)
-				assert(error_rate <= 1)
-				assert(error_rate >=0)
-			except Exception as err:
-				print("Invalid error rate specified!\n")
-				sys.exit(2)
 		elif o == '-z':
 			try:
 				zvalue = float(a)
@@ -112,7 +104,7 @@ def driver():
 		print "There is no output file specified"
 		sys.exit(0)
 			
-	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(error_rate) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance))
+	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance))
 if __name__=="__main__":
 	print('Running bartender')
 	driver()

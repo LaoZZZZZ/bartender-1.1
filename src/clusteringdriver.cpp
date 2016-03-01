@@ -67,8 +67,6 @@ namespace barcodeSpace {
     }
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
 
-        Timer* t = new realTimer(cout);
-
         SeedSelector selector(_barcode_length);
         selector.addBarcode(barcode_pool);
         vector<int> seeds_positions = selector.getSeedsPositions();
@@ -97,15 +95,8 @@ namespace barcodeSpace {
             cout<<"Clustering iteration "<<total<<endl;
             _shatter_machine->shatter(_clusters);
             this->crossBinClustering(_shatter_machine->Bins());
-            //size_t tmp(this->_clusters.size());
-            //if(static_cast<double>(sz - tmp)/sz < this->_stopThres)
-            //    break;
-           // sz = tmp;
         }
-        std::cout<<"Clustering took  ";
         
-        delete t;
-	std::cout << std::endl;
         return true;
     }
     void ClusteringDriver::transform(const std::shared_ptr<BarcodePool>& barcode_pool) {

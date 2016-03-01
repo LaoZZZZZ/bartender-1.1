@@ -48,7 +48,6 @@ namespace barcodeSpace {
                 break;
             }
         }
-        std::cout << error_bases << '\t' << num_bases << std::endl;
         if (num_bases > 0){
             return error_bases / num_bases;
         }

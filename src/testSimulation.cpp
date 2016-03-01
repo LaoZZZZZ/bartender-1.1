@@ -37,7 +37,7 @@ void loadDataFromCSV(const std::string& file,
     CSVReader<kmer>   _cluster_loader(file, false);
     vector<kmer> row;
     table.clear();
-    b2sequence.assign(21, {});
+    b2sequence.assign(21, unordered_map<kmer, std::list<std::string>>());
     int line = 1;
     while(_cluster_loader.nextRow(&row)) {
         table[row[0]] += row[1];
