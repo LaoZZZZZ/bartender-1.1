@@ -48,6 +48,8 @@ namespace barcodeSpace {
     _trim(trim), _stopThres(stopThres), _dist_threshold(distance)
     {
         assert(this->_stopThres < 1);
+	// The initial split threshold is hard coded here.
+	_splitThreshold = 3;
         init();
     }
     void ClusteringDriver::init() {
@@ -77,7 +79,7 @@ namespace barcodeSpace {
         this->transform(barcode_pool);
         MeanEstimator mean_estimator(_trim);
         
-        this->_splitThreshold = ceil(mean_estimator.mean(_clusters)) + 1;
+        //this->_splitThreshold = ceil(mean_estimator.mean(_clusters)) + 1;
         
         std::cout << "Initial number of unique reads:  " << _clusters.size() <<std::endl;
         
@@ -95,6 +97,7 @@ namespace barcodeSpace {
             cout<<"Clustering iteration "<<total<<endl;
             _shatter_machine->shatter(_clusters);
             this->crossBinClustering(_shatter_machine->Bins());
+            this->_splitThreshold = ceil(mean_estimator.mean(_clusters)) + 1;
         }
         
         return true;

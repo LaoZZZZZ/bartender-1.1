@@ -25,7 +25,7 @@ def driver():
 	outprefix = ''
 	freq_cutoff = 1 
 	#error_rate = 0.01
-	zvalue = 4.0
+	zvalue = 5.0
 	seed_len = 5
 	num_threads = 1
 	step = 5 
@@ -90,6 +90,8 @@ def driver():
 		elif o == '-z':
 			try:
 				zvalue = float(a)
+				if zvalue == -1:
+					zvalue = 1e8
 				assert(zvalue >= 0)
 			except Exception as err:
 				print("Invalid zvalue!\n")
@@ -98,12 +100,15 @@ def driver():
             		print usage()
                 	sys.exit(0)
 	if not inputfile:
-		print "There is no input sequence file specified"
+		print("There is no input sequence file specified")
 		sys.exit(0)
 	if not outprefix:
-		print "There is no output file specified"
+		print("There is no output file specified")
 		sys.exit(0)
 			
+	if seed_len < step:
+		print ("The default or specified step is larger than the seed length, reset the step be the seed length!")
+		step = seed_len
 	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance))
 if __name__=="__main__":
 	print('Running bartender')
