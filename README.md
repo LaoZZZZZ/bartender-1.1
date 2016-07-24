@@ -116,7 +116,7 @@ This file is used to keep track the assignment of each raw barcode with respect 
 
 # Input:
 
- Currently it accepts input format that is consistent with the output of clustering component. 
+ Currently it accepts input format that is consistent with the output of bartender_single_com component. 
 
 # Usage
 
