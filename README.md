@@ -155,4 +155,4 @@ sudo port install boost
 Second, export BOOST_INSTALL_DIR=prefix directory that is the prefix specified when installing the boost. For example, BOOST is installed at /usr/local/. And libraries and headers are in the folder /usr/local/lib and /usr/local/include. Then BOOST_INSTALL_DIR should be /usr/local.
 
 ## Is the estimated trajectory ready for usage?
-No. It only matches the clusters between adjacent time points. The trajectory should, at least, be normalized within each time point for downstream analysis.
+No. It only matches the clusters between adjacent time points. The trajectory should, at least, be normalized within each time point to even the difference sequence depth among time points.
