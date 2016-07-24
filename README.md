@@ -4,19 +4,18 @@
 
 Bartender is a c++ tool that is designed to process random barcode data. Bartender is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY.
 
-It currently has two functionalities. 
+It currently has three functionalities. 
 
 1. Extracts the barcode from the original reads
 2. It can call out true barcodes and their population size.
-
-
-It will be able to handle multiple time points and estimate the trajectory in the next version.
+3. It can generates the trajectory for time-course data.
 
 # Installation
  Bartender gcc compiler which should be no older than gcc47. If you want use the extraction components, boost library should be installed prior installing bartender. Installation is simple.
- 1.To build bartender_single: make bartender_single
- 2.To build bartender_extractor: make bartender_extractor
- 3.To build two components in one batch: make all
+ 1.To build bartender_single (barcode clustering): make bartender_single
+ 2.To build bartender_extractor (barcode extractor): make bartender_extractor
+ 3.To build bartender_combiner (multiple time point mode): make bartender_combiner
+ 3.To build three components in one batch: make all
  4.To install: sudo make install
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
@@ -32,7 +31,6 @@ This components takes a reads file and outputs the extracted barcode. Currently 
 
 -q: the quality threshold(optional). Only those barcode that has average quality no less than this threshold will be kept. This threshold is the corresponding ascii value. Different formats might have different ranges, please check relevant reference to determine the value. The default value is 0. That is it will accept all valid barcode.  We typically use a cutoff of 30, which is 63, using the current Illumina FASTQ output. Please EITHER CHANGE THE DEFAULT TO 30 OR GIVE THEM THE CORRESPONING ASCII VALUE. 
 
- 
 -m: the total number of mismatches allowed in the preceeding and suceeding sequence(optional). Default value is 2. The mismatches will be evenly distributed to two parts.
 
 -p: the barcode pattern(required). The general pattern looks like XXXX[min-max]XXXXX[min-max]XXXXX. XXXX part are those fixed DNA sequence, ie. preceeding sequence, spacers and succeeding sequence. [min-max] specified the range of number of random base pairs between two fix parts. Both min and max are integers. The pattern should obey the following rules:
@@ -68,7 +66,7 @@ Please check the test_extractor.sh under the example folder for more example.
 
 # Input:
 
- Currently it accepts input format that is consistent with the output of extraction components. The second column in the input file does not needs to be the line number. It could be anything that is associated with the corresponding extracted barcode, i.e UMI. The first column could be the combined barcode for the double barcodes design.
+ Currently it accepts input format that is consistent with the output of extraction components. The second column in the input file does not need to be the line number. It could be anything that is associated with the corresponding extracted barcode, i.e UMI. The first column could be the combined barcode for the double barcodes design.
 
 # Usage
 
@@ -88,6 +86,7 @@ The command name is bartender_single_com, which is a python file. Use "bartender
 
 -t: The number of threads. The default value is 1.
 
+-s: The distance between two adjacent seeds. The default value is 1. if step value equals to or larger than seed length, then there will be no overlap!
 
 # Output:
 Bartender outputs three files. 
@@ -112,7 +111,25 @@ This file is used to keep track the assignment of each raw barcode with respect 
   1. Unique.reads: the extracted barcode from the raw read.
   2. Frequency: the raw count of this unique read.
   3. Cluster.ID: the cluster id which this barcode belongs to.
- 
+
+##Multiple time point mode
+
+# Input:
+
+ Currently it accepts input format that is consistent with the output of clustering component. 
+
+# Usage
+
+The command name is bartender_combiner_com, which is a python file. Use "bartender_combiner_com -h" for help. There are 3 options and is very easy to use.
+
+-f: the cluster results files from different time points. Only the cluster and quality files should be included. The files should be separated by comma and ordered by the time.
+
+-o: the output prefix
+
+-c: the cutoff that all clusters below this threshold will be removed from the result. 
+
+It ouputs three files that are same with the output of bartender_single_com components.
+
 # Problems and questions
 
 ##What's the meaning of cluster in bartender?
