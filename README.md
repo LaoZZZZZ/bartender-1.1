@@ -8,7 +8,7 @@ It currently has three functionalities.
 
 1. Extracts the barcode from the original reads
 2. It can call out true barcodes and their population size.
-3. It can generates the trajectory for time-course data.
+3. It can generate the trajectory for time-course data.
 
 # Installation
  Bartender gcc compiler which should be no older than gcc47. If you want use the extraction components, boost library should be installed prior installing bartender. Installation is simple.
@@ -153,3 +153,6 @@ brew install boost;
 sudo port install boost 
 
 Second, export BOOST_INSTALL_DIR=prefix directory that is the prefix specified when installing the boost.
+
+## Is the estimated trajectory ready for usage?
+No. It only matches the clusters between adjacent time points. The trajectory should, at least, be normalized within each time point for downstream analysis.
