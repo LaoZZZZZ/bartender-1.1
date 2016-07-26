@@ -6,12 +6,12 @@ Bartender is a c++ tool that is designed to process random barcode data. Bartend
 
 It currently has three functionalities. 
 
-1. Extracts the barcode from the original reads
-2. It can call out true barcodes and their population size.
-3. It can generate the trajectory for time-course data.
+1. It extracts barcode from FASTA or FASTQ files.
+2. It clusters barcode reads and counts the frequency of each cluster.
+3. It generates count trajectories for time-course data.
 
 # Installation
- Bartender gcc compiler which should be no older than gcc47. If you want use the extraction components, boost library should be installed prior installing bartender. Installation is simple.
+Bartender uses a gcc compiler which should be no older than gcc47. If you want use the extraction components, the boost library should be installed prior installing bartender. 
  1.To build bartender_single (barcode clustering): make bartender_single
  2.To build bartender_extractor (barcode extractor): make bartender_extractor
  3.To build bartender_combiner (multiple time point mode): make bartender_combiner
@@ -23,7 +23,8 @@ The default install directory is /usr/local/bin and is hard coded in the make fi
 # Components
 ##Extraction
 ###Input
-This components takes a reads file and outputs the extracted barcode. Currently it only supports single-end reads. The command is bartender_extractor_com. The following are the input parameters.
+This component takes a sequencing reads file and outputs extracted barcodes. Currently it only supports single-end reads. The command is bartender_extractor_com. The following are the input parameters.
+
 
 -f: the input reads file(required). Only supports FASTQ and FASTA.
 
