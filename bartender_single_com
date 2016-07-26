@@ -99,6 +99,10 @@ def driver():
         	elif o in  ("-h","--help"):
             		print usage()
                 	sys.exit(0)
+		else:
+			print("Invalid parameter " + o)
+			print usage()
+			sys.exit(0)
 	if not inputfile:
 		print("There is no input sequence file specified")
 		sys.exit(0)

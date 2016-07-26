@@ -101,9 +101,14 @@ void ClusteringWithTest::clusterImp(const std::list<std::shared_ptr<Cluster>>& c
             assert(similar_clusters.empty());
             this->_clusters.push_back(small_c);
         } else {
-
             best->merge(small_c);
-
+	    /*
+            if (_tester->shouldMerge(best->bpFrequency(),small_c->bpFrequency())) {
+            	best->merge(small_c);
+	    } else {
+		this->_clusters.push_back(small_c);
+	    }
+	    */
             similar_clusters.sort([](const cluster_iterator& iter1,
                                      const cluster_iterator& iter2) {return (*iter1)->size() > (*iter2)->size();});
             // Do pairwise comparision between those similar large clusters.
