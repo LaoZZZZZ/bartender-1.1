@@ -70,19 +70,20 @@ namespace barcodeSpace {
         generateBucketRange();
     }
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
-
+/*
 <<<<<<< HEAD
         SeedSelector selector(_barcode_length);
         selector.addBarcode(barcode_pool);
         vector<int> seeds_positions = selector.getSeedsPositions();
-	/*for (const auto& p : seeds_positions) {
+	for (const auto& p : seeds_positions) {
 		cout << p << '\t';
 	}
-	cout << endl;*/
+	cout << endl;
 =======
+*/
         std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
         vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
->>>>>>> c6acff5fb59bb6e3a10695b4f18f3e26368f7af1
+//>>>>>>> c6acff5fb59bb6e3a10695b4f18f3e26368f7af1
         _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
         
         std::cout << "transforming the barcodes into clusters" << std::endl;

@@ -9,6 +9,7 @@
 #ifndef mutualinformationcalculator_hpp
 #define mutualinformationcalculator_hpp
 
+#include <array>
 #include <math.h>
 #include <stdio.h>
 #include <vector>

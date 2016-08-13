@@ -7,6 +7,7 @@
 //
 
 #include "mutualinformationcalculator.hpp"
+
 #include <iostream>
 #include <array>
 #include <cassert>
@@ -14,6 +15,7 @@
 #include <vector>
 
 using namespace std;
+
 namespace barcodeSpace {
     double MutualInformationCalculator::calculate(
                      const MarginalFrequencyTable& margin_table_1,
