@@ -11,9 +11,11 @@
 
 #include "barcodecluster.hpp"
 #include "barcodepool.hpp"
+#include "bpfrequencytracker.hpp"
 #include "clustersbucketer.hpp"
 #include "clustermergertester.h"
 #include "formats.h"
+
 
 #include <list>
 #include <memory>
@@ -66,6 +68,9 @@ namespace barcodeSpace {
         std::vector<std::pair<size_t, size_t>>          _bucket_ranges;
         // Number of base pairs that used to estimate the sequence error.
         int                                             _num_base_pairs;
+        
+        // keeps the marginal nucleotide frequency and conditional frquency
+        BPFrequencyTracker                              _frequency_tracker;
     };
 }   // namespace barcodeSpace
 

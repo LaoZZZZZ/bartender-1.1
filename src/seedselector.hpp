@@ -10,7 +10,7 @@
 #define seedselector_hpp
 
 #include "barcodepool.hpp"
-#include "kmers_dictionary.h"
+#include "bpfrequencytracker.hpp"
 #include "typdefine.h"
 
 #include <array>
@@ -19,44 +19,16 @@
 #include <vector>
 
 namespace barcodeSpace {
-class SeedSelector {
-public:
-    // Given the total number of bp for seed
-    // this class will pick up the first seed_length bps as the seed pattern
-    // If the total number of qualified positions is less than the seed_length,
-    // then all qualified position will be included.
-    SeedSelector(size_t barcode_length);
-    //void GenerateSeeds(const std::vector<std::pair<std::string, freq>>& barcodes);
-    void addBarcode(const std::shared_ptr<BarcodePool>& barcode_pool) {
-        CalculatePositionWeightMatrix(barcode_pool);
-    }
-    // In the result value. The first element is the start position. The second element
-    // is the span of this part of consecutive seed part.
-    std::vector<int> getSeedsPositions() {
-        CalculateEntropy();
-        SelectSeeds();
-        return _seeds;
-    }
-    const std::vector<std::array<int,4>>& positionWeightMatrix() const {return _position_weight_matrix;}
-    const std::vector<double>& entropies() const {return _entropy;}
-private:
-    void CalculatePositionWeightMatrix(const std::shared_ptr<BarcodePool>& barcode_pool);
     
-    void CalculateEntropy();
-    /** Select the seed position by the entropy values.
-     *  The seed position will be ordered by the entropy value in descending order.
-     */
-    void SelectSeeds();
-    
-    size_t  _barcode_length;
-    
-    std::vector<std::array<int, 4>> _position_weight_matrix;
-    std::vector<double> _entropy;
-    std::vector<int>  _seeds;
-    double  _entropy_threshold;
-    std::shared_ptr<kmersDictionary>    _dict;
-    double _error_rate;
-};
-    
+    // An abstract interface for the seed selection strategy
+    class SeedSelector {
+    public:
+        SeedSelector(int barcode_length);
+        virtual std::vector<int> getSeedsPositions(const BPFrequencyTracker& frequency_tracker) = 0;
+        int barcodeLength()const {return _barcode_length;}
+        virtual ~SeedSelector() {}
+    private:
+        int _barcode_length;
+    };
 }
 #endif /* seedselector_hpp */

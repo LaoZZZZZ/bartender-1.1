@@ -23,6 +23,8 @@ public:
     // Converts 'A', 'C', 'G', 'T', 'N'  to 0,1,2,3,4.
     // current N will be viewed as A
     UINT8 asc2dna(int c)const {return _asc2dna[c];}
+    // Given the coded dna bp, return then coded complementary bp
+    // i.e 0(A) -> 3(T), 1(C) -> 2(G)
     char complement(int c)const {return _complement[c];}
 protected:
     kmersDictionary();
