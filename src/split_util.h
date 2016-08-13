@@ -5,6 +5,9 @@
 #include <array>
 #include <cmath>
 #include <numeric>
+
+namespace barcodeSpace {
+
 inline double Entropy(const std::array<int, 4>& base_freq) {
     double majority = *std::max_element(base_freq.begin(), base_freq.end());
 
@@ -51,4 +54,5 @@ inline std::vector<int> center(const std::vector<std::array<int, 4>>& bpfrequenc
     }
     return center;
 }
+}   // namespace barcodeSpace
 #endif // SPLIT_UTIL_H

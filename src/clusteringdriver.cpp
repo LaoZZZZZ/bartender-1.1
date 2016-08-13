@@ -12,13 +12,14 @@
 #include "clustermergerpooltester.h"
 #include "clustermergeronesampletester.hpp"
 #include "clusteringwithtest.h"
+#include "clusterThreadBatcher.hpp"
 #include "distanceselector.h"
+#include "entropyseedselector.hpp"
 #include "formats.h"
 #include "meanestimator.hpp"
 #include "meansequentialestimator.h"
 #include "seedselector.hpp"
-#include "clusterThreadBatcher.hpp"
-
+#include "split_util.h"
 #include "timer.h"
 #include "typdefine.h"
 
@@ -45,7 +46,8 @@ namespace barcodeSpace {
     _step(step),
     _num_threads(num_threads), _error_rate(error_rate),
     _zvalue(zvalue), _pool(test_method),
-    _trim(trim), _stopThres(stopThres), _dist_threshold(distance)
+    _trim(trim), _stopThres(stopThres), _dist_threshold(distance),
+    _frequency_tracker(barcode_length)
     {
         assert(this->_stopThres < 1);
 	// The initial split threshold is hard coded here.
@@ -69,6 +71,7 @@ namespace barcodeSpace {
     }
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
 
+<<<<<<< HEAD
         SeedSelector selector(_barcode_length);
         selector.addBarcode(barcode_pool);
         vector<int> seeds_positions = selector.getSeedsPositions();
@@ -76,6 +79,10 @@ namespace barcodeSpace {
 		cout << p << '\t';
 	}
 	cout << endl;*/
+=======
+        std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
+        vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
+>>>>>>> c6acff5fb59bb6e3a10695b4f18f3e26368f7af1
         _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
         
         std::cout << "transforming the barcodes into clusters" << std::endl;
@@ -115,6 +122,8 @@ namespace barcodeSpace {
                 continue;
             std::shared_ptr<BarcodeCluster> ptemp(new BarcodeCluster(index));
             _clusters.push_back(ptemp);
+            _frequency_tracker.addFrequency(barcode_pool->barcode(index),
+                                            barcode_pool->primers(index).size());
         }
 
         //DistanceSelector selector(_error_rate, 0.5, _barcode_length);

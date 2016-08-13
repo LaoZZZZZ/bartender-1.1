@@ -18,51 +18,9 @@
 using namespace std;
 namespace barcodeSpace {
 
-SeedSelector::SeedSelector(size_t barcode_length) : _barcode_length(barcode_length) {
-    _entropy_threshold = Entropy({80,20,0,0});
-    _dict = kmersDictionary::getAutoInstance();
-    assert(_dict.get());
-    _position_weight_matrix.assign(barcode_length, {0,0,0,0});
-    _entropy.assign(barcode_length, 0);
-}
-
-
-void SeedSelector::CalculatePositionWeightMatrix(const std::shared_ptr<BarcodePool>& barcode_pool) {
-    
-    if (barcode_pool->size() > 0) {
-        for (size_t i = 0; i < barcode_pool->size(); ++i) {
-            if (barcode_pool->barcode(i).length() != _barcode_length)
-                continue;
-            for (size_t pos = 0; pos < _barcode_length; ++ pos) {
-                _position_weight_matrix[pos][_dict->asc2dna(barcode_pool->barcode(i)[pos])] += 1;
-            }
-        }
-    }    // Go through each barcode and update the position weight matrix.
-
-}
-    
-// Calculate the binary entropy.
-void SeedSelector::CalculateEntropy() {
-    for (size_t i = 0; i < _barcode_length; ++i) {
-        _entropy[i] = Entropy(_position_weight_matrix[i]);
+    SeedSelector::SeedSelector(int barcode_length) :_barcode_length(barcode_length) {
     }
-}
 
-void SeedSelector::SelectSeeds() {
-    _seeds.clear();
-    int cur = 0;
-    vector<std::pair<double, int>> qualified_positions;
-    while (cur < _barcode_length) {
-        if (_entropy[cur] >= _entropy_threshold) {
-            qualified_positions.push_back({-1 * _entropy[cur], cur});
-        }
-        ++cur;
-    }
-    sort(qualified_positions.begin(), qualified_positions.end());
-    for (const auto& p : qualified_positions) {
-		_seeds.push_back(p.second);
-    } 
-}
 // Select consecutive postion based on the entropy value on each position.
 // Currently, each seed ONLY contains consecutive position.
 // Latter, each seed might contain discrete positions if possible.

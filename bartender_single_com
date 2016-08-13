@@ -11,15 +11,15 @@ sys.path.append(p)
 '''
 def usage():
 	print "\tthere are 7 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
-	print " \t -f the input barcode file "
+	print " \t -f the input file, a two column csv file  "
 	print "\t -o the output prefix"
-	print "\t -c the frequency cutoff. The default value is 1.  All clusters with size less then this threshold will not included in the result."
+	print "\t -c tthe frequency cutoff. All clusters with size less then this threshold will not be reported in the results."
 	#print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
-	print "\t -z The index of merging willingness. The default value is 4.0. The higher this value is, the more chance that two similar barcodes get merged"
-	print "\t -l The seed length. The default value is 5. The possible values range from 3 to 8. The larger this value, the faster the program will be with sacrificing the accuracy and memory efficiency!"
+	print "\t -z The cluster merging threshold. Higher z values result in more cluster merging (see the publication for a full description).  This should be set according to the expected coverage per barcode and the barcode library complexity. Please read README for more detail."
+	print "\t -l The seed length. The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging."
 	print "\t -t The number of threads. The default value is 1."
-	print "\t -s The distance between two adjacent seeds. The default value is 1. if step value equals to or larger than seed length, then there will be no overlap!"
-	print "\t -d The hamming distance threshold. The default value is 2. if the distance between two sequences is within this threshold, these two sequences are viewed as similar and might be merged in the clustering process!"
+	print "\t -s The number of non-overlapping positions between two adjacent seeds. The default value is 1 (recommended). For example, using l=5 and s=2, will result in adjacent seeds that have 2 unique positions and 3 positions in common. If the step value is equal to or larger than the seed length, then there will be no overlap between seeds"
+	print "\t -d The maximum cluster distance that may be merged. The default value is 2. If the distance between two cluster sequences is within this threshold, these two sequences will be merged if they pass the statistical test set by the cluster merging threshold (z)"
 def driver():
 	inputfile = ''
 	outprefix = ''
