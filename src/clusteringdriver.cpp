@@ -70,25 +70,13 @@ namespace barcodeSpace {
         generateBucketRange();
     }
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
-/*
-<<<<<<< HEAD
-        SeedSelector selector(_barcode_length);
-        selector.addBarcode(barcode_pool);
-        vector<int> seeds_positions = selector.getSeedsPositions();
-	for (const auto& p : seeds_positions) {
-		cout << p << '\t';
-	}
-	cout << endl;
-=======
-*/
-        std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
-        vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
-//>>>>>>> c6acff5fb59bb6e3a10695b4f18f3e26368f7af1
-        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
-        
-        std::cout << "transforming the barcodes into clusters" << std::endl;
+                std::cout << "transforming the barcodes into clusters" << std::endl;
         // 1. Transform the barcode table into a list of clusters
         this->transform(barcode_pool);
+	std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
+        vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
+        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
+        
         MeanEstimator mean_estimator(_trim);
         
         //this->_splitThreshold = ceil(mean_estimator.mean(_clusters)) + 1;
@@ -132,11 +120,6 @@ namespace barcodeSpace {
     }
     void ClusteringDriver::crossBinClustering(const vector<list<shared_ptr<BarcodeCluster>>>& cbins){
         if(!this->_clusters.empty()){
-	    /*
-	    for (const auto& bin : cbins) {
-		cout << bin.size() << '\t';
-	    }
-	    cout << endl;*/
             this->_clusters.clear();
             vector<std::shared_ptr<ClusterThreadBatcher>> batchers;
             for (size_t i = 0; i < _bucket_ranges.size(); ++i) {
