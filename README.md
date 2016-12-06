@@ -155,3 +155,8 @@ Second, export the BOOST_INSTALL_DIR=prefix directory where BOOST is installed. 
 ## Does a barcode trajectory output from Bartender accurately describe its relative frequency over time? 
 No. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
 
+
+# Fixes and Bugs
+You can post any question or suggestions on google group https://groups.google.com/forum/#!forum/bartenderrandombarcode.
+## Bartender just table unique reads and did not cluster unique reads.
+It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and fixed at Dec 1th. I am really sorry for these fatal error introduced by me. 
