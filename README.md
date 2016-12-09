@@ -156,7 +156,7 @@ Second, export the BOOST_INSTALL_DIR=prefix directory where BOOST is installed. 
 No. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
 
 
-# Fixes and Bugs
+# Bugs and Fixes
 You can post any question or suggestions on google group https://groups.google.com/forum/#!forum/bartenderrandombarcode.
-## Bartender just table unique reads and did not cluster unique reads.
-It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and fixed at Dec 1th. I am really sorry for these fatal error introduced by me. 
+## Bartender just tabled unique reads and did not cluster the reads.
+It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and was fixed at Dec 1th. I am really sorry for these fatal error introduced by this incorrect conflict resolve. Now Batender works fine.
