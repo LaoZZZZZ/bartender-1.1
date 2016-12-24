@@ -120,7 +120,7 @@ This file is used to keep track of the assignment of each unclustered barcode to
 
 The command name is bartender_combiner_com, which is a python file. Use "bartender_combiner_com -h" for help. There are 3 options.
 
--f: the cluster results files from different time points. The cluster and quality files should be included in the list. The files should be separated by commas and ordered by time. For example, if there are two time points included in the time-course data, then the input file should be: “-f time_point_1_cluster.csv,time_point_1_quality.csv,time_point_2_cluster.csv,timepoint_2_quality.csv”. 
+-f: the cluster results files from different time points. The cluster and quality files should be included in the list. The files should be separated by commas(NO SPACE) and ordered by time. For example, if there are two time points included in the time-course data, then the input file should be: “-f time_point_1_cluster.csv,time_point_1_quality.csv,time_point_2_cluster.csv,timepoint_2_quality.csv”. 
 
 -o: the output prefix
 
