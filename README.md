@@ -160,3 +160,6 @@ No. It only tells you the count at each time point. Because total sequencing rea
 You can post any question or suggestions on google group https://groups.google.com/forum/#!forum/bartenderrandombarcode.
 ## Bartender just tabled unique reads and did not cluster the reads.
 It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and was fixed at Dec 1th. I am really sorry for these fatal error introduced by this incorrect conflict resolve. Now Batender works fine.
+## Bartender combiner has problem with the cluster id, which will trigger an fatal alert.
+It was caused by a wrong array initialization. It is fixed now. Combiner should work fine now.
+
