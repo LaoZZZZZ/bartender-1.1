@@ -23,7 +23,6 @@ def driver():
     	for o,a in opt:
         	if o == '-f':
             		inputfile = a.strip().split(',')
-			print(inputfile)
 			if len(inputfile) % 2:
 				print "The number of input files are not correct!"
 				sys.exit(2)
