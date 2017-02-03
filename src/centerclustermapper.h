@@ -64,9 +64,6 @@ public:
     void addPair(const std::shared_ptr<Cluster>& cl, const std::vector<std::string>& centers) {
         assert(cl.get());
         int id = cl->ClusterID();
-        if (id >= _cluster_2_center.size()) {
-            std::cout << id << '\t' << _cluster_2_center.size() << std::endl;
-        }
         assert(id < _cluster_2_center.size());
         if (_cluster_2_instance[id].get()) {
             throw std::runtime_error("Already have cluster " + std::to_string(id) + "when adding it to linkmapper!\n");

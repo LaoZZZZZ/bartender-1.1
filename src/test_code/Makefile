@@ -94,7 +94,7 @@ CENTERCLUSTERMAPPERITERATOROBJECTS	= $(CENTERCLUSTERMAPPERITERATORSOURCES:.cpp=.
 LINKGENERATORSOURCES	= ./link_generator_test.cpp ../kmer_freq.cpp ../dictatorcenter.cpp ../util.cpp ../binaryinfilebuf.cpp ../binaryoutfilebuf.cpp ../kmers_bitwisetransform.cpp ../kmers_dictionary.cpp ../dictatorcluster.cpp ../cluster.cpp ../mixturebptester.cpp ../centerrecalibrator.cpp ../centerclustermapper.cpp ../errorrateestimator.cpp ../clustercenterlinkgenerator.cpp
 LINKGENERATOROBJECTS	= $(LINKGENERATORSOURCES:.cpp=.o)
 
-TIMEPOINTSMERGERSOURCES	= ./timepoint_merger_test.cpp ../kmer_freq.cpp ../dictatorcenter.cpp ../util.cpp ../binaryinfilebuf.cpp ../binaryoutfilebuf.cpp ../kmers_bitwisetransform.cpp ../kmers_dictionary.cpp ../dictatorcluster.cpp ../cluster.cpp ../mixturebptester.cpp ../centerrecalibrator.cpp ../centerclustermapper.cpp ../errorrateestimator.cpp ../clustercenterlinkgenerator.cpp ../timepointsmerger.cpp ../centerclustermapperiterator.cpp ../idgenerator.cpp ../kmerdecoder.cpp
+TIMEPOINTSMERGERSOURCES	= ./timepoint_merger_test.cpp ../barcodecluster.cpp ../util.cpp ../kmers_bitwisetransform.cpp ../kmers_dictionary.cpp ../mixturebptester.cpp ../centerrecalibrator.cpp ../centerclustermapper.cpp ../errorrateestimator.cpp ../clustercenterlinkgenerator.cpp ../timepointsmerger.cpp ../centerclustermapperiterator.cpp ../idgenerator.cpp ../kmerdecoder.cpp ../barcodemutationgenerator.cpp  ../barcodepool.cpp
 TIMEPOINTSMERGEROBJECTS	= $(TIMEPOINTSMERGERSOURCES:.cpp=.o)
 
 ERRORESTIMATORSOURCES	= ./errorrate_estimator_test.cpp ../kmer_freq.cpp ../dictatorcenter.cpp ../util.cpp ../binaryinfilebuf.cpp ../binaryoutfilebuf.cpp ../kmers_bitwisetransform.cpp ../kmers_dictionary.cpp ../dictatorcluster.cpp ../cluster.cpp ../errorrateestimator.cpp ../clusterloader.cpp 

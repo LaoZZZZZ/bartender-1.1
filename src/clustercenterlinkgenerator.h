@@ -28,7 +28,6 @@ public:
             return;
         }
 
-        _clusters = &clusters;
         int max_id = 0;
         for (const auto& c : clusters) {
             max_id = std::max(max_id, c->ClusterID());
@@ -47,7 +46,6 @@ public:
         return _center_cluster_link;
     }
 private:
-    const std::list<std::shared_ptr<Cluster>>* _clusters;
     std::shared_ptr<CenterClusterMapper> _center_cluster_link;
 };
 }   // namespace barcodeSpace

@@ -6,11 +6,9 @@
 #include <string>
 #include <vector>
 #include <array>
-#include "../dictatorcenter.h"
+#include "../barcodecluster.hPP"
 #include "../kmers_bitwisetransform.h"
 #include "../typdefine.h"
-#include "../cluster.h"
-#include "../dictatorcluster.h"
 #include "../centerclustermapper.h"
 #include "../clustercenterlinkgenerator.h"
 #include "../errorrateestimator.h"
@@ -22,16 +20,15 @@ using std::shared_ptr;
 using std::vector;
 using std::array;
 using std::list;
-using barcodeSpace::DictatorCenter;
+using barcodeSpace::BarcodeCluster;
 using barcodeSpace::kmersBitwiseTransform;
-using barcodeSpace::cluster;
-using barcodeSpace::dictatorCluster;
 using barcodeSpace::CenterClusterMapper;
 using barcodeSpace::ClusterCenterLinkGenerator;
 using barcodeSpace::ErrorRateEstimator;
 using barcodeSpace::TimePointsMerger;
 
 
+typedef BarcodeCluster cluster;
  
 void printFrequency(const vector<array<int,4>>& frequencies) {
     cout << "*****************************" << endl;
@@ -44,27 +41,28 @@ void printFrequency(const vector<array<int,4>>& frequencies) {
     cout << "*****************************" << endl;
  
 }
-void printCenter(const vector<kmer>& centers) {
+void printCenter(const vector<string>& centers) {
     for(const auto& c : centers) {
-	string temp;
-        kmersBitwiseTransform::getInstance()->bitwise_2_seq(c, temp, 5);
-        cout << temp << endl;
+        cout << c << endl;
     }   
 }
 
-void printCenter(const list<kmer>& centers) {
+void printCenter(const list<string>& centers) {
     for(const auto& c : centers) {
-	string temp;
-        kmersBitwiseTransform::getInstance()->bitwise_2_seq(c, temp, 5);
-        cout << temp << endl;
+        cout << c << endl;
     }   
 }
-ClusterCenterLinkGenerator link_generator(0.33, 4, 0.05, 0.1);
-ErrorRateEstimator error_estimator(0.9, 5, 20);  
+
+void printTrajectory(const vector<size_t> time) {
+   for(int i : time) {
+	cout << i << ',';
+   }
+   cout << endl;
+}
+ClusterCenterLinkGenerator link_generator;
 
 std::shared_ptr<CenterClusterMapper> getlink(list<shared_ptr<cluster>>& clusters) {
-	error_estimator.Estimate(clusters);
-        link_generator.Generate(clusters, error_estimator.Entropies());
+        link_generator.Generate(clusters);
 	return link_generator.CenterClusterLink();
 }
 list<shared_ptr<cluster>> testCase(list<shared_ptr<cluster>>& clusters_1,
@@ -72,7 +70,7 @@ list<shared_ptr<cluster>> testCase(list<shared_ptr<cluster>>& clusters_1,
 				   int time_points) {
 	std::shared_ptr<CenterClusterMapper> link1 = getlink(clusters_1);
 	std::shared_ptr<CenterClusterMapper> link2 = getlink(clusters_2);
-	TimePointsMerger merger(link1, link2, 5, time_points);
+	TimePointsMerger merger(link1, link2, 5, time_points, 1);
 	merger.merge();
 	return merger.mergedClusters();
 }
@@ -87,46 +85,47 @@ int main() {
     ////////////////////////////////////////////////////////
     /////////////////////each has one cluster////////////////////////
     ///////////////////////////////////////////////////////
-    string seq("AAAAA"); 
+    string seq("AAAAT"); 
     kmer k;
     freq f = 5;
-    kmersBitwiseTransform::getInstance()->seq_2_bitwise(seq, k, 5);    
-    const std::shared_ptr<DictatorCenter> center(new DictatorCenter(k,5));
-    std::shared_ptr<cluster> first_cluster(new dictatorCluster(center,{f}));
+    const vector<array<int,4>> frequency_table_1(
+        {{4, 1, 0, 0},
+        {5, 0, 0, 0},
+        {5, 0, 0, 0},
+        {5, 0, 0, 0},
+        {1, 0, 0, 4}});
+    std::shared_ptr<cluster> first_cluster(new cluster(seq, frequency_table_1, 0)); 
     clusters_1.push_back(first_cluster);    
-    seq = "AAAAT";
+    seq = "AAAAA";
     k = 0;
-    kmersBitwiseTransform::getInstance()->seq_2_bitwise(seq, k, 5);    
-    const std::shared_ptr<DictatorCenter> second_center(new DictatorCenter(k,5));
  
     const vector<array<int,4>> frequency_table_2(
 	{{17, 3, 0, 0},
 	{20, 0, 0, 0},
 	{20, 0, 0, 0},
 	{20, 0, 0, 0},
-	{0, 0, 0, 20}});
-    std::shared_ptr<cluster> second_cluster(new dictatorCluster(second_center, {20}, frequency_table_2, 2));
+	{17, 0, 0, 3}});
+    std::shared_ptr<cluster> second_cluster(new cluster(seq, frequency_table_2, 0));
     clusters_2.push_back(second_cluster);
 
-    clusters = testCase(clusters_1, clusters_2, 1);
+    clusters = testCase(clusters_1, clusters_2, 2);
     vector<array<int,4>> frequency_table = clusters.front()->bpFrequency();
-    error_estimator.Estimate(clusters);
-    link_generator.Generate(clusters, error_estimator.Entropies());
+    link_generator.Generate(clusters);
     shared_ptr<CenterClusterMapper> link = link_generator.CenterClusterLink();
     cout << clusters.size() << endl;
     for (const auto& c : clusters) {
-    	list<kmer> mycenters = link->myCenter(c->ClusterID());
+    	list<std::string> mycenters = link->myCenter(c->ClusterID());
         printFrequency(c->bpFrequency());
-    	printCenter(mycenters); 
+	printCenter(mycenters);
+	printTrajectory(c->columns());
     }
+    
      ////////////////////////////////////////////////////////
     /////////////////////// Three time points ///////////////////
     ///////////////////////////////////////////////////////
     clusters_2.clear();
     seq = "AAAAC";
     k = 0;
-    kmersBitwiseTransform::getInstance()->seq_2_bitwise(seq, k, 5);    
-    const std::shared_ptr<DictatorCenter> third_center(new DictatorCenter(k,5));
     const vector<array<int,4>> frequency_table_3(
 	{{14, 3, 3, 0},
 	{20, 0, 0, 0},
@@ -134,19 +133,19 @@ int main() {
 	{20, 0, 0, 0},
 	{0, 20, 0,0 }});
 
-    std::shared_ptr<cluster> third_cluster(new dictatorCluster(third_center, {20}, frequency_table_3, 3));
+    std::shared_ptr<cluster> third_cluster(new cluster(seq, frequency_table_3, 0));
     clusters_2.push_back(third_cluster);
-    clusters = testCase(clusters, clusters_2, 2);
+    clusters = testCase(clusters, clusters_2, 3 /*3 time points*/);
     cout << clusters.size() << endl;
-    error_estimator.Estimate(clusters);
-    link_generator.Generate(clusters, error_estimator.Entropies());
+    link_generator.Generate(clusters);
     link = link_generator.CenterClusterLink();
-    list<kmer> mycenters;
+    list<string> mycenters;
     for (const auto& c : clusters) {
     	mycenters = link->myCenter(c->ClusterID());
         printFrequency(c->bpFrequency());
     	printCenter(mycenters); 
     }
+    /*
   //  printCenter(centers);
     ////////////////////////////////////////////////////////
     /////////////////////// Four time points ///////////////////
@@ -211,6 +210,6 @@ int main() {
     	mycenters = link->myCenter(c->ClusterID());
     	printCenter(mycenters); 
  
-    }
+    }*/
         return 0;
 }
