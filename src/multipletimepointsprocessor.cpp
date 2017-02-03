@@ -7,6 +7,7 @@
 #include "clustercenterlinkgenerator.h"
 #include "errorrateestimator.h"
 #include "mergebycenters.h"
+#include "centerclustermapperiterator.h"
 
 #include <cassert>
 #include <iostream>
@@ -57,20 +58,20 @@ void MultipleTimePointsProcessor::process() {
     // combine those cluster results in backward manner.
     int len = static_cast<int>(_cluster_result_files.size()) - 1;
     for (int i = len; i >= 0; --i) {
-
         cout << "Current generation " << i << endl;
         ClusterLoader loader(_cluster_result_files[i].first, _cluster_result_files[i].second);
         std::unordered_map<int, list<shared_ptr<Cluster>>> new_clusters;
         loader.LoadClusters(&new_clusters);
+	single_link.clear();
         // Estimate the sequence error for this single time point.
         for (const auto& clusters : new_clusters) {
-            _error_estimator->Estimate(clusters.second, false);
+            _error_estimator->Estimate(clusters.second, true);
             _original_error_rates[clusters.first].push_back(_error_estimator->ErrorRate());
+	   
             _link_generator->Generate(clusters.second);
 
             single_link[clusters.first] = _link_generator->CenterClusterLink();
         }
-
         // Combined those clusters that have the same length.
         for (const auto& batch : combined_link) {
             TimePointsMerger merger(batch.second, single_link[batch.first],
@@ -78,8 +79,7 @@ void MultipleTimePointsProcessor::process() {
             merger.merge();
             const list<shared_ptr<Cluster>>& merged_clusters = merger.mergedClusters();
             _center_merger->merge(merged_clusters);
-
-            _error_estimator->Estimate(_center_merger->clusters(), false);
+            _error_estimator->Estimate(_center_merger->clusters(), true);
             mediate_clusters[batch.first] = _center_merger->clusters();
 
             _link_generator->Generate(_center_merger->clusters());
@@ -93,7 +93,6 @@ void MultipleTimePointsProcessor::process() {
 
 
         }
-
         // keep those barcode whose length does not show up in the previously combined result.
         for (const auto& batch: single_link) {
             if (0 == combined_link.count(batch.first)) {
@@ -101,9 +100,9 @@ void MultipleTimePointsProcessor::process() {
                 merger.merge();
                 const list<shared_ptr<Cluster>>& merged_clusters = merger.mergedClusters();
                 _center_merger->merge(merged_clusters);
-                _error_estimator->Estimate(merged_clusters, false);
+                _error_estimator->Estimate(merged_clusters, true);
                 mediate_clusters[batch.first] = _center_merger->clusters();
-                _error_estimator->Estimate(_center_merger->clusters(), false);
+                _error_estimator->Estimate(_center_merger->clusters(), true);
 
                 _link_generator->Generate(_center_merger->clusters());
 
@@ -120,25 +119,24 @@ void MultipleTimePointsProcessor::process() {
         ++num_time_points;
     }
     std::cout << "Filter out low frequency clusters whose size is below " << _csize_filter << std::endl;
+    int mostPervasiveBarcodeLength = -1;
+    int numOfCluster = 0;
     for (const auto& clusters : mediate_clusters) {
         std::list<std::shared_ptr<Cluster>> cluster_result;
         for (const auto& c : clusters.second) {
 	    if(c->size() >= _csize_filter) {
 		cluster_result.push_back(c);
 	    } 
-	    /*
-            const vector<freq>& columns = c->columns();
-            if ((columns.size() == 1 && c->size() >= _csize_filter)
-                  || (columns.size() > 1 && columns[columns.size() - 2] > 0)) {
-                cluster_result.push_back(c);
-            }
-	    */
         }
-        //_error_estimator->Estimate(clusters.second);
-        //_combined_error_rates[clusters.first].push_back(_error_estimator->ErrorRate());
         _result_clusters[clusters.first] = cluster_result;
+	if (cluster_result.size() > numOfCluster) {
+        	mostPervasiveBarcodeLength = clusters.first; 
+		numOfCluster = cluster_result.size();
+	}
     }
-    //_result_clusters = mediate_clusters;
+    // Find the most pervasive barcode length group and estimate the error rate from there.
+    
+    _error_estimator->Estimate(_result_clusters[mostPervasiveBarcodeLength], false);
 }
 void MultipleTimePointsProcessor::SanityCheck(const unordered_map<int, list<shared_ptr<Cluster>>>& clusters) {
     for (const auto& cls : clusters) {
