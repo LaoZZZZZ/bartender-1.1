@@ -23,7 +23,8 @@ Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, bool& success) {
 
 int BarcodeExtractor::isMatched(string& sequence,string& qual){
     boost::smatch result;
-    if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
+    // only consider full matched sequence
+    if(boost::regex_search(sequence, result, _pattern) && !result.empty() && result[0].matched){
         this->combinePieces(sequence,qual,result);
         return static_cast<int>(result.position());
     }

@@ -89,6 +89,9 @@ int main(int argc,char* argv[])
     boost::regex pattern;
     if (argc >= 5) {
         pattern.assign(argv[4]);
+	if (pattern.empty()) {
+	   std::cerr << "The given pattern " << argv[4] << " is invalid"<< std::endl;
+	}
     }
     string preceeding;
     string suceeding;

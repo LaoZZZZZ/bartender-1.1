@@ -110,7 +110,7 @@ def usage():
 def driver():
 	inputfile = ''
 	outprefix = ''
-	qual_cutoff = 0 
+	qual_cutoff = 1 
 	preceeding = 'TACC'
 	succeeding = 'ATAA' 
 	parts = 0
@@ -167,7 +167,7 @@ def driver():
 		preceeding, succeeding, parts, pattern = parsePattern(pattern, mismatches)
 	else:
 		pattern = "\"(.ACC|T.CC|TA.C|TAC.)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(TT)(A|T|C|G|N){4,7}(.TAA|A.AA|AT.A|ATA.)\""
-	command = 'bartender_extractor ' + inputfile + ' ' + outprefix + ' ' + chr(qual_cutoff) + ' ' + pattern + ' ' +  preceeding + ' ' + succeeding + ' ' + str(parts)
+	command = 'bartender_extractor ' + inputfile + ' ' + outprefix + ' ' + str(qual_cutoff) + ' ' + pattern + ' ' +  preceeding + ' ' + succeeding + ' ' + str(parts)
 	print(command)
 	os.system(command)
 if __name__=="__main__":
