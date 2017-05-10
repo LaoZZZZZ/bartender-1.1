@@ -91,6 +91,7 @@ int main(int argc,char* argv[])
         pattern.assign(argv[4]);
 	if (pattern.empty()) {
 	   std::cerr << "The given pattern " << argv[4] << " is invalid"<< std::endl;
+	   exit(1);
 	}
     }
     string preceeding;
