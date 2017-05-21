@@ -88,6 +88,7 @@ void TimePointsMerger::merge() {
     //for (const auto& cl : unmatched_cluster_t1) {
         const std::shared_ptr<Cluster> cl = iter_1.next();
         assert(cl.get());
+	mutated_center.clear();
         _mutator.mutateCenterInplace(cl->center(), mutated_center);
         double ratio = 0;
         double sz = cl->size();
