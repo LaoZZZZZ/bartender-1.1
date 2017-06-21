@@ -90,7 +90,6 @@ void TimePointsMerger::merge() {
         assert(cl.get());
 	mutated_center.clear();
         _mutator.mutateCenterInplace(cl->center(), mutated_center);
-        double ratio = 0;
         double sz = cl->size();
         std::shared_ptr<Cluster> matched_cluster_from_t2;
         for (const auto& center : mutated_center) {
@@ -99,14 +98,12 @@ void TimePointsMerger::merge() {
                 matched_clusters_from_t2.push_back(_t2_center_cluster_linker->getClusterByCenter(center));
                 // remove the cluster immediately in case it is matched by multiple times
                 _t2_center_cluster_linker->removeCluster(matched_clusters_from_t2.back()->ClusterID());*/
-                double tmp_sz = _t2_center_cluster_linker->getClusterByCenter(center)->size();
-                if (tmp_sz > sz) {
-                    std::swap(tmp_sz, sz);
-                }
-                if ( sz/tmp_sz > ratio) {
-                    matched_cluster_from_t2 = _t2_center_cluster_linker->getClusterByCenter(center);
-                }
-                sz = cl->size();
+                std::shared_ptr<Cluster> matched_cluster  = _t2_center_cluster_linker->getClusterByCenter(center);
+                if (matched_cluster_from_t2.get()) {
+		   std::cout << "there are at least two clusters that are one base pair away from the targeted cluster!" << std::endl;
+		   std::cout << matched_cluster.get()->center() << " vs " << matched_cluster_from_t2.get()->center() << std::endl;
+		}
+                matched_cluster_from_t2 = matched_cluster; 
             }
         }
         _t1_center_cluster_linker->removeCluster(cl->ClusterID());
