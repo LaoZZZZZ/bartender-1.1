@@ -4,13 +4,14 @@ import sys
 import getopt
 
 
-
-def generateRexImp(sequence,start, mismatch, result):
+#recursively generate the regular expression given the number original sequence, number of mismatches
+def generateRexImp(sequence, start, mismatch, result):
 	if mismatch == 0:
 		result = [ r + sequence[start:] for r in result]
 	else:
-		if mismatch == len(sequence) - start:
-			result = [r + '.' * mismatch for r in result]
+		if mismatch >= len(sequence) - start:
+			num_of_dots = len(sequence) - start 
+			result = [r + '.' * num_of_dots for r in result]
 		elif len(sequence) - start > mismatch:
 			exact = [r + sequence[start] for r in result] 
 			inexact = [r + '.' for r in result]
@@ -20,29 +21,24 @@ def generateRexImp(sequence,start, mismatch, result):
 			else:
 				result = exact
 				result += inexact
-		else:
-			result = []
 	return result					
 		
 def generateRex(sequence, mismatch):
+	pattern = '' 
 	if mismatch == 0:
-		return [sequence]
-	result = ['']
-	result = generateRexImp(sequence, 0, mismatch, result)
-	pattern = [] 
-	if result:
-		pattern += '('
-		for m in result:
-			pattern += m
-			pattern += '|'
-		pattern[-1] = ')'	
-	return ''.join(pattern)
+		pattern = sequence
+	else:
+		result = ['']
+		result = generateRexImp(sequence, 0, mismatch, result)
+		if result:
+			pattern = '|'.join(result)
+	return '(' + pattern + ')'
 
 # Supported pattern: ACTAG[4-7]AA[4-7]CC[4-7]TT[4-7]ACTA	
 # Another example: TAA[7]AA[7]CC[7]TT[4-7]CTA	
 # Another example: ACT[4-9]TT[9]CC[4-7]TTA
 # The pattern should obey the following rules:
-# 1. It could only DNA sequence, numerical value, brackets and '-'
+# 1. It could only be DNA sequence, numerical value, brackets and '-'
 # 2. All DNA sequence before the first numeric value or bracket is viewed as proceedings
 # 3. All DNA sequence right after the last numeric value or bracket is viewed as the succeedings
 # 4. The range specified by the numeric values within each pair of brackets specifies the random positions at that positions 
@@ -63,12 +59,15 @@ def parsePattern(pattern, mismatches):
 		if len(preceedings) > 5:
 			print("The length of preceeding sequence exceeds the maximum length(5)")
 			sys.exit(2)
-		if mismatches == 1:
+		elif mismatches == 1:
 			mutations = generateRex(preceedings, mismatches)
 			mismatches = 0	
 		else:
+			if (mismatches % 2 == 1):
+				print("invalid number mismatches: " + mismatches)
+				sys.exit(2) 
 			mutations = generateRex(preceedings, mismatches/2)
-			mismatches -= mismatches/2
+			mismatches = mismatches/2
 		result_pattern += mutations
 		total_sub_expressions += 1
 	# check succeeding
@@ -80,7 +79,6 @@ def parsePattern(pattern, mismatches):
 			last += '{' + numeric_range + '})'	
 		else:
 			succeedings = parts[-1]
-			
 			if len(succeedings) > 5:
 				print("The length of succeeding sequence exceeds the maximum length(5)")
 				sys.exit(2)
