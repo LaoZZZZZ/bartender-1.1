@@ -12,11 +12,11 @@ It currently has three functionalities.
 
 # Installation
  Bartender uses a gcc compiler which should be no older than gcc47. If you want use the extraction components, the boost library should be installed prior installing bartender. Installation is simple.
- *To build bartender_single (barcode clustering): make bartender_single
- *To build bartender_extractor (barcode extractor): make bartender_extractor
- *To build bartender_combiner (multiple time point mode): make bartender_combiner
- *To build three components in one batch: make all
- *To install: sudo make install
+ * To build bartender_single (barcode clustering): make bartender_single
+ * To build bartender_extractor (barcode extractor): make bartender_extractor
+ * To build bartender_combiner (multiple time point mode): make bartender_combiner
+ * To build three components in one batch: make all
+ * To install: sudo make install
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
 
@@ -64,11 +64,11 @@ Please check the test_extractor.sh under the example folder for more details.
 
 ## Bartender Clustering
 
-# Input:
+### Input:
 
 Currently it only accepts input format that are consistent with the output of extraction components. The input must be a csv file with two columns. The second column in the input file does not need to be the line number (the default extractor output). It could be anything that is associated with the corresponding extracted barcode (i.e an UMI). 
 
-# Usage
+### Usage
 
 The command name is bartender_single_com, which is a python file. Use "bartender_single_com -h" for help. There are 7 options.
 
@@ -88,10 +88,10 @@ The command name is bartender_single_com, which is a python file. Use "bartender
 
 -s: The number of non-overlapping positions between two adjacent seeds. The default value is 1 (recommended). For example, using l=5 and s=2, will result in adjacent seeds that have 2 unique positions and 3 positions in common. If the step value is equal to or larger than the seed length, then there will be no overlap between seeds.
 
-# Output:
+### Output:
 Bartender outputs three files. 
 
-## a. Cluster file.
+#### a. Cluster file.
    
 This file contains general information of each cluster. It has at least four columns.
   1. Cluster.ID: the unique ID of the cluster.
@@ -99,11 +99,11 @@ This file contains general information of each cluster. It has at least four col
   3. Cluster.Score: this score measures the quality of the cluster. The lower the score is, the higher the cluster quality is. Low quality clusters have a greater likelihood of being more than one barcode that were erroneously clustered together. The score is calculated based on the entropy of a binary variable using the Position Weight Matrix (PWM). Each cluster will have a PWM, which has the frequency of each nucleotide at each position. Based on the PWM, the percentage of majority nucleotide at each position is denoted as P and the entropy at that position is -P*log2(P) - (1 - P)*log2(1-P) . The Cluster Score is the maximum entropy value across all positions.
   4. The remaining columns are the cluster count at each time point. The overall count is the sum of these remaining columns. When only a single time point is processed, the fourth column is the size of the cluster.
 
-## b.Quality file.
+#### b.Quality file.
 
 This file is the position weight matrix of each cluster.  The first column is cluster ID. The second column is the nucleotide that the line represents. The remaining columns are the frequency of that nucleotide at each position in the barcode cluster. Each cluster takes four lines, with each line being a nucleotide (e.g. A, C, G, T).  Check the 2M_clustering_quality.csv in the example folder for more details.
 
-## c.Barcode file.
+#### c.Barcode file.
 
 This file is used to keep track of the assignment of each unclustered barcode to the clusters. It has three columns.
   1. Unique.reads: the unclustered barcode sequence.
@@ -112,11 +112,11 @@ This file is used to keep track of the assignment of each unclustered barcode to
 
 ## Multiple time point mode
 
-# Input:
+### Input:
 
  Currently it only accepts input format that is consistent with the output of the bartender_single_com component. 
 
-# Usage
+### Usage
 
 The command name is bartender_combiner_com, which is a python file. Use "bartender_combiner_com -h" for help. There are 3 options.
 
