@@ -99,11 +99,11 @@ This file contains general information of each cluster. It has at least four col
   3. Cluster.Score: this score measures the quality of the cluster. The lower the score is, the higher the cluster quality is. Low quality clusters have a greater likelihood of being more than one barcode that were erroneously clustered together. The score is calculated based on the entropy of a binary variable using the Position Weight Matrix (PWM). Each cluster will have a PWM, which has the frequency of each nucleotide at each position. Based on the PWM, the percentage of majority nucleotide at each position is denoted as P and the entropy at that position is -P*log2(P) - (1 - P)*log2(1-P) . The Cluster Score is the maximum entropy value across all positions.
   4. The remaining columns are the cluster count at each time point. The overall count is the sum of these remaining columns. When only a single time point is processed, the fourth column is the size of the cluster.
 
-#### b.Quality file.
+#### b. Quality file.
 
 This file is the position weight matrix of each cluster.  The first column is cluster ID. The second column is the nucleotide that the line represents. The remaining columns are the frequency of that nucleotide at each position in the barcode cluster. Each cluster takes four lines, with each line being a nucleotide (e.g. A, C, G, T).  Check the 2M_clustering_quality.csv in the example folder for more details.
 
-#### c.Barcode file.
+#### c. Barcode file.
 
 This file is used to keep track of the assignment of each unclustered barcode to the clusters. It has three columns.
   1. Unique.reads: the unclustered barcode sequence.
@@ -132,11 +132,11 @@ It outputs three files that in the same format as the bartender_single_com outpu
 
 1. What's the meaning of cluster in bartender?
 
-A cluster represents a putative "true" barcode. The size of the cluster represents the count of the barcode. All unclustered barcode reads that are merged into a cluster must have the same length since hamming distance is used to measure sequence dissimilarity. 
+A cluster represents a **putative** "true" barcode. The size of the cluster represents the count of the barcode. All unclustered barcode reads that are merged into a cluster must have the same length since hamming distance is used to measure sequence dissimilarity. 
 
-2. Will a barcode sequence with an insertion or deletion be clustered to its original "true" barcode?
+2. Will a barcode sequence with an **insertion** or **deletion** be clustered to its original "true" barcode?
 
-No. Barcodes with insertions and deletions will form a cluster by themselves. Bartender only merges sequences with identical lengths.
+**No**. Barcodes with insertions and deletions will form a cluster by themselves. Bartender only merges sequences with identical lengths.
 
 3. What's the center in a cluster?
 
@@ -144,7 +144,7 @@ The center is the consensus nucleotide sequence of all barcodes within a cluster
 
 4. I had hard time compiling bartender because boost was not installed correctly.
 
-First, download and install boost by following the instructions on boost official webpage http://www.boost.org/. Remember to specify the prefix (--prefix=place you want to install the BOOST) when installing BOOST via the b2 command supplied by the BOOST package. 
+First, download and install **boost** by following the instructions on boost official webpage http://www.boost.org/. Remember to specify the prefix (--prefix=place you want to install the BOOST) when installing BOOST via the b2 command supplied by the BOOST package. 
 
 On OSX, use one of the following commands: 
 brew install boost; (brew installs packages to /usr/local/Cellar by default)
@@ -152,8 +152,8 @@ sudo port install boost (port installs packages to /opt/local by default)
 
 Second, export the BOOST_INSTALL_DIR=prefix directory where BOOST is installed. For example, if BOOST is installed at /usr/local/ and BOOST libraries and headers are in the folder /usr/local/lib and /usr/local/include. Then BOOST_INSTALL_DIR should be /usr/local. One way to add BOOST_INSTALL_DIR is using export command. For example, at the command line: “export BOOST_INSTALL_DIR=/usr/local”. This command will set BOOST_INSTALL_DIR to /usr/local.
 
-## Does a barcode trajectory output from Bartender accurately describe its relative frequency over time? 
-No. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
+5. Does a barcode trajectory output from Bartender accurately describe its **relative** frequency over time? 
+**Noi**. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
 
 
 # Bugs and Fixes
@@ -162,4 +162,6 @@ You can post any question or suggestions on google group https://groups.google.c
 It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and was fixed at Dec 1th. I am really sorry for these fatal error introduced by this incorrect conflict resolve. Now Batender works fine.
 * Bartender combiner has problem with the cluster id, which will trigger an fatal alert.
 It was caused by a wrong array initialization. It is fixed now. Combiner should work fine now.
+* Bartender extractor could not accept other mismatch number except 2. This bug is in the bartender_extractor_com pythong script. There was some logic issue in the regular expression pattern generation function
+It was fixed now at Jun 24 2017.
 
