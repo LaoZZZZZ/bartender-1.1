@@ -19,6 +19,20 @@ It currently has three functionalities.
  * To install: sudo make install
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
+# Get started
+This section will introduce Bartender with an simple example. This exmaple illustrates how to converte a raw fastq reads file to a frequency table containing discovered barcode and raw reads count. The result also provides the quality of the discovered barcode in the position matricx format. Please download this project to your local machine in order to go through this example. The data is in example/random_small_data folder.
+The raw input is 2M_test.fq reads file.
+
+## Barcode extraction 
+The barcode pattern in the reads file is TACC[4-7]AA[4-7]AA[4-7]TT[4-7]ATAA. It has four random region separated by 3 spacers. Both proceeding and succeeding sequences has 4 characters. In this example, we will all one mismatch at proceeding and suceeding sequence respectively. To filter out low quality read, any read with average quality score less than 63 (corresponding ascii code is '?') will be filtered out. And we name the output file as 2M_extracted_barcode.txt by giving the prefix - 2M_extracted. So the ultimate running command is **bartender_extractor_com -f 2M_test.fq -o 2M_extracted -q ? -p TACC[4-7]AA[4-7]AA[4-7]TT[4-7]ATAA -m 2**. This commands will output the extracted barcode and its line number to 2M_extracted_barcode.txt file. It also reports the total number of reads, total number of reads that have valid barcode and total number of reads that have valid reads that pass the average quality score. There is a bash script containing the actual command. Feel free to try that script.
+
+## Clustring the barcode
+Once we get the extracted barcode, we can group similar extracted barcodes to putative barcode by using the bartender clustering componenti (bartender_single_com). Bartener provides one way to incorporate the UMI to each barcode to handle PCR errors. In the extracted barcode file, the line number is associated with each extracted barcode. User can replace this line number with the corresponding UMI in the original read file. Unfortunately, bartender can not automate this step, which needs user to write simple script to accomplish this step. There are several things that user can config on the grouping process (described in Bartender Clustering section). The most important parameter is the maximum distance that define whether two barcode could be viewed as same. The second one is the seed length. The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging. And you can also choose the number of threads to leverage the computing power. Here we will use this command to clustering the extacted barcode. 
+
+**bartender_single_com -f 2M_extracted_barcode.txt -o 2M_barcode -d 3**        
+
+We will consider extracted barcode within 3 bp distance come from the same true barcode. 2M_extracted_barcode.txt is the input file. We name the output file starting with 2M_barcode prefix. Bartender will generate three output files (described in the Bartender clustering section). All other param are in default values.
+
 
 # Components
 ## Bartender Extractor
@@ -34,12 +48,12 @@ This component takes a sequencing reads file and outputs extracted barcodes. Cur
 -m: the total number of mismatches allowed in the proceeding and succeeding sequences (optional). The default value is 2 which allows 1 mismatch only in both the proceeding and succeeding sequences. For values greater than 2, the number of allowable mismatches will be split evenly between the proceeding and succeeding sequences (e.g. a value of 4 allows 2 mismatches in each). For odd values, an extra mismatch will be allowed in the proceeding sequence.
 
 -p: the barcode pattern (required). The general pattern is XXXX[min-max]XXXXX[min-max]XXXXX, where XXXX is fixed DNA sequence (ie. proceeding sequence, spacers and succeeding sequence), and [min-max] is the range of random bases allowed. Both min and max must be integers. The pattern should obey the following rules:
- * 1. It should only have DNA sequences, numerical values, brackets and '-'.
- * 2. The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
- * 3. The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
- * 4. The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
- * 5. The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
- * 6. The maximum length of both the proceeding and succeeding sequences is 5.
+ *  It should only have DNA sequences, numerical values, brackets and '-'.
+ *  The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
+ *  The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
+ *  The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
+ *  The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
+ *  The maximum length of both the proceeding and succeeding sequences is 5.
  
 Here are some valid examples. 
 
@@ -162,7 +176,7 @@ You can post any question or suggestions on google group https://groups.google.c
 * Bartender just tabled unique reads and did not cluster the reads.
 It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and was fixed at Dec 1th. I am really sorry for these fatal error introduced by this incorrect conflict resolve. Now Batender works fine.
 * Bartender combiner has problem with the cluster id, which will trigger an fatal alert.
-It was caused by a wrong array initialization. It is fixed now. Combiner should work fine now.
-* Bartender extractor could not accept other mismatch number except 2. This bug is in the bartender_extractor_com pythong script. There was some logic issue in the regular expression pattern generation function
-It was fixed now at Jun 24 2017.
+It was caused by a wrong array initialization. Combiner should work fine now.
+* Bartender extractor could not accept other mismatch number except 2. This bug is in the bartender_extractor_com pythong script. There was some logic issue in the regular expression pattern generation function.
+It was fixed at Jun 24 2017.
 
