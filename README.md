@@ -34,12 +34,12 @@ This component takes a sequencing reads file and outputs extracted barcodes. Cur
 -m: the total number of mismatches allowed in the proceeding and succeeding sequences (optional). The default value is 2 which allows 1 mismatch only in both the proceeding and succeeding sequences. For values greater than 2, the number of allowable mismatches will be split evenly between the proceeding and succeeding sequences (e.g. a value of 4 allows 2 mismatches in each). For odd values, an extra mismatch will be allowed in the proceeding sequence.
 
 -p: the barcode pattern (required). The general pattern is XXXX[min-max]XXXXX[min-max]XXXXX, where XXXX is fixed DNA sequence (ie. proceeding sequence, spacers and succeeding sequence), and [min-max] is the range of random bases allowed. Both min and max must be integers. The pattern should obey the following rules:
- *1. It should only have DNA sequences, numerical values, brackets and '-'.
- *2. The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
- *3. The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
- *4. The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
- *5. The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
- *6. The maximum length of both the proceeding and succeeding sequences is 5.
+ * 1. It should only have DNA sequences, numerical values, brackets and '-'.
+ * 2. The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
+ * 3. The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
+ * 4. The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
+ * 5. The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
+ * 6. The maximum length of both the proceeding and succeeding sequences is 5.
  
 Here are some valid examples. 
 
@@ -153,7 +153,8 @@ sudo port install boost (port installs packages to /opt/local by default)
 Second, export the BOOST_INSTALL_DIR=prefix directory where BOOST is installed. For example, if BOOST is installed at /usr/local/ and BOOST libraries and headers are in the folder /usr/local/lib and /usr/local/include. Then BOOST_INSTALL_DIR should be /usr/local. One way to add BOOST_INSTALL_DIR is using export command. For example, at the command line: “export BOOST_INSTALL_DIR=/usr/local”. This command will set BOOST_INSTALL_DIR to /usr/local.
 
 5. Does a barcode trajectory output from Bartender accurately describe its **relative** frequency over time? 
-**Noi**. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
+
+**No**. It only tells you the count at each time point. Because total sequencing reads may vary between time points, Bartender output must be normalized by the sequencing depth to obtain barcode frequency trajectories. 
 
 
 # Bugs and Fixes
