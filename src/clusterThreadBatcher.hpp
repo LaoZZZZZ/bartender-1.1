@@ -26,7 +26,7 @@ namespace barcodeSpace {
         const std::list<std::shared_ptr<BarcodeCluster>>& clusters()const {return _clusters;}
     private:
         void run();
-        
+    private:
         std::shared_ptr<clusterAlgorithm>   _cluster_engine;
         std::pair<size_t, size_t> _bucket_range;
         std::list<std::shared_ptr<BarcodeCluster>>   _clusters;
