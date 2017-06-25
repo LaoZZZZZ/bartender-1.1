@@ -12,17 +12,17 @@ It currently has three functionalities.
 
 # Installation
  Bartender uses a gcc compiler which should be no older than gcc47. If you want use the extraction components, the boost library should be installed prior installing bartender. Installation is simple.
- 1.To build bartender_single (barcode clustering): make bartender_single
- 2.To build bartender_extractor (barcode extractor): make bartender_extractor
- 3.To build bartender_combiner (multiple time point mode): make bartender_combiner
- 3.To build three components in one batch: make all
- 4.To install: sudo make install
+ *To build bartender_single (barcode clustering): make bartender_single
+ *To build bartender_extractor (barcode extractor): make bartender_extractor
+ *To build bartender_combiner (multiple time point mode): make bartender_combiner
+ *To build three components in one batch: make all
+ *To install: sudo make install
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
 
 # Components
-##Bartender Extractor
-###Input
+## Bartender Extractor
+### Input
 This component takes a sequencing reads file and outputs extracted barcodes. Currently it only supports single-end reads. The command is bartender_extractor_com. The following are the input parameters.
 
 -f: the input reads file (required). Only supports FASTQ and FASTA.
@@ -34,12 +34,12 @@ This component takes a sequencing reads file and outputs extracted barcodes. Cur
 -m: the total number of mismatches allowed in the proceeding and succeeding sequences (optional). The default value is 2 which allows 1 mismatch only in both the proceeding and succeeding sequences. For values greater than 2, the number of allowable mismatches will be split evenly between the proceeding and succeeding sequences (e.g. a value of 4 allows 2 mismatches in each). For odd values, an extra mismatch will be allowed in the proceeding sequence.
 
 -p: the barcode pattern (required). The general pattern is XXXX[min-max]XXXXX[min-max]XXXXX, where XXXX is fixed DNA sequence (ie. proceeding sequence, spacers and succeeding sequence), and [min-max] is the range of random bases allowed. Both min and max must be integers. The pattern should obey the following rules:
- 1. It should only have DNA sequences, numerical values, brackets and '-'.
- 2. The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
- 3. The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
- 4. The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
- 5. The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
- 6. The maximum length of both the proceeding and succeeding sequences is 5.
+ *1. It should only have DNA sequences, numerical values, brackets and '-'.
+ *2. The DNA sequence before the first bracket is the proceeding sequence (important for the -m parameter).
+ *3. The DNA sequence after the last bracket is the succeeding sequence (important for the -m parameter).
+ *4. The range specified by the numeric values within the brackets specifies the possible number of random positions. For example, [2-3] means between 2 and 3 random bases, and [3] means 3 random bases. 
+ *5. The pattern must start with fixed sequence and end with fixed sequence. In other words, the proceeding sequence and succeeding sequence cannot be empty.
+ *6. The maximum length of both the proceeding and succeeding sequences is 5.
  
 Here are some valid examples. 
 
@@ -57,12 +57,12 @@ ATTTCAT[3-4]ATC: the length of proceeding sequence exceeds 5.
 
 ATC[3-]TAC: the numerical range is not valid.
 
-###Output
+### Output
 One output file will be generated. It is in csv format and has two columns. The first column is the extracted barcode (only random parts are kept). The second column is the original line number in the FASTA or FASTQ file. We include this line number for use in more complex situations (for example, pairing UMIs). 
 
 Please check the test_extractor.sh under the example folder for more details.
 
-##Bartender Clustering
+## Bartender Clustering
 
 # Input:
 
@@ -110,7 +110,7 @@ This file is used to keep track of the assignment of each unclustered barcode to
   2. Frequency: the count of this sequence before clustering (unique reads).
   3. Cluster.ID: the cluster id to which this unique read belongs.
 
-##Multiple time point mode
+## Multiple time point mode
 
 # Input:
 
@@ -130,19 +130,19 @@ It outputs three files that in the same format as the bartender_single_com outpu
 
 # Problems and questions
 
-##What's the meaning of cluster in bartender?
+1. What's the meaning of cluster in bartender?
 
 A cluster represents a putative "true" barcode. The size of the cluster represents the count of the barcode. All unclustered barcode reads that are merged into a cluster must have the same length since hamming distance is used to measure sequence dissimilarity. 
 
-##Will a barcode sequence with an insertion or deletion be clustered to its original "true" barcode?
+2. Will a barcode sequence with an insertion or deletion be clustered to its original "true" barcode?
 
 No. Barcodes with insertions and deletions will form a cluster by themselves. Bartender only merges sequences with identical lengths.
 
-##What's the center in a cluster?
+3. What's the center in a cluster?
 
 The center is the consensus nucleotide sequence of all barcodes within a cluster.
 
-##I had hard time compiling bartender because boost was not installed correctly.
+4. I had hard time compiling bartender because boost was not installed correctly.
 
 First, download and install boost by following the instructions on boost official webpage http://www.boost.org/. Remember to specify the prefix (--prefix=place you want to install the BOOST) when installing BOOST via the b2 command supplied by the BOOST package. 
 
@@ -158,8 +158,8 @@ No. It only tells you the count at each time point. Because total sequencing rea
 
 # Bugs and Fixes
 You can post any question or suggestions on google group https://groups.google.com/forum/#!forum/bartenderrandombarcode.
-## Bartender just tabled unique reads and did not cluster the reads.
+* Bartender just tabled unique reads and did not cluster the reads.
 It was caused by an incorrect merge between local branch and remote branch happened in Aug 13th 2016. It was reported by one user and was fixed at Dec 1th. I am really sorry for these fatal error introduced by this incorrect conflict resolve. Now Batender works fine.
-## Bartender combiner has problem with the cluster id, which will trigger an fatal alert.
+* Bartender combiner has problem with the cluster id, which will trigger an fatal alert.
 It was caused by a wrong array initialization. It is fixed now. Combiner should work fine now.
 
