@@ -4,8 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 namespace barcodeSpace {
-ProportionTest::ProportionTest(double zvalue) : HypothesisTester(), z_value(zvalue), numerator(0),
-                                                denominator(0), common_variance(0)
+ProportionTest::ProportionTest(double zvalue) : HypothesisTester(), z_value(zvalue), numerator(0),denominator(0), common_variance(0)
 {
 }
 bool ProportionTest::isSignificant(double e1, double e2, double n1, double n2) {
@@ -20,5 +19,4 @@ bool ProportionTest::isSignificant(double e1, double e2, double n1, double n2) {
     denominator = sqrt(p1 * (1 - p1)/n1 + p2*(1-p2)/n2);
     return fabs(numerator / denominator) >= z_value;
 }
-
 }

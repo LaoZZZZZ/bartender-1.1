@@ -28,7 +28,6 @@ void MergeByCenters::merge(const std::list<std::shared_ptr<Cluster>>& clusters) 
     _linker.reset(temp_mapper);
 
     for (auto& c :  clusters) {
-
         std::shared_ptr<BarcodeCluster> matched_cluster;
         while (true) {
             if (_linker->hasCenter(c->center())) {

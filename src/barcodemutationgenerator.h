@@ -46,9 +46,10 @@ public:
         }
         return result;
     }
+    
 private:
-
     void init();
+private:
     size_t  _k_len;
     std::vector<kmer> _mut_mask;
     std::shared_ptr<kmersDictionary> _dict;

@@ -22,6 +22,7 @@ namespace barcodeSpace {
     : _num_base_pairs(numb_base_pairs), _entropy_threshold(entropy_threshold) {
         assert(numb_base_pairs > 0);
     }
+    
     double ErrorEstimator::estimate(
                     const vector<std::array<int,4>>& frequency_table,
                     const vector<double>& entropies) {
