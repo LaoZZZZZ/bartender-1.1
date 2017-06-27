@@ -34,12 +34,12 @@ This command outputs the extracted barcode and the line number in input file to 
 "barcode sequence","line number"
 "barcode sequence","line number"
 etc.
-It also reports the total number of reads, total number of reads that have valid barcode, and total number of reads that have valid reads that pass the average quality score to the command line. There is a bash script containing the actual command [LIST WHAT THIS IS CALLED]. Feel free to try that script. The Bartender clustering component will also accept a unique molecular identifier (UMI) instead of a line number in these files and this is discussed below.
+It also reports the total number of reads, total number of reads that have valid barcode, and total number of reads that have valid reads that pass the average quality score to the command line. There is a bash script containing the actual command (/example/random_small_data/test_extractor.sh). Feel free to try that script. The Bartender clustering component will also accept a unique molecular identifier (UMI) instead of a line number in these files and this is discussed below.
 
 
 ## Clustring the barcode
 
-Once the barcode is extracted, we can group similar extracted barcodes into putative barcodes by using the bartender clustering component (bartender_single_com). Bartener provides a way to assigne a unique molecular identifier (UMI) to each barcode read to handle PCR jackpotting errors. In the extracted barcode file, the line number is associated with each extracted barcode and this will act as a default UMI for clustering without UMI handling (each barcode read has a unique line number and therefore a unique UMI). The user can replace this line number with the corresponding UMI in the original read file. Bartender has not automated this step, so the user will need to write a  script to accomplish to extact the UMIs and replace the line numbers in the input file with UMIs. For reads with multiple UMIs (e.g. one on the forward read and one on the reverse read), we recommend concatenating the sequences to generate one longer UMI. There are several things that user can configure for the grouping process (described in Bartender Clustering section). The most important parameter (-d) is the maximum allowable sequence distance that allows two barcode reads to be clustered. A second important parameter is the seed length (-s). The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging. You can also choose the number of threads to leverage the computing power. Here we will use this command to clustering the extacted barcode. 
+Once the barcode is extracted, we can group similar extracted barcodes into putative barcodes by using the bartender clustering component (bartender_single_com). Bartener provides a way to assign a unique molecular identifier (UMI) to each barcode read to handle PCR jackpotting errors. In the extracted barcode file, the line number is associated with each extracted barcode and this will act as a default UMI for clustering without UMI handling (each barcode read has a unique line number and therefore a unique UMI). The user can replace this line number with the corresponding UMI in the original read file. Bartender has not automated this step, so the user will need to write a script to accomplish to extact the UMIs and replace the line numbers in the input file with UMIs. For reads with multiple UMIs (e.g. one on the forward read and one on the reverse read), we recommend concatenating the sequences to generate one longer UMI. There are several things that user can configure for the grouping process (described in Bartender Clustering section). The most important parameter (-d) is the maximum allowable sequence distance that allows two barcode reads to be clustered. A second important parameter is the seed length (-s). The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging. You can also choose the number of threads to leverage the computing power. Here we will use this command to clustering the extacted barcode. 
 
 **bartender_single_com -f 2M_extracted_barcode.txt -o 2M_barcode -d 3**        
 
@@ -47,10 +47,9 @@ There is one file named 2M_extracted_barcode_umi.txt in the same folder. This fi
 
 **bartender_single_com -f 2M_extracted_barcode_umi.txt -o 2M_barcode -d 3**        
 
-Both of these commands specify the following behavior:
+You can find these two commands in two bash files(test_clustering.sh and test_clustering_umi.sh) in the example/random_small_data/ folder. Both of these commands specify the following behavior:
  
 Extracted barcodes within 3 base pairs of each other have a chance of being clustered together. 2M_extracted_barcode.txt is the input file. We name the output file starting with 2M_barcode prefix. All other parameters are in default values. Bartender will generate three output files (described in the Bartender clustering section).
-
 
 # Components
 ## Bartender Extractor
