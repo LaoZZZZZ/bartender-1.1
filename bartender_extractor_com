@@ -54,20 +54,16 @@ def parsePattern(pattern, mismatches):
 	
 	# check preceeding and succeeding.
 	parts = re.split('\[|\]', pattern)
+	assert len(parts) >= 3
 	preceedings = parts[0]
 	if preceedings:
 		if len(preceedings) > 5:
 			print("The length of preceeding sequence exceeds the maximum length(5)")
 			sys.exit(2)
-		elif mismatches == 1:
-			mutations = generateRex(preceedings, mismatches)
-			mismatches = 0	
 		else:
-			if (mismatches % 2 == 1):
-				print("invalid number mismatches: " + mismatches)
-				sys.exit(2) 
-			mutations = generateRex(preceedings, mismatches/2)
-			mismatches = mismatches/2
+			allowed_mismatches_prec = mismatches / 2 + mismatches % 2
+			mutations = generateRex(preceedings, allowed_mismatches_prec)
+			mismatches = mismatches - allowed_mismatches_prec
 		result_pattern += mutations
 		total_sub_expressions += 1
 	# check succeeding
@@ -86,7 +82,11 @@ def parsePattern(pattern, mismatches):
 		total_sub_expressions += 1
 	for p in parts[1:len(parts) - 1]:
 		if re.search(r'\d', p):
-			numeric_range = ','.join(p.strip().split('-'))
+			length_range = p.strip().split('-')
+			if (len(length_range) != 2):
+				print("invalid length range: " + p)
+				sys.exit(2)
+			numeric_range = ','.join(length_range)
 			result_pattern += '(' + candidates
 			result_pattern += '{' + numeric_range + '})'	
 		else:
@@ -109,8 +109,8 @@ def driver():
 	inputfile = ''
 	outprefix = ''
 	qual_cutoff = 1 
-	preceeding = 'TACC'
-	succeeding = 'ATAA' 
+	preceeding = ''
+	succeeding = '' 
 	parts = 0
 	mismatches = 2
     	try:
@@ -145,7 +145,7 @@ def driver():
 			try:
 				mismatches = int(a)
 				assert(mismatches >= 0)
-				assert(mismatches <= 2)	
+				assert(mismatches <= 10)	
 			except Exception as err:
                 		print("The mismatches parameter  " + a + " is not a valid input!\n")
                 		sys.exit(2)
