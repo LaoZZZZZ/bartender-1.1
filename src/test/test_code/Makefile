@@ -12,25 +12,26 @@
 # project, except GTEST_HEADERS, which you can use in your own targets
 # but shouldn't modify.
 
+CXX = g++
 # Points to the root of Google Test, relative to where this file is.
 # Remember to tweak this if you move this file.
-GTEST_DIR = ../googletest 
+GTEST_DIR = ../googletest
 GMOCK_DIR = ../googlemock
 
 # Where to find user code.
-USER_DIR = ../../
-TEST_DIR = ./
+USER_DIR = ../..
+TEST_DIR = .
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
-CPPFLAGS += -isystem $(GTEST_DIR)/include $(GMOCK_DIR)/include
+CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
 LDFLAGS	=  -lboost_regex 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = kmersDictionayTest 
+TESTS = kmersDictionaryTest 
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -91,12 +92,12 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-kmers_dictionary.o : $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/kmers_dictionary.h $(GTEST_HEADERS)
+kmers_dictionary.o : $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/kmers_dictionary.h 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/kmers_dictionary.cpp
 
 kmers_dictionary_unittest.o : $(TEST_DIR)/kmers_dictionary_unittest.cpp \
                      $(USER_DIR)/kmers_dictionary.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/kmers_dictionary_unittest.cpp
 
-kmersDictionayTest : kmers_dictionary.o kmers_dictionary_unittest.o gtest_main.a
+kmersDictionaryTest : kmers_dictionary.o kmers_dictionary_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $(LDFLAGS) $^ -o $@
