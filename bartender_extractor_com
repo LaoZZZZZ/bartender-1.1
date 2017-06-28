@@ -118,7 +118,7 @@ def driver():
     	except getopt.error,msg:
         	usage()
         	sys.exit(2)
-    	for o,a in opt:
+    	for o, a in opt:
         	if o == '-f':
             		inputfile = a
             		if not os.path.isfile(inputfile):
@@ -147,7 +147,7 @@ def driver():
 				assert(mismatches >= 0)
 				assert(mismatches <= 10)	
 			except Exception as err:
-                		print("The mismatches parameter  " + a + " is not a valid input!\n")
+                		print("The mismatches parameter " + a + " is not a valid input!\n")
                 		sys.exit(2)
         	elif o in  ("-h","--help"):
             		print usage()
