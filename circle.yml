@@ -1,0 +1,11 @@
+dependencies:
+  pre:
+   - sudo apt-get update
+   - sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev 
+   - sudo apt-get install libboost-all-dev
+compile:
+  override:
+    - make all 
+test:
+  override:
+    - cd src/test/test_code;make clean;make all;bash unit_test_runner.sh 
