@@ -8,7 +8,4 @@ compile:
     - make all 
 test:
   override:
-    - cd src/test/test_code
-    - make clean
-    - make all
-    - bash unit_test_runner.sh 
+    - cd src/test/test_code;make clean;make all;bash unit_test_runner.sh 
