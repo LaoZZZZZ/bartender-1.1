@@ -30,10 +30,15 @@ We first extract barcodes from an example fastq file (2M_tst.fq) using the barte
 **bartender_extractor_com -f 2M_test.fq -o 2M_extracted -q ? -p TACC[4-7]AA[4-7]AA[4-7]TT[4-7]ATAA -m 2**. 
 
 This command outputs the extracted barcode and the line number in input file to 2M_extracted_barcode.txt in the following format:
+
 "barcode sequence","line number"
+
 "barcode sequence","line number"
+
 "barcode sequence","line number"
-etc.
+
+...
+
 It also reports the total number of reads, total number of reads that have valid barcode, and total number of reads that have valid reads that pass the average quality score to the command line. There is a bash script containing the actual command (/example/random_small_data/test_extractor.sh). Feel free to try that script. The Bartender clustering component will also accept a unique molecular identifier (UMI) instead of a line number in these files and this is discussed below.
 
 
