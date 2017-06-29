@@ -2,15 +2,13 @@ dependencies:
   pre:
    - wget https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz
    - tar -xvf boost_1_64_0.tar.gz
-   - cd boost_1_64_0
+   - cd boost_1_64_0/
    - pwd
    - ls
    - bash bootstrap.sh
    - ./b2 install --prefix=./boost
    - export BOOST_INSTALL_DIR=./boost
    - cd ..
-general:
-  build_dir: ./
 compile:
   override:
     - make all 
