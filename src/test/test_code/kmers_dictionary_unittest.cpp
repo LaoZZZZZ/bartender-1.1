@@ -28,4 +28,3 @@ TEST(Asc2Dna, success) {
     EXPECT_EQ('G', dict->dna2asc(2));
     EXPECT_EQ('T', dict->dna2asc(3));
 }
-
