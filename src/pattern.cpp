@@ -15,7 +15,7 @@ patternParser* CreatePatternParser(const string &filename, file_format format) {
     } else if (format == FASTA) {
         return new fastaPattern(filename);
     } else {
-        throw std::runtime_error("Does not support the specified file format!\n");
+        throw std::runtime_error("Does not support the specified file format!\n It looks like the input raw reads file is not either FASTQ or FASTA!\n");
     }
 }
 

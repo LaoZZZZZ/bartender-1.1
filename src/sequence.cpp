@@ -15,5 +15,4 @@ Sequence::Sequence(const string& id,
 {
     this->init(id,seq.c_str(),qual);
 }
-
 }

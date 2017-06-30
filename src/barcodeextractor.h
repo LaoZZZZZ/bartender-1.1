@@ -47,9 +47,6 @@ private:
         return this->isMatched(seq, qual);
     }
 
-    // TODO(lu): factor out this part from the source code into the
-    // input specification. Since this only works for current barcode parttern.
-    // Should come out with a smart way to remove the spacers.
     void combinePieces(std::string& sequence, std::string& qual, boost::smatch& result);
 
 private:
