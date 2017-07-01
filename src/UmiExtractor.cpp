@@ -51,7 +51,7 @@ namespace barcodeSpace {
         }
     }
     
-    // 
+    // extract the umis and concantenate them into single string.
     const string UmiExtractor::extractUmi(const Sequence& read) {
         if (read.length() < _totalCharacters) {
             stringstream ss;
