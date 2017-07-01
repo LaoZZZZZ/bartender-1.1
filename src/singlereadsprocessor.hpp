@@ -44,6 +44,8 @@ namespace barcodeSpace {
         ~SingleReadsProcessor() {
             _barcode_dumper.close();
         }
+    private:
+        void extractAndLogCount(const Sequence& read, const size_t lineNumber, const string& umi);
     protected:
         std::unique_ptr<patternParser>  _pattern_handler;
         std::shared_ptr<BarcodeExtractor>   _barcodeExtractor;

@@ -35,6 +35,7 @@ namespace barcodeSpace {
     public:
         UmiExtractor(const vector<UmiConfig> umiConfigs);
         const string extractUmi(const Sequence& read);
+        const vector<UmiConfig> getUmiConfigs() const {return _umiConfigs}
     private:
         vector<UmiConfig> _umiConfigs;
         size_t _totalCharacters;

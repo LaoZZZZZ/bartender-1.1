@@ -39,6 +39,14 @@ public:
         this->qual.clear();
         this->id_.clear();
     }
+    // return the sub read between [startPos, endPos].
+    Sequence subRead(const int startPos, const int length) const {
+        if (length <= 0 || startPos < 0U || startPos >= this->patFw.length()) {
+            return Sequence();
+        } else {
+        return Sequence(this->id_, this->patFw.substr(startPos, length), this->qual.substr(startPos, length));
+        }
+    }
     virtual ~Sequence(){}
 private:
     void init(const std::string &id,
