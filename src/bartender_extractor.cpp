@@ -119,7 +119,7 @@ int main(int argc,char* argv[])
     size_t umiLength = -1;
     if (argc >= 9) {
         umiPosition = atoi(argv[8]);
-        assert(argv >= 10);
+        assert(argc >= 10);
         umiLength = atoi(argv[9]);
         UmiConfig umiConfig(umiPosition, umiLength);
         umiConfigs.push_back(umiConfig);
