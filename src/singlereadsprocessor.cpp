@@ -72,13 +72,13 @@ namespace barcodeSpace {
                     } else {
                         if (returnTypePrevious == FAIL) {
                             if (returnTypeAfter != FAIL) {
-                                if (returnType == REVERSE_COMPLEMENT) {
+                                if (returnTypeAfter == REVERSE_COMPLEMENT) {
                                     reverseComplementInplace(umi);
                                 }
                                 this->extractAndLogCount(after, line, umi);
                             }
                         } else {
-                            if (returnType == REVERSE_COMPLEMENT) {
+                            if (returnTypePrevious == REVERSE_COMPLEMENT) {
                                 reverseComplementInplace(umi);
                             }
                             this->extractAndLogCount(previous, line, umi);
