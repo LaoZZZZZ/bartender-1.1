@@ -55,14 +55,21 @@ void drive(const string& reads_file,
            const boost::regex& pattern,
            const string& preceeding,
            const string& suceeding,
-	   size_t num_sub_regex) {
+	       size_t num_sub_regex,
+           const vector<UmiConfig> umiConfigs) {
     
     Timer* time = new realTimer(cout);
     file_format format = FindInputFormat(reads_file);
     std::shared_ptr<BarcodeExtractor> barcode_extractor(
         new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex));
+    std::shared_ptr<UmiExtractor> umiExtractorPtr;
+    if (umiConfigs.empty()) {
+        UmiExtractor* umiExtractor = new UmiExtractor(umiConfigs);
+        umiExtractorPtr.reset(umiExtractor);
+    }
     SingleReadsProcessor processor(reads_file,
                                    barcode_extractor,
+                                   umiExtractorPtr,
                                    format,
                                    output_prefix,
                                    quality_threshold);
@@ -106,12 +113,24 @@ int main(int argc,char* argv[])
     if (argc >= 8) {
         num_sub_regex = atoi(argv[7]);
     }
+    
+    vector<UmiConfig> umiConfigs;
+    size_t umiPosition = -1;
+    size_t umiLength = -1;
+    if (argc >= 9) {
+        umiPosition = atoi(argv[8]);
+        assert(argv >= 10);
+        umiLength = atoi(argv[9]);
+        UmiConfig umiConfig(umiPosition, umiLength);
+        umiConfigs.push_back(umiConfig);
+    }
     drive(input_reads_file,
           output_prefix,
           qual_threshold,
           pattern,
           preceeding,
           suceeding,
-	  num_sub_regex);
+	      num_sub_regex,
+          umiConfigs);
     return 0;
 }

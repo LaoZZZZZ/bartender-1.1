@@ -11,16 +11,19 @@
 #include "pattern.h"
 #include "sequence.h"
 #include "util.h"
+#include "UmiExtractor.hpp"
 
 #include <string>
 #include <sstream>
 namespace barcodeSpace {
     SingleReadsProcessor::SingleReadsProcessor(const std::string& reads_file_name,
-                                               std::shared_ptr<BarcodeExtractor> extractor,
+                                               std::shared_ptr<BarcodeExtractor> barcodeExtractor,
+                                               std::shared_ptr<UmiExtractor> umiExtractor,
                                                file_format format,
                                                const std::string& output,
                                                double qual_thres) :
-                            _extractor(extractor), _formats(format), _outprefix(output),
+                            _barcodeExtractor(barcodeExtractor), _umiExtractor(umiExtractor),
+                            _formats(format), _outprefix(output),
                             _barcode_dumper(output + "_barcode.txt", false),
                             _total_reads(0), _total_barcodes(0),
                             _total_valid_barcodes(0), _quality_threshold(qual_thres){
@@ -36,23 +39,36 @@ namespace barcodeSpace {
             read.clear();
             size_t line = _pattern_handler->CurrentLine();
             _pattern_handler->parse(read, success, done);
+            // extract umi first.
+            string umi;
+            if (_umiExtractor.get() != nullptr) {
+                umi = _umiExtractor->extractUmi(read);
+            }
             // If get a read successfully, then extract the barcode from the read.
             if (success) {
-                success = _extractor->ExtractBarcode(read);
+                ExtractionResultType returnType = _barcodeExtractor->ExtractBarcode(read);
                 
                 // If extracted a barcode from the read successfully,
-                if (success) {
+                if (returnType != FAIL) {
                     // The average quality is above the threshold.
                     if (qualityCheck(read.quality(), _quality_threshold)) {
-                        ss << read.fowardSeq() << ',' << line << std::endl;
+                        if (umi.empty()) {
+                            ss << read.fowardSeq() << ',' << line << std::endl;
+                        } else {
+                            if (returnType == REVERSE_COMPLEMENT) {
+                                reverseComplementInplace(umi);
+                            }
+                            ss << read.fowardSeq() << ',' << umi << std::endl;
+                        }
                         _barcode_dumper.writeString(ss.str());
+                        // keep track all valid barcode that pass the quality check.
                         ++_total_valid_barcodes;
                         ss.str("");
                     }
-                    // Keep tract all barcodes.
+                    // Keep tract all valid barcodes.
                     ++_total_barcodes;
                 }
-		// keep tract all parsed reads.
+		       // keep tract all parsed reads.
                 ++_total_reads;
             }
         }

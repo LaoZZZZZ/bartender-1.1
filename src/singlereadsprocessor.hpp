@@ -14,6 +14,7 @@
 #include "formats.h"
 #include "patternparser.h"
 #include "typdefine.h"
+#include "UmiExtractor.hpp"
 
 #include <memory>
 #include <string>
@@ -24,7 +25,8 @@ namespace barcodeSpace {
     class SingleReadsProcessor {
     public:
         SingleReadsProcessor(const std::string& reads_file_name,
-                             std::shared_ptr<BarcodeExtractor> extractor,
+                             std::shared_ptr<BarcodeExtractor> barcodeExtractor,
+                             std::shared_ptr<UmiExtractor> umiExtractor,
                              file_format format,
                              const std::string& output,
                              double qual_threshold);
@@ -44,7 +46,8 @@ namespace barcodeSpace {
         }
     protected:
         std::unique_ptr<patternParser>  _pattern_handler;
-        std::shared_ptr<BarcodeExtractor>   _extractor;
+        std::shared_ptr<BarcodeExtractor>   _barcodeExtractor;
+        std::shared_ptr<UmiExtractor> _umiExtractor;
         OutFileBuf _barcode_dumper;
         file_format _formats;
         std::string _outprefix;
