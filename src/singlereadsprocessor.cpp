@@ -12,6 +12,7 @@
 #include "sequence.h"
 #include "util.h"
 #include "UmiExtractor.hpp"
+#include "barcodeextractor.h"
 
 #include <string>
 #include <sstream>
@@ -44,7 +45,6 @@ namespace barcodeSpace {
         int firstPartEnd = _umiExtractor->getUmiConfigs()[0].getUmiPosition();
         
         int secondPartStart =_umiExtractor->getUmiConfigs()[0].getUmiPosition() + _umiExtractor->getUmiConfigs()[0].getUmiLength();
-        
         
         while(!done) {
             read.clear();

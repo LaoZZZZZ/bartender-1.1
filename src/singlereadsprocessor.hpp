@@ -31,7 +31,7 @@ namespace barcodeSpace {
                              const std::string& output,
                              double qual_threshold);
         void extract();
-        double errorRate() const {return _extractor->ErrorRate();}
+        double errorRate() const {return _barcodeExtractor->ErrorRate();}
         // Total number of reads in the file.
         size_t TotalReads() const {return this->_total_reads;}
         
