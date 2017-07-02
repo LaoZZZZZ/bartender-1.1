@@ -28,7 +28,7 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
-LDFLAGS	=  -lboost_regex 
+LDFLAGS	= -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams
 
 # add dependency for new unit test suite.
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 
@@ -40,10 +40,13 @@ DICTIONARY_OBJECTS=$(DICTIONARY_SOURCES:.cpp=.o)
 SEQUENCE_SOURCES	= $(USER_DIR)/sequence.cpp $(TEST_DIR)/sequence_unittest.cpp
 SEQUENCE_OBJECTS=$(SEQUENCE_SOURCES:.cpp=.o)
 
+BARCODEEXTACTOR_SOURCES = $(USER_DIR)/sequence.cpp $(USER_DIR)/barcodeextractor.cpp $(USER_DIR)/util.cpp $(USER_DIR)/kmers_dictionary.cpp ./barcodeExtractor_unittest.cpp
+BARCODEEXTACTOR_OBJECTS=$(BARCODEEXTACTOR_SOURCES:.cpp=.o)
+
 TESTS = bartenderUnitTests
 
 # update this objects once more unit test is added
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS)
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS)
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -100,11 +103,10 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
 
-# Builds a sample test.  A test should link with either gtest.a or
-# gtest_main.a, depending on whether it defines its own main()
-# function.
+# Builds testing objects and unit test binay file.
+# All tests share the same main function gtest_main
 .cpp.o:
 	$(CXX)  -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@ 
 
 bartenderUnitTests: $(OBJECTS) gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
