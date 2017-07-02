@@ -34,10 +34,14 @@ LDFLAGS	=  -lboost_regex
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 
 UMIEXTRACTOR_OBJECTS=$(UMIEXTRACTOR_SOURCES:.cpp=.o)
 
-DICTIONARY_SOURCES       = $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/kmers_dictionary_unittest.cpp
+DICTIONARY_SOURCES	= $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/kmers_dictionary_unittest.cpp
 DICTIONARY_OBJECTS=$(DICTIONARY_SOURCES:.cpp=.o)
 
-TESTS = kmersDictionaryTest umiExtractorTest
+SEQUENCE_SOURCES	= $(USER_DIR)/sequence.cpp $(TEST_DIR)/sequence_unittest.cpp
+SEQUENCE_OBJECTS=$(SEQUENCE_SOURCES:.cpp=.o)
+
+TESTS = kmersDictionaryTest umiExtractorTest sequenceTest
+
 OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS)
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -104,24 +108,7 @@ kmersDictionaryTest: $(DICTIONARY_OBJECTS) gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
 
 umiExtractorTest: $(UMIEXTRACTOR_OBJECTS) gtest_main.a 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
-#umiExtractor_test: $(UMIEXTRACTOR_OBJECTS)
-#        $(CC) $(UMIEXTRACTOR_OBJECTS) -o $@ $(LDFLAGS)
-#
-#umi_extractor.o : $(USER_DIR)/umiExtractor.cpp $(USER_DIR)/umiExtractor.hpp $(USER_DIR)/sequence.h  
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/umiExtractor.cpp
-#
-#umiExtractor_unittest.o : $(TEST_DIR)/umiExtractor_unittest.cpp \
-#                     $(USER_DIR)/umiExtractor.hpp $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/umiExtractor_unittest.cpp
-#
-#umiExtractorTest : umi_extractor.o umiExtractor_unittest.o gtest_main.a
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $(LDFLAGS) $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
 
-#kmers_dictionary.o : $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/kmers_dictionary.h 
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/kmers_dictionary.cpp
-#kmers_dictionary_unittest.o : $(TEST_DIR)/kmers_dictionary_unittest.cpp \
-#                     $(USER_DIR)/kmers_dictionary.h $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/kmers_dictionary_unittest.cpp
-#kmersDictionaryTest : kmers_dictionary.o kmers_dictionary_unittest.o gtest_main.a
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $(LDFLAGS) $^ -o $@
+sequenceTest: $(SEQUENCE_OBJECTS) gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
