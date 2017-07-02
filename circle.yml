@@ -9,4 +9,4 @@ compile:
 test:
   override:
     - cd src/test/test_code;make all
-    - cd src/test/test_code;bash unit_test_runner.sh
+    - cd src/test/test_code;./bartenderUnitTests

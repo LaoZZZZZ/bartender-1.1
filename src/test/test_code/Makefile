@@ -29,8 +29,8 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
 LDFLAGS	=  -lboost_regex 
-# All tests produced by this Makefile.  Remember to add new tests you
-# created to the list.
+
+# add dependency for new unit test suite.
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 
 UMIEXTRACTOR_OBJECTS=$(UMIEXTRACTOR_SOURCES:.cpp=.o)
 
@@ -40,9 +40,11 @@ DICTIONARY_OBJECTS=$(DICTIONARY_SOURCES:.cpp=.o)
 SEQUENCE_SOURCES	= $(USER_DIR)/sequence.cpp $(TEST_DIR)/sequence_unittest.cpp
 SEQUENCE_OBJECTS=$(SEQUENCE_SOURCES:.cpp=.o)
 
-TESTS = kmersDictionaryTest umiExtractorTest sequenceTest
+TESTS = bartenderUnitTests
 
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS)
+# update this objects once more unit test is added
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS)
+
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
@@ -104,11 +106,5 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 .cpp.o:
 	$(CXX)  -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@ 
 
-kmersDictionaryTest: $(DICTIONARY_OBJECTS) gtest_main.a 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
-
-umiExtractorTest: $(UMIEXTRACTOR_OBJECTS) gtest_main.a 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
-
-sequenceTest: $(SEQUENCE_OBJECTS) gtest_main.a
+bartenderUnitTests: $(OBJECTS) gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
