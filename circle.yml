@@ -8,6 +8,5 @@ compile:
     - make all 
 test:
   override:
-    - make all:
-        pwd:./src/test/test_code
+    - cd src/test/test_code;make all
     - cd src/test/test_code;bash unit_test_runner.sh

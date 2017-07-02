@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include "../../umiExtractor.hpp"
+#include "../../UmiExtractor.hpp"
 #include "../../sequence.h"
 #include "gtest/gtest.h"
 using barcodeSpace::UmiExtractor;
