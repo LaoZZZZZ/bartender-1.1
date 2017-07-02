@@ -29,7 +29,6 @@ ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual)
     }
 
     reverseComplementInplace(sequence);
-    std::cout << sequence << std::endl;
     std::reverse(qual.begin(),qual.end());
     if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
         this->combinePieces(sequence, qual, result);
