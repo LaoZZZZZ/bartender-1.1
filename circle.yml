@@ -1,4 +1,4 @@
-\dependencies:
+dependencies:
   pre:
    - sudo apt-get update
    - sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev 
@@ -6,11 +6,9 @@
 compile:
   override:
     - make all 
+    - make clean;make all
+        pwd:test/test_code
 test:
   override:
-    - make clean
-        pwd:test/test_code
-    - make all
-        pwd:test/test_code
     - bash unit_test_runner.sh 
         pwd:test/test_code
