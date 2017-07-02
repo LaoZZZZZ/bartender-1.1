@@ -10,35 +10,32 @@ using std::string;
 
 namespace barcodeSpace {
 
-bool BarcodeExtractor::ExtractBarcode(Sequence &read)  {
-    int position = isMatched(read.fowardSeq(), read.quality());
-    return position != -1;
+ExtractionResultType BarcodeExtractor::ExtractBarcode(Sequence &read)  {
+    return isMatched(read.fowardSeq(), read.quality());
 }
     
-Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, bool& success) {
-    success = false;
+Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, ExtractionResultType& extractionResult) {
     Sequence result(read.id(), read.fowardSeq().c_str(), read.quality());
-    int pos = isMatched(result.fowardSeq(), result.quality());
-    success = pos != -1;
+    extractionResult = isMatched(result.fowardSeq(), result.quality());
     return result;
 }
 
-int BarcodeExtractor::isMatched(string& sequence, string& qual){
+ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual){
     boost::smatch result;
     // only consider full matched sequence
     if(boost::regex_search(sequence, result, _pattern, boost::match_flag_type::match_posix) && !result.empty() && result[0].matched){
-        this->combinePieces(sequence,qual,result);
-        return static_cast<int>(result.position());
+        this->combinePieces(sequence, qual, result);
+        return FORWARD;
     }
 
     reverseComplementInplace(sequence);
     //string rev_sequence = reverseComplement(sequence);
     std::reverse(qual.begin(),qual.end());
     if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
-        this->combinePieces(sequence,qual,result);
-        return static_cast<int>(result.position());
+        this->combinePieces(sequence, qual, result);
+        return REVERSE_COMPLEMENT;
     }
-    return -1;
+    return FAIL;
 }
     
 void BarcodeExtractor::combinePieces(string& sequence, string& qual, boost::smatch& result)  {

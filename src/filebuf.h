@@ -481,7 +481,7 @@ private:
     
     /**
      * Wrapper for a buffered output stream that writes characters and
-     * other data types.  This class is *not* synchronized; the caller is
+     * other data types.  This class is NOT synchronized; the caller is
      * responsible for synchronization.
      */
     class OutFileBuf {

@@ -1,2 +1,3 @@
 #!/bin/bash
 ./kmersDictionaryTest
+./umiExtractorTest

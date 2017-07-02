@@ -34,7 +34,9 @@ namespace barcodeSpace {
     class UmiExtractor {
     public:
         UmiExtractor(const vector<UmiConfig> umiConfigs);
+        // extract the umis and concantenate them into single string.
         const string extractUmi(const Sequence& read);
+	const vector<UmiConfig> getUmiConfigs() const {return _umiConfigs;}
     private:
         vector<UmiConfig> _umiConfigs;
         size_t _totalCharacters;

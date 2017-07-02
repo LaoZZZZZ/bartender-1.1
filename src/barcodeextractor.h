@@ -10,6 +10,11 @@
 #include <vector>
 
 namespace barcodeSpace{
+    enum ExtractionResultType {
+        FORWARD = 1,
+        REVERSE_COMPLEMENT = -1,
+        FAIL = 0
+    };
 class BarcodeExtractor
 {
 public:
@@ -30,10 +35,10 @@ public:
                   }
     // Extracts the barcode region from the read.
     // And change the read in place.
-    bool ExtractBarcode(Sequence& read);
+    ExtractionResultType ExtractBarcode(Sequence& read);
     // Extracts the barcode region from the given read,
     // return a new read that only contains the barcode region.
-    Sequence ExtractBarcode(const Sequence& read, bool& success);
+    Sequence ExtractBarcode(const Sequence& read, ExtractionResultType& returnType);
     double ErrorRate() const {
         if (_total_bps == 0) {
             return 0;
@@ -41,9 +46,9 @@ public:
         return static_cast<double>(_error_bps) / _total_bps;
     }
 private:
-    int isMatched(std::string& sequence, std::string& qual);
+    ExtractionResultType isMatched(std::string& sequence, std::string& qual);
 
-    int extractBarcode(std::string& seq, std::string& qual){
+    ExtractionResultType extractBarcode(std::string& seq, std::string& qual){
         return this->isMatched(seq, qual);
     }
 
