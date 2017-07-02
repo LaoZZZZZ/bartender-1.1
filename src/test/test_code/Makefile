@@ -109,4 +109,4 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(CXX)  -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@ 
 
 bartenderUnitTests: $(OBJECTS) gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) 
