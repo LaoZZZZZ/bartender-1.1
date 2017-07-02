@@ -6,9 +6,9 @@ dependencies:
 compile:
   override:
     - make all 
-    - make clean;make all
-        pwd:./src/test/test_code
 test:
   override:
-    - bash unit_test_runner.sh 
+    - make all:
+        pwd:./src/test/test_code
+    - bash unit_test_runner.sh: 
         pwd:./src/test/test_code
