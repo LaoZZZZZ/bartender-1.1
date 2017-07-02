@@ -28,7 +28,7 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
-LDFLAGS	= -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams
+LDFLAGS	= -lboost_regex -lboost_iostreams
 
 # add dependency for new unit test suite.
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 

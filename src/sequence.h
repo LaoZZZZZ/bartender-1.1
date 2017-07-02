@@ -51,6 +51,14 @@ public:
     bool operator==(const Sequence& cp) const {
         return this->id_ == cp.id() && this->fowardSeq() == cp.fowardSeq() && this->quality() == cp.quality();
     }
+    
+    Sequence& operator=(const Sequence& cp) {
+        this->id_ = cp.id();
+        this->patFw = cp.fowardSeq();
+        this->qual = cp.quality();
+        return *this;
+    }
+    
     virtual ~Sequence(){}
 private:
     void init(const std::string &id,
