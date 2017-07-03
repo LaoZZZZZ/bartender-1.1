@@ -16,7 +16,6 @@
 
 namespace barcodeSpace {
 
-
 // Check if the average quality is larger than the given threshold.
 bool qualityCheck(const std::string& qualities, double threshold);
 //TODO(lu): Implement a in-place version.
@@ -55,15 +54,7 @@ std::list<std::string> strSplit(const std::string&);
 
 void strSplit(const std::string&, std::list<std::string>&);
 
-bool isDnaSequence(const std::string& sequence) {
-    kmersDictionary* dict = kmersDictionary::getInstance();
-    for (const auto& c : sequence) {
-        if (!dict->isNucleotide(c) {
-            return false;
-        }
-    }
-    return true;
-}
+bool isDnaSequence(const std::string& sequence);
 }
 
 #endif /*ndef UTIL_H_*/

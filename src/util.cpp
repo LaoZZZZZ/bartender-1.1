@@ -132,4 +132,13 @@ void outputPositionWeightMatrix(const std::string& filename,
     }
 }
 
+bool isDnaSequence(const std::string& sequence) {
+    kmersDictionary* dict = kmersDictionary::getInstance();
+    for (const auto& c : sequence) {
+        if (!dict->isNucleotide(c)) {
+            return false;
+        }
+    }
+    return true;
+}
 }   // namespace barcodeSpace.

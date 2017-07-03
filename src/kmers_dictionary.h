@@ -28,7 +28,7 @@ public:
     // Given the coded dna bp, return then coded complementary bp
     // i.e 0(A) -> 3(T), 1(C) -> 2(G)
     char complement(int c)const {return _complement[c];}
-    bool isNucleotide(char c) {
+    bool isNucleotide(int c) {
         return _asc2dna[c] != 20U;
     }
 protected:
