@@ -9,7 +9,7 @@
 using std::string;
 
 namespace barcodeSpace {
-
+// if no match, the input read will not be changed
 ExtractionResultType BarcodeExtractor::ExtractBarcode(Sequence &read)  {
     return isMatched(read.fowardSeq(), read.quality());
 }
@@ -29,7 +29,6 @@ ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual)
     }
 
     reverseComplementInplace(sequence);
-    //string rev_sequence = reverseComplement(sequence);
     std::reverse(qual.begin(),qual.end());
     if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
         this->combinePieces(sequence, qual, result);

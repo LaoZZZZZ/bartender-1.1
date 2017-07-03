@@ -29,7 +29,7 @@ public:
                       assert(_preceeding.size());
                       assert(_suceeding.size());
                       assert(_parts%2);
-                      for (int i = 1; i <= _parts/2; ++i) {
+                      for (size_t i = 1; i <= _parts/2; ++i) {
                           _random_part_index.push_back(2*i);
                       }
                   }

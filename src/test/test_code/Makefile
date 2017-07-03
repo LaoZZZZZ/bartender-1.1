@@ -28,17 +28,26 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
-LDFLAGS	=  -lboost_regex 
-# All tests produced by this Makefile.  Remember to add new tests you
-# created to the list.
+LDFLAGS	= -lboost_regex -lboost_iostreams
+
+# add dependency for new unit test suite.
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 
 UMIEXTRACTOR_OBJECTS=$(UMIEXTRACTOR_SOURCES:.cpp=.o)
 
-DICTIONARY_SOURCES       = $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/kmers_dictionary_unittest.cpp
+DICTIONARY_SOURCES	= $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/kmers_dictionary_unittest.cpp
 DICTIONARY_OBJECTS=$(DICTIONARY_SOURCES:.cpp=.o)
 
-TESTS = kmersDictionaryTest umiExtractorTest
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS)
+SEQUENCE_SOURCES	= $(USER_DIR)/sequence.cpp $(TEST_DIR)/sequence_unittest.cpp
+SEQUENCE_OBJECTS=$(SEQUENCE_SOURCES:.cpp=.o)
+
+BARCODEEXTACTOR_SOURCES = $(USER_DIR)/sequence.cpp $(USER_DIR)/barcodeextractor.cpp $(USER_DIR)/util.cpp $(USER_DIR)/kmers_dictionary.cpp ./barcodeExtractor_unittest.cpp
+BARCODEEXTACTOR_OBJECTS=$(BARCODEEXTACTOR_SOURCES:.cpp=.o)
+
+TESTS = bartenderUnitTests
+
+# update this objects once more unit test is added
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS)
+
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
@@ -94,34 +103,10 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
 
-# Builds a sample test.  A test should link with either gtest.a or
-# gtest_main.a, depending on whether it defines its own main()
-# function.
+# Builds testing objects and unit test binay file.
+# All tests share the same main function gtest_main
 .cpp.o:
 	$(CXX)  -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@ 
 
-kmersDictionaryTest: $(DICTIONARY_OBJECTS) gtest_main.a 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
-
-umiExtractorTest: $(UMIEXTRACTOR_OBJECTS) gtest_main.a 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ 
-#umiExtractor_test: $(UMIEXTRACTOR_OBJECTS)
-#        $(CC) $(UMIEXTRACTOR_OBJECTS) -o $@ $(LDFLAGS)
-#
-#umi_extractor.o : $(USER_DIR)/umiExtractor.cpp $(USER_DIR)/umiExtractor.hpp $(USER_DIR)/sequence.h  
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/umiExtractor.cpp
-#
-#umiExtractor_unittest.o : $(TEST_DIR)/umiExtractor_unittest.cpp \
-#                     $(USER_DIR)/umiExtractor.hpp $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/umiExtractor_unittest.cpp
-#
-#umiExtractorTest : umi_extractor.o umiExtractor_unittest.o gtest_main.a
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $(LDFLAGS) $^ -o $@
-
-#kmers_dictionary.o : $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/kmers_dictionary.h 
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/kmers_dictionary.cpp
-#kmers_dictionary_unittest.o : $(TEST_DIR)/kmers_dictionary_unittest.cpp \
-#                     $(USER_DIR)/kmers_dictionary.h $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/kmers_dictionary_unittest.cpp
-#kmersDictionaryTest : kmers_dictionary.o kmers_dictionary_unittest.o gtest_main.a
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $(LDFLAGS) $^ -o $@
+bartenderUnitTests: $(OBJECTS) gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) 

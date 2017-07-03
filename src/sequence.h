@@ -39,14 +39,26 @@ public:
         this->qual.clear();
         this->id_.clear();
     }
-    // return the sub read between [startPos, endPos].
+    // return the sub read between [startPos, length + startPos).
     Sequence subRead(const int startPos, const int length) const {
-        if (length <= 0 || startPos < 0U || startPos >= this->patFw.length()) {
+        if (length <= 0 || startPos < 0 || static_cast<size_t>(startPos + length) >= this->patFw.length()) {
             return Sequence();
         } else {
-        return Sequence(this->id_, this->patFw.substr(startPos, length), this->qual.substr(startPos, length));
+            return Sequence(this->id_, this->patFw.substr(startPos, length), this->qual.substr(startPos, length));
         }
     }
+    
+    bool operator==(const Sequence& cp) const {
+        return this->id_ == cp.id() && this->fowardSeq() == cp.fowardSeq() && this->quality() == cp.quality();
+    }
+    
+    Sequence& operator=(const Sequence& cp) {
+        this->id_ = cp.id();
+        this->patFw = cp.fowardSeq();
+        this->qual = cp.quality();
+        return *this;
+    }
+    
     virtual ~Sequence(){}
 private:
     void init(const std::string &id,
