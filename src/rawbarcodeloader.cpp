@@ -7,10 +7,11 @@
 //
 
 #include "rawbarcodeloader.hpp"
-
+#include "util.h"
 #include <algorithm>
 #include <string>
 #include <vector>
+
 using namespace std;
 namespace barcodeSpace {
     RawBarcodeLoader::RawBarcodeLoader(const string& file) {
@@ -26,13 +27,21 @@ namespace barcodeSpace {
             assert(row.size() == 2);
 
             if (_table.find(row.front()) == _table.end()) {
-                _table.insert({row.front(),{row[1]}});
+                const string revComplement = reverseComplement(row.front());
+                if (_table.find(revComplement) == _table.end()) {
+                    _table.insert({row.front(),{row[1]}});
+                } else {
+                    if (isDnaSequence(row.back())) {
+                        _table[revComplement].push_back(reverseComplement(row.back()));
+                    } else {
+                        _table[revComplement].push_back(row[1]);
+                    }
+                }
             } else {
                 _table[row.front()].push_back(row[1]);
             }
             _barcode_length_range.first = std::min(row[0].length(), _barcode_length_range.first);
             _barcode_length_range.second = std::max(row[0].length(), _barcode_length_range.second);
-
             row.clear();
         }
     }

@@ -6,13 +6,15 @@ namespace barcodeSpace{
     std::shared_ptr<kmersDictionary> kmersDictionary::_pIns = std::shared_ptr<kmersDictionary>();
     kmersDictionary::kmersDictionary()
     {
-         memset(_asc2dna, 0, 256);
+         memset(_asc2dna, 20, 256);
          memset(_complement, 0, 256);
+        _asc2dna[65] = 0;
          _asc2dna[67] = 1;
          _asc2dna[71] = 2;
          //_asc2dna[78] = 4 ;
          _asc2dna[84] = 3;
 
+        _asc2dna[97] = 0;
          _asc2dna[99] = 1;
          _asc2dna[103] = 2;
          //_asc2dna[110] = 4;
@@ -35,7 +37,6 @@ namespace barcodeSpace{
          _dna2asc[2] = 'G';
          _dna2asc[3] = 'T';
          _dna2asc[4] = 'N';
-
     }
     kmersDictionary* kmersDictionary::getInstance(){
         if(!_pIns.get()){

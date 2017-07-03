@@ -5,8 +5,10 @@
 
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 
 using std::unordered_map;
+using std::unordered_set;
 namespace barcodeSpace{
 /**
  * Holds all possible characters.
@@ -26,6 +28,9 @@ public:
     // Given the coded dna bp, return then coded complementary bp
     // i.e 0(A) -> 3(T), 1(C) -> 2(G)
     char complement(int c)const {return _complement[c];}
+    bool isNucleotide(char c) {
+        return _asc2dna[c] != 20U;
+    }
 protected:
     kmersDictionary();
     bool isValid(char c);
