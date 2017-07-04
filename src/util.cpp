@@ -62,7 +62,6 @@ void reverseComplementInplace(std::string& seq) {
 }
 
 std::string reverseComplement(const std::string& seq) {
-
     kmersDictionary* dict = kmersDictionary::getInstance();
     std::string result;
     int pos = static_cast<int>(seq.length()) - 1;
