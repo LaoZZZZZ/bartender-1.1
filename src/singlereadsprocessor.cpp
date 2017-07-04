@@ -20,18 +20,38 @@ namespace barcodeSpace {
                                                file_format format,
                                                const std::string& output,
                                                double qual_thres) :
+<<<<<<< HEAD
     _extractor(extractor), _formats(format), _outprefix(output),
     _barcode_dumper(output + "_barcode.txt", false),
     _total_reads(0), _total_barcodes(0),
     _total_valid_barcodes(0), _quality_threshold(qual_thres){
         _pattern_handler.reset(CreatePatternParser(reads_file_name, format));
     }
+=======
+                            _barcodeExtractor(barcodeExtractor), _umiExtractor(umiExtractor),
+                            _formats(format), _outprefix(output),
+                            _barcode_dumper(output + "_barcode.txt", false),
+                            _total_reads(0), _total_barcodes(0),
+                            _total_valid_barcodes(0), _quality_threshold(qual_thres){
+                                _pattern_handler.reset(CreatePatternParser(reads_file_name, format));
+                                }
+>>>>>>> 3509f69... add reads processor with umi logic.
     
     void SingleReadsProcessor::extract() {
         bool done = false;
         bool success = false;
         Sequence read;
+<<<<<<< HEAD
         std::stringstream ss;
+=======
+        int firstPartStart = 0;
+
+        if (_umiExtractor.get() != nullptr) {
+        int firstPartEnd = _umiExtractor->getUmiConfigs()[0].getUmiPosition();
+        
+        int secondPartStart =_umiExtractor->getUmiConfigs()[0].getUmiPosition() + _umiExtractor->getUmiConfigs()[0].getUmiLength();
+        }
+>>>>>>> 3509f69... add reads processor with umi logic.
         while(!done) {
             read.clear();
             size_t line = _pattern_handler->CurrentLine();
