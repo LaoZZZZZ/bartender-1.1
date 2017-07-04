@@ -52,10 +52,6 @@ namespace barcodeSpace {
         size_t  _total_barcodes;
         size_t  _total_valid_barcodes;
         double  _quality_threshold;
-<<<<<<< HEAD
-=======
-        
->>>>>>> 3509f69... add reads processor with umi logic.
     };
 }   // namespace barcodeSpace
 
