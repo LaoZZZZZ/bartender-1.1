@@ -26,7 +26,6 @@ namespace barcodeSpace {
     _total_valid_barcodes(0), _quality_threshold(qual_thres){
         _pattern_handler.reset(CreatePatternParser(reads_file_name, format));
     }
-    
     void SingleReadsProcessor::extract() {
         bool done = false;
         bool success = false;
