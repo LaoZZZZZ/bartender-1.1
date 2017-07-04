@@ -25,9 +25,9 @@ namespace barcodeSpace {
         vector<string> row;
         while (_csv_reader->nextRow(&row)) {
             assert(row.size() == 2);
-
-            if (_table.find(row.front()) == _table.end()) {
-                const string revComplement = reverseComplement(row.front());
+            const std::string rawBarcode = toUpper(row.front());
+            if (_table.find(rawBarcode) == _table.end()) {
+                const string revComplement = reverseComplement(rawBarcode);
                 if (_table.find(revComplement) == _table.end()) {
                     _table.insert({row.front(),{row[1]}});
                 } else {
@@ -38,7 +38,7 @@ namespace barcodeSpace {
                     }
                 }
             } else {
-                _table[row.front()].push_back(row[1]);
+                _table[rawBarcode].push_back(row[1]);
             }
             _barcode_length_range.first = std::min(row[0].length(), _barcode_length_range.first);
             _barcode_length_range.second = std::max(row[0].length(), _barcode_length_range.second);

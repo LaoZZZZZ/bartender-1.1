@@ -6,6 +6,7 @@
 #include <iostream>
 #include <list>
 #include <memory>
+#include <boost/algorithm/string.hpp>
 
 using std::string;
 using std::list;
@@ -15,7 +16,7 @@ namespace barcodeSpace{
 std::list<std::string> strSplit(const std::string& str) {
     string tmp;
     std::list<std::string> result;
-    int len(str.length());
+    int len(static_cast<int>(str.length()));
     for(int i = 0; i < len; i++){
         if (str[i] == ',') {
             result.push_back(tmp);
@@ -32,7 +33,7 @@ std::list<std::string> strSplit(const std::string& str) {
 void strSplit(const std::string& str, std::list<std::string>& result) {
     string tmp;
     result.clear();
-    int len(str.length());
+    int len(static_cast<int>(str.length()));
     for (int i = 0; i < len; i++) {
         if(str[i] == ','){
             result.push_back(tmp);
@@ -49,7 +50,7 @@ void reverseComplementInplace(std::string& seq) {
     if (seq.empty()) return;
     kmersDictionary* dict = kmersDictionary::getInstance();
     int start = 0;
-    int end = seq.length() - 1;
+    int end = static_cast<int>(seq.length()) - 1;
     char temp;
     while (start <= end) {
         temp = dict->complement(seq[start]);
@@ -64,7 +65,7 @@ std::string reverseComplement(const std::string& seq) {
 
     kmersDictionary* dict = kmersDictionary::getInstance();
     std::string result;
-    int pos = seq.length() - 1;
+    int pos = static_cast<int>(seq.length()) - 1;
     while (pos >= 0) {
         result.push_back(dict->complement(seq[pos]));
         --pos;
@@ -140,5 +141,9 @@ bool isDnaSequence(const std::string& sequence) {
         }
     }
     return true;
+}
+
+std::string toUpper(const string& str) {
+    return boost::to_upper_copy<std::string>(str);
 }
 }   // namespace barcodeSpace.
