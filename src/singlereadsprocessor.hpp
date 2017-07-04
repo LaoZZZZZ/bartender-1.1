@@ -14,7 +14,6 @@
 #include "formats.h"
 #include "patternparser.h"
 #include "typdefine.h"
-#include "UmiExtractor.hpp"
 
 #include <memory>
 #include <string>
@@ -25,13 +24,12 @@ namespace barcodeSpace {
     class SingleReadsProcessor {
     public:
         SingleReadsProcessor(const std::string& reads_file_name,
-                             std::shared_ptr<BarcodeExtractor> barcodeExtractor,
-                             std::shared_ptr<UmiExtractor> umiExtractor,
+                             std::shared_ptr<BarcodeExtractor> extractor,
                              file_format format,
                              const std::string& output,
                              double qual_threshold);
         void extract();
-        double errorRate() const {return _barcodeExtractor->ErrorRate();}
+        double errorRate() const {return _extractor->ErrorRate();}
         // Total number of reads in the file.
         size_t TotalReads() const {return this->_total_reads;}
         
@@ -44,19 +42,16 @@ namespace barcodeSpace {
         ~SingleReadsProcessor() {
             _barcode_dumper.close();
         }
-    private:
-        void extractAndLogCount(const Sequence& read, const size_t lineNumber, const string& umi);
     protected:
         std::unique_ptr<patternParser>  _pattern_handler;
-        std::shared_ptr<BarcodeExtractor>   _barcodeExtractor;
-        std::shared_ptr<UmiExtractor> _umiExtractor;
+        std::shared_ptr<BarcodeExtractor>   _extractor;
         OutFileBuf _barcode_dumper;
         file_format _formats;
         std::string _outprefix;
         size_t  _total_reads;
         size_t  _total_barcodes;
         size_t  _total_valid_barcodes;
-        double  _quality_threshold; 
+        double  _quality_threshold;
     };
 }   // namespace barcodeSpace
 

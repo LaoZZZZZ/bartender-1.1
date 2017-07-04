@@ -69,7 +69,6 @@ void drive(const string& reads_file,
     }
     SingleReadsProcessor processor(reads_file,
                                    barcode_extractor,
-                                   umiExtractorPtr,
                                    format,
                                    output_prefix,
                                    quality_threshold);
