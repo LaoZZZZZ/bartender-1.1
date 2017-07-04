@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 #include "barcodeextractor.h"
+#include "UmiExtractor.hpp"
 #include "filebuf.h"
 #include "singlereadsprocessor.hpp"
 #include "timer.h"
@@ -63,7 +64,7 @@ void drive(const string& reads_file,
     std::shared_ptr<BarcodeExtractor> barcode_extractor(
         new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex));
     std::shared_ptr<UmiExtractor> umiExtractorPtr;
-    if (umiConfigs.empty()) {
+    if (!umiConfigs.empty()) {
         UmiExtractor* umiExtractor = new UmiExtractor(umiConfigs);
         umiExtractorPtr.reset(umiExtractor);
     }
