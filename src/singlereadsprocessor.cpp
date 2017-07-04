@@ -37,10 +37,10 @@ namespace barcodeSpace {
             _pattern_handler->parse(read, success, done);
             // If get a read successfully, then extract the barcode from the read.
             if (success) {
-                success = _extractor->ExtractBarcode(read);
+                ExtractionResultType returnType = _extractor->ExtractBarcode(read);
                 
                 // If extracted a barcode from the read successfully,
-                if (success) {
+                if (returnType != FAIL) {
                     // The average quality is above the threshold.
                     if (qualityCheck(read.quality(), _quality_threshold)) {
                         ss << read.fowardSeq() << ',' << line << std::endl;
