@@ -173,6 +173,9 @@ def driver():
 				if (intValue < 0):
 					print("invalid umi length: " + umiLength)
 					sys.exit(2)
+			except Exception as err:
+				print("The umi parameter " + a + " is not valid!\n")
+				sys.exit(2)
         	elif o in  ("-h","--help"):
             		print usage()
                 	sys.exit(0)

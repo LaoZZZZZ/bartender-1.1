@@ -9,13 +9,12 @@
 #include <string>
 #include <stdexcept>
 #include <vector>
-
+#include <list>
 //#include "kmer_freq.h"
 #include "kmers_dictionary.h"
 #include "typdefine.h"
 
 namespace barcodeSpace {
-
 
 // Check if the average quality is larger than the given threshold.
 bool qualityCheck(const std::string& qualities, double threshold);
@@ -55,7 +54,7 @@ std::list<std::string> strSplit(const std::string&);
 
 void strSplit(const std::string&, std::list<std::string>&);
 
-
+bool isDnaSequence(const std::string& sequence);
+std::string toUpper(const std::string& str);
 }
-
 #endif /*ndef UTIL_H_*/
