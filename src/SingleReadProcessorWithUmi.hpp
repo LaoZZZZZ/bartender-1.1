@@ -37,6 +37,7 @@ namespace barcodeSpace {
     private:
         void extractAndLogCount(const Sequence& read, const string& umi);
         void initializeReadsBoundaries();
+        // extracts barcode from single read and dump it to out put buffer.
         void processSingleRead(Sequence& read);
     private:
         std::shared_ptr<UmiExtractor> _umiExtractor;

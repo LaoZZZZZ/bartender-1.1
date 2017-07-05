@@ -21,9 +21,8 @@ namespace barcodeSpace {
         file_format format,
         const std::string& output,
         double qual_thres) :
-    _barcodeExtractor(extractor), _formats(format), _outprefix(output),
-    _barcode_dumper(output + "_barcode.txt", false),
-    _total_reads(0), _total_barcodes(0),
+    _barcodeExtractor(extractor), _barcode_dumper(output, false),
+    _formats(format), _outprefix(output),_total_reads(0), _total_barcodes(0),
     _total_valid_barcodes(0), _quality_threshold(qual_thres){
         _pattern_handler.reset(CreatePatternParser(reads_file_name, format));
     }
