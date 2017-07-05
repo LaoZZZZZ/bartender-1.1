@@ -41,7 +41,7 @@ public:
     }
     // return the sub read between [startPos, length + startPos).
     Sequence subRead(const int startPos, const int length) const {
-        if (length <= 0 || startPos < 0 || static_cast<size_t>(startPos + length) >= this->patFw.length()) {
+        if (length <= 0 || startPos < 0 || static_cast<size_t>(startPos + length) > this->patFw.length()) {
             return Sequence();
         } else {
             return Sequence(this->id_, this->patFw.substr(startPos, length), this->qual.substr(startPos, length));

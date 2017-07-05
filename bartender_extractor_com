@@ -109,7 +109,7 @@ def usage():
 	print("\t -o: the output prefix (required). The output filename will be output prefix + \"_barcode.txt\"")
 	print("\t -q: the ascii value for the quality threshold (optional). Only those barcodes with an average quality greater than this threshold will be kept. This is the value of the ascii character that corresponds to a quality score, not the quality score itself.  For example, the ascii character on the Illumina 1.8+ platform that corresponds to a quality of 30 is \"?\". So to filter out reads with an average quality score below 30 , the threshold should be set to \"?\". Different sequencing platforms might have different ascii character maps, so please check before determining the value. The default value is 0 (all valid barcodes are accepted).")
 	print("\t -p: the barcode pattern (required). Please follow the instruction in the readme to set up the barcode pattern.")
-	print("\t -u: the umi position and length. the position is 0-based. format is (position, length)")
+	print("\t -u: the umi position and length. the position is 0-based. format is [position, length]")
 	print("\t -m: the total number of mismatches allowed in the proceeding and succeeding sequences (optional). The default value is 2 which allows 1 mismatch only in both the proceeding and succeeding sequences. For values greater than 2, the number of allowable mismatches will be split evenly between the proceeding and succeeding sequences (e.g. a value of 4 allows 2 mismatches in each). For odd values, an extra mismatch will be allowed in the proceeding sequence.")
 def driver():
 	inputfile = ''
@@ -163,8 +163,7 @@ def driver():
                 		sys.exit(2)
 		elif o == '-u':
 			try:
-				value = a.strip('\(|\)')
-				umiPosition, umiLength = value.split(',')
+				umiPosition, umiLength = a.strip().split(',')
 				intValue = int(umiPosition)
 				if (intValue < 0):
 					print("invalid umi position: " + umiPosition)
