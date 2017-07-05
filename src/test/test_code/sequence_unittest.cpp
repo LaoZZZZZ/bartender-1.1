@@ -10,13 +10,13 @@ TEST(sequenceSubstr, success) {
     
     ASSERT_EQ(Sequence(), read.subRead(0, 0));
     ASSERT_EQ(Sequence(), read.subRead(-1, 0));
-    ASSERT_EQ(Sequence(), read.subRead(0, read.length()));
     ASSERT_EQ(Sequence(), read.subRead(0, read.length() + 1));
     ASSERT_EQ(Sequence(), read.subRead(0, -1));
               
     ASSERT_EQ(Sequence(read.id(), string("T"), string("e")), read.subRead(1, 1));
     ASSERT_EQ(Sequence(read.id(), string("TC"), string("el")), read.subRead(1, 2));
     ASSERT_EQ(Sequence("read_id", "ATCAGT", "hellol"), read.subRead(0, read.length() - 1));
+    ASSERT_EQ(read, read.subRead(0, read.length()));
 }
 
 TEST(sequenceEqual, success) {

@@ -13,6 +13,7 @@
 #include "UmiExtractor.hpp"
 #include "filebuf.h"
 #include "singlereadsprocessor.hpp"
+#include "SingleReadProcessorWithUmi.hpp"
 #include "timer.h"
 
 #include <cassert>
@@ -64,22 +65,26 @@ void drive(const string& reads_file,
     std::shared_ptr<BarcodeExtractor> barcode_extractor(
         new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex));
     std::shared_ptr<UmiExtractor> umiExtractorPtr;
+    std::shared_ptr<SingleReadsProcessor> readFileProcessor;
     if (!umiConfigs.empty()) {
         UmiExtractor* umiExtractor = new UmiExtractor(umiConfigs);
         umiExtractorPtr.reset(umiExtractor);
+        readFileProcessor.reset(new SingleReadProcessorWithUmi(
+            reads_file, barcode_extractor,format, output_prefix, quality_threshold, umiExtractorPtr));
+    } else {
+        readFileProcessor.reset(new SingleReadsProcessor(reads_file,
+                                       barcode_extractor,
+                                       format,
+                                       output_prefix,
+                                       quality_threshold));
     }
-    SingleReadsProcessor processor(reads_file,
-                                   barcode_extractor,
-                                   format,
-                                   output_prefix,
-                                   quality_threshold);
-    processor.extract();
+    readFileProcessor->extract();
     
-    cout << "Totally there are " << processor.TotalReads() << " reads in " <<  reads_file << " file!" << endl;
-    cout << "Totally there are " << processor.TotalBarcodes() << " valid barcodes from " << reads_file << " file" << endl;
-    cout << "Totally there are " << processor.TotalQualifiedBarcodes() << " valid barcodes whose quality pass the quality condition " << endl;
+    cout << "Totally there are " << readFileProcessor->TotalReads() << " reads in " <<  reads_file << " file!" << endl;
+    cout << "Totally there are " << readFileProcessor->TotalBarcodes() << " valid barcodes from " << reads_file << " file" << endl;
+    cout << "Totally there are " << readFileProcessor->TotalQualifiedBarcodes() << " valid barcodes whose quality pass the quality condition " << endl;
     
-    cout << "The estimated sequence error from the prefix and suffix parts is " << processor.errorRate() << endl;
+    cout << "The estimated sequence error from the prefix and suffix parts is " << readFileProcessor->errorRate() << endl;
     delete time;
 }
 int main(int argc,char* argv[])
@@ -115,8 +120,8 @@ int main(int argc,char* argv[])
     }
     
     vector<UmiConfig> umiConfigs;
-    size_t umiPosition = -1;
-    size_t umiLength = -1;
+    int umiPosition = -1;
+    int umiLength = -1;
     if (argc >= 9) {
         umiPosition = atoi(argv[8]);
         assert(argc >= 10);

@@ -14,6 +14,7 @@
 #include "formats.h"
 #include "patternparser.h"
 #include "typdefine.h"
+#include "sequence.h"
 
 #include <memory>
 #include <string>
@@ -29,7 +30,7 @@ namespace barcodeSpace {
                              const std::string& output,
                              double qual_threshold);
         void extract();
-        double errorRate() const {return _extractor->ErrorRate();}
+        double errorRate() const {return _barcodeExtractor->ErrorRate();}
         // Total number of reads in the file.
         size_t TotalReads() const {return this->_total_reads;}
         
@@ -39,12 +40,14 @@ namespace barcodeSpace {
         // Total number of barcoes that the average quality is above the threshold.
         size_t TotalQualifiedBarcodes() const {return this->_total_valid_barcodes;}
         
-        ~SingleReadsProcessor() {
+        virtual ~SingleReadsProcessor() {
             _barcode_dumper.close();
         }
+    private:
+        virtual void processSingleRead(Sequence& read);
     protected:
         std::unique_ptr<patternParser>  _pattern_handler;
-        std::shared_ptr<BarcodeExtractor>   _extractor;
+        std::shared_ptr<BarcodeExtractor>   _barcodeExtractor;
         OutFileBuf _barcode_dumper;
         file_format _formats;
         std::string _outprefix;
