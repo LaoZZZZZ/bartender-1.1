@@ -43,6 +43,13 @@ namespace barcodeSpace {
         size_t lineNumber = _pattern_handler->CurrentLine();
         string umi = _umiExtractor->extractUmi(read);
         Sequence previous = read.subRead(subReadsBoundaries.front().first, subReadsBoundaries.front().second);
+        // If the umi region is out of read index.
+        // exit the program
+        if (read.length() < subReadsBoundaries.back().first) {
+            std::cerr << "The umi region [" << subReadsBoundaries.front().second << ',' << subReadsBoundaries.back().first << ']' << " exceeds the read length " << read.length() << std::endl;
+            throw new runtime_error("Incompatible umi region with read length!");
+        }
+        
         Sequence after = read.subRead(
             subReadsBoundaries.back().first,
             static_cast<int>(read.length()) - subReadsBoundaries.back().first);
