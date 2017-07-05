@@ -24,7 +24,7 @@ class patternParser
 {
 public:
     patternParser(const string& file):
-        _file(file),_nakeHandler(NULL), line_num_(0){
+         line_num_(0), _file(file), _nakeHandler(NULL){
         _nakeHandler = fopen(this->_file.c_str(),"r");
         if(!(_nakeHandler)){
             throw runtime_error(string("can not open file ") + _file);

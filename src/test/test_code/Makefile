@@ -31,6 +31,9 @@ CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
 LDFLAGS	= -lboost_regex -lboost_iostreams
 
 # add dependency for new unit test suite.
+SINGLEREADSPROCESSOR_SOURCES = $(TEST_DIR)/singleReadsProcessor_unittest.cpp $(USER_DIR)/sequence.cpp $(USER_DIR)/fastqpattern.cpp $(USER_DIR)/fastapattern.cpp $(USER_DIR)/barcodeextractor.cpp $(USER_DIR)/util.cpp $(USER_DIR)/pattern.cpp $(USER_DIR)/singlereadsprocessor.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/SingleReadProcessorWithUmi.cpp $(USER_DIR)/UmiExtractor.cpp 
+SINGLEREADSPROCESSOR_OBJECTS = $(SINGLEREADSPROCESSOR_SOURCES:.cpp=.o)
+
 UMIEXTRACTOR_SOURCES	= $(USER_DIR)/sequence.cpp $(USER_DIR)/UmiExtractor.cpp ./umiExtractor_unittest.cpp 
 UMIEXTRACTOR_OBJECTS=$(UMIEXTRACTOR_SOURCES:.cpp=.o)
 
@@ -50,7 +53,7 @@ UTIL_OBJECTS=$(UTIL_SOURCES:.cpp=.o)
 TESTS = bartenderUnitTests
 
 # update this objects once more unit test is added
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS)
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS) $(SINGLEREADSPROCESSOR_OBJECTS)
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.

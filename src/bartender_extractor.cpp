@@ -66,16 +66,17 @@ void drive(const string& reads_file,
         new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex));
     std::shared_ptr<UmiExtractor> umiExtractorPtr;
     std::shared_ptr<SingleReadsProcessor> readFileProcessor;
+    const std::string output = output_prefix + "_barcode.txt";
     if (!umiConfigs.empty()) {
         UmiExtractor* umiExtractor = new UmiExtractor(umiConfigs);
         umiExtractorPtr.reset(umiExtractor);
         readFileProcessor.reset(new SingleReadProcessorWithUmi(
-            reads_file, barcode_extractor,format, output_prefix, quality_threshold, umiExtractorPtr));
+            reads_file, barcode_extractor,format, output, quality_threshold, umiExtractorPtr));
     } else {
         readFileProcessor.reset(new SingleReadsProcessor(reads_file,
                                        barcode_extractor,
                                        format,
-                                       output_prefix,
+                                       output,
                                        quality_threshold));
     }
     readFileProcessor->extract();

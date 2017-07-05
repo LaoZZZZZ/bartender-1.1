@@ -7,6 +7,7 @@
 //
 
 #include "SingleReadProcessorWithUmi.hpp"
+#include "UmiExtractor.hpp"
 #include "util.h"
 #include <limits.h>
 
