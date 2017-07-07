@@ -91,8 +91,8 @@ void fastqPattern::parseImp(Sequence& read,
                 break;
             }
             // convert N to A
-            if(toupper(c) == 'N')
-                c = 'A';
+            //if(toupper(c) == 'N')
+            //    c = 'A';
             sequence += c;
             c = this->fb_->get();
         }
