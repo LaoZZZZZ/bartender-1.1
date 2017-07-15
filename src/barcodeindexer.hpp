@@ -23,8 +23,9 @@ namespace barcodeSpace {
         BarcodeIndexer(const std::vector<int> seed_pos);
         size_t GetIndex(const std::string& barcode) {
             size_t index = 0;
+            int barcodeLength = static_cast<int>(barcode.length());
             for (const auto& p : _seed_positions) {
-                if (p >= barcode.length()) {
+                if (p >= barcodeLength) {
                     throw std::runtime_error("The seed position is larger than the barcode length!");
                 }
                 index |= _dict->asc2dna(barcode[p]);
