@@ -23,7 +23,7 @@ namespace barcodeSpace {
     public:
         ClusterBucketer(const std::vector<int>& seed_pos,
                         size_t seed_len,
-			size_t step);
+                        size_t step);
 
         bool done() const { return _cur == _indexers.size();}
         void shatter(const std::list<std::shared_ptr<BarcodeCluster>>& clusters);

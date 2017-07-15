@@ -73,7 +73,7 @@ namespace barcodeSpace {
                 std::cout << "transforming the barcodes into clusters" << std::endl;
         // 1. Transform the barcode table into a list of clusters
         this->transform(barcode_pool);
-	std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
+	    std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
         vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
         _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
         
