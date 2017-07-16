@@ -30,15 +30,15 @@ namespace barcodeSpace {
         _raw_barcodes.push_back(barcode_index);
         ClusterCount += 1;
         this->_cid = ClusterCount;
-	_size_at_time.push_back(_size);
+        _size_at_time.push_back(_size);
     }
 
     BarcodeCluster::BarcodeCluster(const std::string& center,
-                   const std::vector< std::array<int, 4> >& frequency_table,
+                                   const std::vector< std::array<int, 4> >& frequency_table,
                                    int cluster_id) :
         _center(center), _bpFrequency(frequency_table),_cid(cluster_id){
         assert(frequency_table.size() == center.length());
         _size = std::accumulate(frequency_table[0].begin(), frequency_table[0].end(), 0);
-	_size_at_time.push_back(_size);
+        _size_at_time.push_back(_size);
     }
 }

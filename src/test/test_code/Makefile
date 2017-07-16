@@ -49,13 +49,16 @@ BARCODEEXTACTOR_OBJECTS=$(BARCODEEXTACTOR_SOURCES:.cpp=.o)
 UTIL_SOURCES	= $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/util_unittest.cpp $(USER_DIR)/util.cpp  
 UTIL_OBJECTS=$(UTIL_SOURCES:.cpp=.o)
 
+CLUSTERBUCKETER_SOURCES = $(USER_DIR)/clustersbucketer.cpp $(USER_DIR)/barcodepool.cpp $(USER_DIR)/barcodeindexer.cpp $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/clusterBucketer_unittest.cpp $(USER_DIR)/barcodecluster.cpp
+CLUSTERBUCKETER_OBJECTS=$(CLUSTERBUCKETER_SOURCES:.cpp=.o)
+
 BARCODEINDEXER_SOURCES	= $(USER_DIR)/barcodeindexer.cpp $(TEST_DIR)/barcodeIndexer_unittest.cpp $(USER_DIR)/util.cpp $(USER_DIR)/kmers_dictionary.cpp
 BARCODEINDEXER_OBJECTS=$(BARCODEINDEXER_SOURCES:.cpp=.o)
 
 TESTS = bartenderUnitTests
 
 # update this objects once more unit test is added
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS) $(SINGLEREADSPROCESSOR_OBJECTS) $(BARCODEINDEXER_OBJECTS)
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS) $(SINGLEREADSPROCESSOR_OBJECTS) $(CLUSTERBUCKETER_OBJECTS) $(BARCODEINDEXER_OBJECTS)
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
