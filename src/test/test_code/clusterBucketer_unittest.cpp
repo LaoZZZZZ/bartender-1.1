@@ -111,3 +111,22 @@ TEST_F(ClusterBucketerTest, seedLengthLargerThanStepSize) {
     ASSERT_TRUE(clusterBucketerPtr->done());
 }
 
+TEST_F(ClusterBucketerTest, oneRound) {
+    size_t seedsLength = 5U;
+    size_t stepSize = 1U;
+    ClusterBucketer* bucketer = new ClusterBucketer(seeds, seedsLength, stepSize);
+    clusterBucketerPtr.reset(bucketer);
+    ASSERT_EQ(1, clusterBucketerPtr->round());
+    clusterBucketerPtr->shatter(clusters);
+    std::vector<ClusterBucketer::CBin> bins = clusterBucketerPtr->Bins();
+    // clusters AAAAA is in the first bin in the first round
+    ASSERT_EQ(1, bins[0].size());
+    // cluster AAAAT is in the fourth bin in first round
+    ASSERT_EQ(1, bins[3].size());
+    // cluster TAAAA is in the 768th bin in the first round
+    ASSERT_EQ(1, bins[768].size());
+    // cluster AACAT is in the 19th bin in the first round.
+    ASSERT_EQ(1, bins[19].size());
+    ASSERT_TRUE(clusterBucketerPtr->done());
+}
+
