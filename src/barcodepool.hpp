@@ -48,9 +48,19 @@ namespace barcodeSpace {
             return _instance;
         }
         size_t size() const {return _barcodes.size();}
+        
+        // if the barcode does not exist, return -1;
+        // This is added for testing purpose.
+        size_t barcodeIndex(const std::string& barcode) {
+            if (_barcodeIndex.find(barcode) == _barcodeIndex.end()) {
+                return -1;
+            } else {
+                return _barcodeIndex[barcode];
+            }
+        }
     private:
+        // The input vecter must be sorted.
         std::vector<std::string> uniqueElement(const std::vector<std::string>& p) {
-            
             std::vector<std::string> result;
 
             if (!p.empty()) {
@@ -75,7 +85,7 @@ namespace barcodeSpace {
         size_t _total_raw_barcodes;
         size_t _num_replicates;
         static std::shared_ptr<BarcodePool> _instance;
-        
+        std::unordered_map<std::string, size_t> _barcodeIndex;
     };
 }   // namespace barcodeSpace
 
