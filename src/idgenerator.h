@@ -7,6 +7,7 @@ namespace barcodeSpace {
 // Given a list of takened id.
 // this class could give the next smallest available id.
 // This class is designed to make the id system as small as possible.
+// This class is not thread safe.
 class IDGenerator
 {
 public:
@@ -18,6 +19,8 @@ public:
             return _available[_cur++];
         }
     }
+    // check if the given id is available
+    // The function only check if the given id is in the available list.
     bool isAvailable(int id) {
         return std::binary_search(_available.begin() + _cur, _available.end(), id);
     }

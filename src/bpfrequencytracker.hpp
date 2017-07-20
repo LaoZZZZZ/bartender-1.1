@@ -26,7 +26,7 @@ namespace barcodeSpace {
         BPFrequencyTracker(size_t num_positions);
         
         // Given the conditional position and target position,
-        // this funciton return the nucleotide frequency table of the
+        // this function returns the nucleotide frequency table of the
         // target position given the conditinoal position.
         const ConditionFrequencyTable& getConditionFrequency(int cond_pos,
                                                              int target_pos) const {
