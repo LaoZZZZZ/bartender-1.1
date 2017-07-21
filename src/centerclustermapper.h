@@ -85,7 +85,7 @@ public:
 private:
     std::vector<std::list<std::string>>     _cluster_2_center;
     std::unordered_map<std::string, int>    _center_2_cluster;
-    std::vector<std::shared_ptr<Cluster>>            _cluster_2_instance;
+    std::vector<std::shared_ptr<Cluster>>   _cluster_2_instance;
 };
 }   // namespace barcodeSpace
 #endif // CENTERCLUSTERMAPPER_H
