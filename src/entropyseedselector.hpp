@@ -36,7 +36,7 @@ namespace barcodeSpace {
         virtual ~EntropySeedSelector() {}
     private:
         
-        void CalculateEntropy(const PositionWeightMatrix&marginal_frequency_table);
+        void CalculateEntropy(const PositionWeightMatrix& marginal_frequency_table);
         /** Select the seed position by the entropy values.
          *  The seed position will be ordered by the entropy value in descending order.
          */
