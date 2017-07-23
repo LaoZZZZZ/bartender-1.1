@@ -42,12 +42,10 @@ namespace barcodeSpace {
          */
         void SelectSeeds();
         
-        
         std::vector<double> _entropy;
         std::vector<int>    _seeds;
         double              _entropy_threshold;
     };
-    
 }   // namespace barcodeSpace
 
 #endif /* entropyseedselector_hpp */

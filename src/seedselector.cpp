@@ -17,7 +17,6 @@
 
 using namespace std;
 namespace barcodeSpace {
-
     SeedSelector::SeedSelector(int barcode_length) :_barcode_length(barcode_length) {
     }
 
