@@ -53,7 +53,4 @@ namespace barcodeSpace {
             }
         }
     }
-
-    
-    
 }   // namespace barcodeSpace
