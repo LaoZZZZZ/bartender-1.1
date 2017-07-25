@@ -1,5 +1,4 @@
 #include "centerrecalibrator.h"
-#include "kmers_dictionary.h"
 #include "split_util.h"
 #include "typdefine.h"
 
@@ -19,7 +18,7 @@ CenterRecalibrator::CenterRecalibrator(double entropy_threshold,
     : _entropy_threshold(entropy_threshold), _maximum_centers(maximum_center),
       _p_value(p_value), _error_rate(error_rate), _mixture_bp_tester(_p_value, _error_rate)
 {
-
+    kmersDictionaryPtr = kmersDictionary::getAutoInstance();
 }
 
 bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<int, 4>>& base_freq,
@@ -49,12 +48,12 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
                     const std::vector<std::array<int, 4>>& base_freq,
                     const std::vector<double>& entropies,
                     bool& truncated) {
+    assert(!entropies.empty());
     std::vector<string>   centers;
     std::vector<int> majorities = center(base_freq);
-    std::shared_ptr<kmersDictionary> dict = kmersDictionary::getAutoInstance();
     centers.push_back("");
     for(const auto& bp : majorities) {
-        centers.back().push_back(dict->dna2asc(bp));
+        centers.back().push_back(kmersDictionaryPtr->dna2asc(bp));
     }
     std::vector<bool> checked(entropies.size(), false);
     std::vector<std::pair<double, size_t>> heap_entropy;
@@ -62,7 +61,6 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
         heap_entropy.push_back({entropies[i],i});
     }
     std::make_heap(heap_entropy.begin(), heap_entropy.end(), [](const std::pair<double, size_t>& v1, const std::pair<double, size_t>& v2) {return v1.first < v2.first;});
-    kmer mask = pow(4, entropies.size()) - 1;
     while(!truncated && !heap_entropy.empty()) {
         size_t index = heap_entropy.front().second;
         if (heap_entropy.front().first > _entropy_threshold) {
@@ -81,7 +79,7 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
                             break;
                         }
                         std::string mut = centers[cp];
-                        mut[index] = dict->dna2asc(bp);
+                        mut[index] = kmersDictionaryPtr->dna2asc(bp);
                         centers.push_back(mut);
                     }
                 }
@@ -127,7 +125,7 @@ std::vector<kmer> CenterRecalibrator::IdentifyCentersImp(const std::vector<std::
             //assert(total > 0);
             //double proportion = 0.0f;
             size_t sz = centers.size();
-            for (int bp = 0; bp < 4; ++bp) {
+            for (size_t bp = 0; bp < 4; ++bp) {
                 if (bp == majority) continue;
                 //proportion = base_freq[index][bp] / total;
                 // mixture base pair position

@@ -35,7 +35,7 @@ namespace barcodeSpace {
         
         void addFrequency(const std::string& seq,
                           size_t freq = 1);
-        // Get the
+        // Get the marginal frequency table for a single position.
         const std::array<int,4>& getMarginalFrequency(int position) const {
             return _self_marginal_frequency[position];
         }
