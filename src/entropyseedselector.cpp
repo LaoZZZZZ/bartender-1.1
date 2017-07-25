@@ -20,7 +20,7 @@ namespace barcodeSpace {
     
     // Calculate the binary entropy.
     void EntropySeedSelector::CalculateEntropy(const PositionWeightMatrix& marginal_frequency_table) {
-        for (size_t i = 0; i < this->barcodeLength(); ++i) {
+        for (int i = 0; i < this->barcodeLength(); ++i) {
             _entropy[i] = Entropy(marginal_frequency_table[i]);
         }
     }

@@ -16,9 +16,9 @@ using std::array;
 using std::vector;
 namespace barcodeSpace {
     BPFrequencyTracker::BPFrequencyTracker(size_t num_positions) {
-        
         _total_position = num_positions;
-        
+        assert(_total_position > 0);
+        _totalFrequency = 0;
         _condition_frequency_tracker.assign(num_positions, vector<ConditionFrequencyTable>(num_positions,ConditionFrequencyTable()));
         _self_marginal_frequency.assign(_total_position,array<int,4>());
        
@@ -39,15 +39,13 @@ namespace barcodeSpace {
                                           size_t freq) {
         assert(seq.length() == _total_position);
         for (size_t pos = 0; pos < _total_position; ++pos) {
-           
             _bps_buffer[pos] = _dict->asc2dna(seq[pos]);
-
             _self_marginal_frequency[pos][_bps_buffer[pos]] += 1;
         }
+        _totalFrequency += freq;
         
         // update the conditional frequency table
-        
-        for (int pos = 0; pos < _total_position - 1; ++pos) {
+        for (size_t pos = 0; pos < _total_position - 1; ++pos) {
             for (size_t n_pos = pos + 1; n_pos < _total_position; ++n_pos) {
                 _condition_frequency_tracker[pos][n_pos][_bps_buffer[pos]][_bps_buffer[n_pos]] += freq;
             }
