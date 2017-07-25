@@ -42,10 +42,7 @@ namespace barcodeSpace {
         
         size_t numberOfPositions()const {return _total_position;}
         size_t totalFrequency() const {
-
-            return _self_marginal_frequency.empty()? 0:std::accumulate(_self_marginal_frequency.front().begin(),
-                                   _self_marginal_frequency.front().end(),
-                                   0U);
+            return _totalFrequency;
         }
         const std::vector<std::array<int, 4>>& getMarginalFrequencyTable() const {return _self_marginal_frequency;}
     private:
@@ -60,7 +57,7 @@ namespace barcodeSpace {
         // keep track the marginal nucleotide frequency for each position.
         std::vector<std::array<int, 4>>    _self_marginal_frequency;
         
-        
+        size_t _totalFrequency;
         std::vector<int> _bps_buffer;
     };
 }   // namespace barcodeSpace
