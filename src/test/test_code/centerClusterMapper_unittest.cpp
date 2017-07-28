@@ -26,7 +26,7 @@ TEST(CenterClusterMapperTest, empty) {
     ASSERT_THROW(centerClusterMapper.getClusterByID(10), std::out_of_range);
 }
 
-TEST(CenterClusterMapperTest, removeCluster) {
+TEST(CenterClusterMapperTest, addAndRemoveCluster) {
     CenterClusterMapper centerClusterMapper(10);
     
     const vector<array<int,4>> frequency_table({{{17, 3, 0, 0}},

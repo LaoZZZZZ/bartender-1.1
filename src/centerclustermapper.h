@@ -93,6 +93,9 @@ public:
     }
 
     size_t numberOfClusters() const {return _numOfClusters;}
+    size_t size() const {
+        return _cluster_2_instance.size();
+    }
 
 private:
     std::vector<std::list<std::string>>     _cluster_2_center;
