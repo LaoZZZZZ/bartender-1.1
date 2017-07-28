@@ -31,11 +31,17 @@ public:
 
     // Checks if it has the cluster.
     bool hasCluster(size_t c_id) {
+        if (c_id >= _cluster_2_instance.size()) {
+            throw std::out_of_range("The id exceeds the maximum possible id.");
+        }
         return _cluster_2_instance[c_id].get() != NULL;
     }
 
     // RClusterResultProcessoremoves the cluster and its centers.
     void removeCluster(size_t cid) {
+        if (_numOfClusters <= 0) {
+            return;
+        }
         assert(cid < _cluster_2_instance.size());
         if (_cluster_2_instance[cid].get()) {
             _cluster_2_instance[cid].reset();
@@ -44,6 +50,7 @@ public:
             }
             _cluster_2_center[cid].clear();
         }
+        _numOfClusters -= 1;
     }
 
     std::shared_ptr<Cluster> getClusterByCenter(const std::string& c) {
@@ -56,18 +63,23 @@ public:
 
     // Gets the cluster pointer.
     const std::shared_ptr<Cluster>& getClusterByID(size_t id) {
-        assert(id < _cluster_2_instance.size());
+        if (id >= _cluster_2_instance.size()) {
+            throw std::out_of_range("The id exceeds the maximum possible id.");
+        }
         return _cluster_2_instance[id];
     }
 
     // Adds mapping pair between the cluster and its centers.
     void addPair(const std::shared_ptr<Cluster>& cl, const std::vector<std::string>& centers) {
         assert(cl.get());
-        int id = cl->ClusterID();
-        assert(id < _cluster_2_center.size());
+        size_t id = cl->ClusterID();
+        if (id >= _cluster_2_instance.size()) {
+            throw std::out_of_range("The id exceeds the maximum possible id.");
+        }
         if (_cluster_2_instance[id].get()) {
             throw std::runtime_error("Already have cluster " + std::to_string(id) + "when adding it to linkmapper!\n");
         }
+        _numOfClusters += 1;
         _cluster_2_instance[id] = cl;
         for (const auto& c : centers) {
             _cluster_2_center[id].push_back(c);
@@ -80,12 +92,13 @@ public:
         }
     }
 
-    size_t size() const {return _cluster_2_instance.size();}
+    size_t numberOfClusters() const {return _numOfClusters;}
 
 private:
     std::vector<std::list<std::string>>     _cluster_2_center;
     std::unordered_map<std::string, int>    _center_2_cluster;
     std::vector<std::shared_ptr<Cluster>>   _cluster_2_instance;
+    size_t _numOfClusters;
 };
 }   // namespace barcodeSpace
 #endif // CENTERCLUSTERMAPPER_H

@@ -17,7 +17,6 @@ using namespace std;
 namespace barcodeSpace {
     std::shared_ptr<BarcodePool> BarcodePool::_instance = nullptr;
     void BarcodePool::createInstance(std::unordered_map<std::string, std::vector<std::string>>& raw_counts) {
-        //assert(_instance.get() == nullptr);
         _instance.reset(new BarcodePool(raw_counts));
     }
 BarcodePool::BarcodePool(std::unordered_map<std::string, std::vector<std::string>>& raw_counts) {
