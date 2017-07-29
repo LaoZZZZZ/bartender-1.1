@@ -18,7 +18,6 @@ void MergeByCenters::merge(const std::list<std::shared_ptr<Cluster>>& clusters) 
     if (clusters.empty()) {
         return;
     }
-    size_t klen = 0;
     int max_id = 0;
     for (const auto& c : clusters) {
         max_id = std::max(max_id, c->ClusterID());

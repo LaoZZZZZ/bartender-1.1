@@ -23,6 +23,9 @@ public:
             std::string temp = center;
             for (size_t bp = 0; bp < 4; ++bp) {
                 temp[i] = _dict->dna2asc(bp);
+                if (temp[i] == center[i]) {
+                    continue;
+                }
                 mutated_center.push_back(temp);
             }
         }
@@ -41,6 +44,9 @@ public:
             std::string temp = center;
             for (size_t bp = 0; bp < 4; ++bp) {
                 temp[i] = _dict->dna2asc(bp);
+                if (temp[i] == center[i]) {
+                    continue;
+                }
                 result.push_back(temp);
             }
         }

@@ -36,18 +36,16 @@ namespace barcodeSpace {
         virtual ~EntropySeedSelector() {}
     private:
         
-        void CalculateEntropy(const PositionWeightMatrix&marginal_frequency_table);
+        void CalculateEntropy(const PositionWeightMatrix& marginal_frequency_table);
         /** Select the seed position by the entropy values.
          *  The seed position will be ordered by the entropy value in descending order.
          */
         void SelectSeeds();
         
-        
         std::vector<double> _entropy;
         std::vector<int>    _seeds;
         double              _entropy_threshold;
     };
-    
 }   // namespace barcodeSpace
 
 #endif /* entropyseedselector_hpp */
