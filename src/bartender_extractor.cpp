@@ -130,6 +130,7 @@ int main(int argc,char* argv[])
         UmiConfig umiConfig(umiPosition, umiLength);
         umiConfigs.push_back(umiConfig);
     }
+    
     drive(input_reads_file,
           output_prefix,
           qual_threshold,

@@ -22,17 +22,22 @@ Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, ExtractionResult
 
 ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual){
     boost::smatch result;
-    // only consider full matched sequence
-    if(boost::regex_search(sequence, result, _pattern, boost::match_flag_type::match_posix) && !result.empty() && result[0].matched){
-        this->combinePieces(sequence, qual, result);
-        return FORWARD;
+    // if we consider forward or both, we first check the forward direction match.
+    if (_strandDirection != REVERSE) {
+        // only consider full matched sequence
+        if(boost::regex_search(sequence, result, _pattern, boost::match_flag_type::match_posix) && !result.empty() && result[0].matched){
+            this->combinePieces(sequence, qual, result);
+            return FORWARD;
+        }
     }
-
-    reverseComplementInplace(sequence);
-    std::reverse(qual.begin(),qual.end());
-    if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
-        this->combinePieces(sequence, qual, result);
-        return REVERSE_COMPLEMENT;
+    
+    if (_strandDirection != FORWARD) {
+        reverseComplementInplace(sequence);
+        std::reverse(qual.begin(),qual.end());
+        if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
+            this->combinePieces(sequence, qual, result);
+            return REVERSE_COMPLEMENT;
+        }
     }
     return FAIL;
 }
