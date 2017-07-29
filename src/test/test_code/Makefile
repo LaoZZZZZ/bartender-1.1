@@ -49,13 +49,40 @@ BARCODEEXTACTOR_OBJECTS=$(BARCODEEXTACTOR_SOURCES:.cpp=.o)
 UTIL_SOURCES	= $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/util_unittest.cpp $(USER_DIR)/util.cpp  
 UTIL_OBJECTS=$(UTIL_SOURCES:.cpp=.o)
 
+BARCODEMUTATIONGENERATOR_SOURCES	= $(USER_DIR)/barcodemutationgenerator.cpp $(TEST_DIR)/barcodeMutationGenerator_unittest.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/util.cpp
+BARCODEMUTATIONGENERATOR_OBJECTS=$(BARCODEMUTATIONGENERATOR_SOURCES:.cpp=.o)
+
+BARCODEPOOL_SOURCES	= $(USER_DIR)/barcodepool.cpp $(TEST_DIR)/barcodePool_unittest.cpp
+BARCODEPOOL_OBJECTS=$(BARCODEPOOL_SOURCES:.cpp=.o)
+
+CLUSTERBUCKETER_SOURCES = $(USER_DIR)/clustersbucketer.cpp $(USER_DIR)/barcodepool.cpp $(USER_DIR)/barcodeindexer.cpp $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/clusterBucketer_unittest.cpp $(USER_DIR)/barcodecluster.cpp
+CLUSTERBUCKETER_OBJECTS=$(CLUSTERBUCKETER_SOURCES:.cpp=.o)
+
+PCRPROCESSOR_SOURCES = $(USER_DIR)/pcrprocessor.cpp $(USER_DIR)/barcodepool.cpp  $(USER_DIR)/kmers_dictionary.cpp $(TEST_DIR)/pcrProcessor_unittest.cpp $(USER_DIR)/barcodecluster.cpp
+PCRPROCESSOR_OBJECTS=$(PCRPROCESSOR_SOURCES:.cpp=.o)
+
 BARCODEINDEXER_SOURCES	= $(USER_DIR)/barcodeindexer.cpp $(TEST_DIR)/barcodeIndexer_unittest.cpp $(USER_DIR)/util.cpp $(USER_DIR)/kmers_dictionary.cpp
 BARCODEINDEXER_OBJECTS=$(BARCODEINDEXER_SOURCES:.cpp=.o)
+
+IDGENERATOR_SOURCES = $(USER_DIR)/idgenerator.cpp $(TEST_DIR)/idGenerator_unittest.cpp
+IDGENERATOR_OBJECTS=$(IDGENERATOR_SOURCES:.cpp=.o)
+
+CENTERRECALIBRATOR_SOURCES = $(USER_DIR)/centerrecalibrator.cpp $(TEST_DIR)/centerRecalibrator_unittest.cpp $(USER_DIR)/mixturebptester.cpp $(USER_DIR)/kmers_dictionary.cpp
+CENTERRECALIBRATOR_OBJECTS=$(CENTERRECALIBRATOR_SOURCES:.cpp=.o)
+
+SEEDSELECTOR_SOURCES = $(USER_DIR)/seedselector.cpp $(TEST_DIR)/seedSelector_unittest.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/bpfrequencytracker.cpp $(USER_DIR)/entropyseedselector.cpp
+SEEDSELECTOR_OBJECTS=$(SEEDSELECTOR_SOURCES:.cpp=.o)
+
+BPFREQUENCYTRACKER_SOURCES = $(USER_DIR)/bpfrequencytracker.cpp $(TEST_DIR)/bpFrequencyTracker_unittest.cpp $(USER_DIR)/kmers_dictionary.cpp
+BPFREQUENCYTRACKER_OBJECTS=$(BPFREQUENCYTRACKER_SOURCES:.cpp=.o)
+
+CENTERCLUSTERMAPPER_SOURCES = $(USER_DIR)/centerclustermapper.cpp $(TEST_DIR)/centerClusterMapper_unittest.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/barcodecluster.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/barcodepool.cpp
+CENTERCLUSTERMAPPER_OBJECTS=$(CENTERCLUSTERMAPPER_SOURCES:.cpp=.o)
 
 TESTS = bartenderUnitTests
 
 # update this objects once more unit test is added
-OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS) $(SINGLEREADSPROCESSOR_OBJECTS) $(BARCODEINDEXER_OBJECTS)
+OBJECTS = $(UMIEXTRACTOR_OBJECTS) $(DICTIONARY_OBJECTS) $(SEQUENCE_OBJECTS) $(BARCODEEXTACTOR_OBJECTS) $(UTIL_OBJECTS) $(SINGLEREADSPROCESSOR_OBJECTS) $(CLUSTERBUCKETER_OBJECTS) $(BARCODEINDEXER_OBJECTS) $(BARCODEPOOL_OBJECTS) $(IDGENERATOR_OBJECTS) $(PCRPROCESSOR_OBJECTS) $(BARCODEMUTATIONGENERATOR_OBJECTS) $(CENTERRECALIBRATOR_OBJECTS) $(SEEDSELECTOR_OBJECTS) $(BPFREQUENCYTRACKER_OBJECTS) $(CENTERCLUSTERMAPPER_OBJECTS)
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.

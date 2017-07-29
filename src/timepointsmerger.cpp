@@ -34,21 +34,21 @@ void TimePointsMerger::merge() {
     // Build up the used id table, which is used in merge function
     // It is to make sure that the merged clusters have unique id each.
 
-    // First merge those clusters that have at least one centers thar
+    // First merge those clusters that have at least one centers that
     // are exactly the same.
     CenterClusterMapperIterator iter_1(_t1_center_cluster_linker);
     if (_t2_center_cluster_linker.get() == NULL) {
-	while (iter_1.has_next()) {
-           const std::shared_ptr<Cluster> c1 = iter_1.next();
-           std::vector<size_t> my_timepoints = {0};
-            my_timepoints.insert(my_timepoints.end(), c1->columns().begin(), c1->columns().end());
-            //std::vector<size_t> my_timepoints = cl->columns();
-            assert(my_timepoints.size() == _num_time_points + 1);
-            //my_timepoints.push_front(0);
-            c1->SetTimePointFrequency(my_timepoints);
-            _result.push_back(c1);
-	}		
-	return;	
+        while (iter_1.has_next()) {
+               const std::shared_ptr<Cluster> c1 = iter_1.next();
+               std::vector<size_t> my_timepoints = {0};
+                my_timepoints.insert(my_timepoints.end(), c1->columns().begin(), c1->columns().end());
+                //std::vector<size_t> my_timepoints = cl->columns();
+                assert(my_timepoints.size() == _num_time_points + 1);
+                //my_timepoints.push_front(0);
+                c1->SetTimePointFrequency(my_timepoints);
+                _result.push_back(c1);
+        }
+        return;
     }
     while (iter_1.has_next()) {
         const std::shared_ptr<Cluster> cl = iter_1.next();
@@ -87,8 +87,8 @@ void TimePointsMerger::merge() {
     while(iter_1.has_next()) {
     //for (const auto& cl : unmatched_cluster_t1) {
         const std::shared_ptr<Cluster> cl = iter_1.next();
-        assert(cl.get());
-	mutated_center.clear();
+        assert(cl.get() != nullptr);
+	    mutated_center.clear();
         _mutator.mutateCenterInplace(cl->center(), mutated_center);
         double ratio = 0;
         double sz = cl->size();

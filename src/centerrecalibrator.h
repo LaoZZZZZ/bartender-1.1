@@ -3,6 +3,7 @@
 
 #include "typdefine.h"
 #include "mixturebptester.h"
+#include "kmers_dictionary.h"
 
 #include <array>
 #include <algorithm>
@@ -28,7 +29,6 @@ public:
     bool IdentifyCenters(const std::vector<std::array<int, 4>>& cluster_bp_frequency,
                          std::vector<std::string>* centers);
 private:
-    
     std::vector<kmer> IdentifyCentersImp(const std::vector<std::array<int, 4>>& base_freq,
                                          const std::vector<double>& entropies,
                                          bool& truncated);
@@ -43,6 +43,7 @@ private:
     double _p_value;
     double _error_rate;
     MixtureBPTester _mixture_bp_tester;
+    std::shared_ptr<kmersDictionary> kmersDictionaryPtr;
 };
 }   // namespace barcodeSpace
 #endif // CENTERRECALIBRATOR_H
