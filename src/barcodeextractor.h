@@ -17,9 +17,9 @@ enum ExtractionResultType {
 };
     
     enum StrandDirection {
-        FORWARD = 0,
-        BOTH,
-        REVERSE
+        FORWARD_DIRECTION = 0,
+        BOTH_DIRECTION,
+        REVERSE_DIRECTION
     };
 class BarcodeExtractor
 {
@@ -28,7 +28,7 @@ public:
                      const std::string& preceeding = "",
                      const std::string& suceeding = "",
                      size_t parts = 0,
-                     const StrandDirection strandDirection = FORWARD)
+                     const StrandDirection strandDirection = FORWARD_DIRECTION)
                 : _pattern(pattern), _preceeding(preceeding),
                   _suceeding(suceeding), _parts(parts),
                   _error_bps(0), _total_bps(0), _strandDirection(strandDirection){

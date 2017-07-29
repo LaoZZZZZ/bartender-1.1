@@ -23,15 +23,14 @@ Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, ExtractionResult
 ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual){
     boost::smatch result;
     // if we consider forward or both, we first check the forward direction match.
-    if (_strandDirection != REVERSE) {
+    if (_strandDirection != REVERSE_DIRECTION) {
         // only consider full matched sequence
         if(boost::regex_search(sequence, result, _pattern, boost::match_flag_type::match_posix) && !result.empty() && result[0].matched){
             this->combinePieces(sequence, qual, result);
             return FORWARD;
         }
     }
-    
-    if (_strandDirection != FORWARD) {
+    if (_strandDirection != FORWARD_DIRECTION) {
         reverseComplementInplace(sequence);
         std::reverse(qual.begin(),qual.end());
         if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
