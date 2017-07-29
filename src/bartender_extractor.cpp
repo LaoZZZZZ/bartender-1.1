@@ -58,12 +58,13 @@ void drive(const string& reads_file,
            const string& preceeding,
            const string& suceeding,
 	       size_t num_sub_regex,
-           const vector<UmiConfig> umiConfigs) {
+           const vector<UmiConfig> umiConfigs,
+           const StrandDirection direction) {
     
     Timer* time = new realTimer(cout);
     file_format format = FindInputFormat(reads_file);
     std::shared_ptr<BarcodeExtractor> barcode_extractor(
-        new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex));
+        new BarcodeExtractor(pattern,preceeding, suceeding, num_sub_regex, direction));
     std::shared_ptr<UmiExtractor> umiExtractorPtr;
     std::shared_ptr<SingleReadsProcessor> readFileProcessor;
     const std::string output = output_prefix + "_barcode.txt";
@@ -120,16 +121,28 @@ int main(int argc,char* argv[])
         num_sub_regex = atoi(argv[7]);
     }
     
+    StrandDirection direction = FORWARD_DIRECTION;
+    if (argc >= 9) {
+        int dir = atoi(argv[8]);
+        assert(dir == 0 || dir == -1 || dir == 1);
+        if (dir == 0) {
+            direction = BOTH_DIRECTION;
+        } else if (dir == -1) {
+            direction = REVERSE_DIRECTION;
+        }
+    }
+    
     vector<UmiConfig> umiConfigs;
     int umiPosition = -1;
     int umiLength = -1;
-    if (argc >= 9) {
-        umiPosition = atoi(argv[8]);
-        assert(argc >= 10);
-        umiLength = atoi(argv[9]);
+    if (argc >= 10) {
+        umiPosition = atoi(argv[9]);
+        assert(argc >= 11);
+        umiLength = atoi(argv[10]);
         UmiConfig umiConfig(umiPosition, umiLength);
         umiConfigs.push_back(umiConfig);
     }
+    
     drive(input_reads_file,
           output_prefix,
           qual_threshold,
@@ -137,6 +150,7 @@ int main(int argc,char* argv[])
           preceeding,
           suceeding,
 	      num_sub_regex,
-          umiConfigs);
+          umiConfigs,
+          direction);
     return 0;
 }

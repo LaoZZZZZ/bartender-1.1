@@ -10,10 +10,16 @@
 #include <vector>
 
 namespace barcodeSpace{
-    enum ExtractionResultType {
-        FORWARD = 1,
-        REVERSE_COMPLEMENT = -1,
-        FAIL = 0
+enum ExtractionResultType {
+    FORWARD = 1,
+    REVERSE_COMPLEMENT = -1,
+    FAIL = 0
+};
+    
+    enum StrandDirection {
+        FORWARD_DIRECTION = 0,
+        BOTH_DIRECTION,
+        REVERSE_DIRECTION
     };
 class BarcodeExtractor
 {
@@ -21,10 +27,11 @@ public:
     BarcodeExtractor(const boost::regex& pattern,
                      const std::string& preceeding = "",
                      const std::string& suceeding = "",
-		     size_t parts = 0)
+                     size_t parts = 0,
+                     const StrandDirection strandDirection = FORWARD_DIRECTION)
                 : _pattern(pattern), _preceeding(preceeding),
                   _suceeding(suceeding), _parts(parts),
-                  _error_bps(0), _total_bps(0){
+                  _error_bps(0), _total_bps(0), _strandDirection(strandDirection){
                       
                       assert(_preceeding.size());
                       assert(_suceeding.size());
@@ -62,6 +69,7 @@ private:
     size_t          _error_bps;
     size_t          _total_bps;
     std::vector<int> _random_part_index;
+    StrandDirection _strandDirection;
 };
 }   // namespace barcodeSpace
 #endif // BARCODEEXTRACTOR_H

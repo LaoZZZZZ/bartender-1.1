@@ -104,12 +104,13 @@ def parsePattern(pattern, mismatches):
 	return (preceedings, succeedings, total_sub_expressions, result_pattern)
 
 def usage():
-	print("\tThere are 5 options, the first 3 is required, the remainings are optional,for help use -h or --help:")
+	print("\tThere are 7 options, the first 3 is required, the remainings are optional,for help use -h or --help:")
 	print( "\t -f: the input reads file (required). Only supports FASTQ and FASTA.")
 	print("\t -o: the output prefix (required). The output filename will be output prefix + \"_barcode.txt\"")
 	print("\t -q: the ascii value for the quality threshold (optional). Only those barcodes with an average quality greater than this threshold will be kept. This is the value of the ascii character that corresponds to a quality score, not the quality score itself.  For example, the ascii character on the Illumina 1.8+ platform that corresponds to a quality of 30 is \"?\". So to filter out reads with an average quality score below 30 , the threshold should be set to \"?\". Different sequencing platforms might have different ascii character maps, so please check before determining the value. The default value is 0 (all valid barcodes are accepted).")
 	print("\t -p: the barcode pattern (required). Please follow the instruction in the readme to set up the barcode pattern.")
 	print("\t -u: the umi position and length. the position is 0-based. format is [position, length]")
+	print("\t -d: the strand direction when extracting barcode. There are three possible options-forward, both and reverse complement. There are short and full values(case insensitive) for each option. forward: f or forward; both: b or both; reverse complement: rc or reverse_complement. For example -d=f means forward direction, which is equivalent to -d=forward. -d=rc means reverse complement, which is equivalent to -d=reverse_complement. you can also specify this option with --direction and all possible values, i.e. --direction=forward, which means forward strand direction.")
 	print("\t -m: the total number of mismatches allowed in the proceeding and succeeding sequences (optional). The default value is 2 which allows 1 mismatch only in both the proceeding and succeeding sequences. For values greater than 2, the number of allowable mismatches will be split evenly between the proceeding and succeeding sequences (e.g. a value of 4 allows 2 mismatches in each). For odd values, an extra mismatch will be allowed in the proceeding sequence.")
 def driver():
 	inputfile = ''
@@ -121,9 +122,10 @@ def driver():
 	mismatches = 2
 	umiPosition = ''
 	umiLength = '' 
-	
+	# 1 means forward, 0 means both, -1 means reverse complement
+	direction = 1	
     	try:
-        	opt,args = getopt.getopt(sys.argv[1:],"f:o:q:p:l:r:m:u:h",["help"])
+        	opt,args = getopt.getopt(sys.argv[1:],"hd:p:m:u:f:o:q:",["help", "direction="])
     	except getopt.error,msg:
         	usage()
         	sys.exit(2)
@@ -175,6 +177,21 @@ def driver():
 			except Exception as err:
 				print("The umi parameter " + a + " is not valid!\n")
 				sys.exit(2)
+		elif o in ("-d", "--direction"):
+			try:
+				strDirection = a.strip().lower()
+				print(strDirection)
+				if strDirection in ['f', 'forward']:
+					direction = 1
+				elif strDirection in ['b', 'both']:
+					direction = 0
+				else:
+					if strDirection not in ['rc', 'reverse_complement']:
+						raise ValueError
+					direction = -1		
+			except Exception as err:
+				print("invalid direction parameter: " + a + '\n')
+				sys.exit(2)
         	elif o in  ("-h","--help"):
             		print usage()
                 	sys.exit(0)
@@ -191,7 +208,7 @@ def driver():
 		preceeding, succeeding, parts, pattern = parsePattern(pattern, mismatches)
 	else:
 		pattern = "\"(.ACC|T.CC|TA.C|TAC.)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(AA)(A|T|C|G|N){4,7}(TT)(A|T|C|G|N){4,7}(.TAA|A.AA|AT.A|ATA.)\""
-	command = 'bartender_extractor ' + inputfile + ' ' + outprefix + ' ' + str(qual_cutoff) + ' ' + pattern + ' ' +  preceeding + ' ' + succeeding + ' ' + str(parts) + ' ' + umiPosition + ' ' + umiLength
+	command = 'bartender_extractor ' + inputfile + ' ' + outprefix + ' ' + str(qual_cutoff) + ' ' + pattern + ' ' +  preceeding + ' ' + succeeding + ' ' + str(parts) + ' ' + str(direction) + ' ' + umiPosition + ' ' + umiLength
 	print(command)
 	os.system(command)
 if __name__=="__main__":
