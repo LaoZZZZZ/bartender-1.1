@@ -16,8 +16,6 @@
 using namespace std;
 using namespace csv;
 namespace barcodeSpace {
-    
-    
     void ClusterTableDumper::generateHeader(size_t num_time_points) {
         _cash.push_back("Cluster.ID");
         _cash.push_back("Center");

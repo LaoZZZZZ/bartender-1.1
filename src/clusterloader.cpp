@@ -82,5 +82,4 @@ bool ClusterLoader::LoadClusters(std::unordered_map<int, list<std::shared_ptr<Cl
     }
     return true;
 }
-
 }   // namespace barcodeSpace
