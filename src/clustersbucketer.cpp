@@ -43,8 +43,8 @@ namespace barcodeSpace {
             size_t end = min(_seed_positions.size(), cur + _seed_len);
             // reach the last truncated seed. extend its left bound such that the seed length is equal to seed length.
             vector<int> seed_range;
-            if (end == _seed_positions.size()) {
-                seed_range.assign(_seed_positions.end() - _seed_len, _seed_positions.end());
+            if (end >= _seed_positions.size()) {
+                seed_range.assign(_seed_positions.end() - min(_seed_len, _seed_positions.size()), _seed_positions.end());
                 cur = _seed_positions.size(); // exit the loop in next check
             } else {
                 seed_range.assign(_seed_positions.begin() + cur, _seed_positions.begin() + end);

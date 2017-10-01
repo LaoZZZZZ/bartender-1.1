@@ -130,3 +130,12 @@ TEST_F(ClusterBucketerTest, oneRound) {
     ASSERT_TRUE(clusterBucketerPtr->done());
 }
 
+TEST_F(ClusterBucketerTest, seedLengthLargerThanSeedsCandidate) {
+    size_t seedsLength = 10U;
+    size_t stepSize = 1U;
+    ClusterBucketer* bucketer = new ClusterBucketer(seeds, seedsLength, stepSize);
+    clusterBucketerPtr.reset(bucketer);
+    ASSERT_EQ(1, clusterBucketerPtr->getIndexers().size());
+    ASSERT_EQ(seeds.size(), clusterBucketerPtr->getIndexers()[0]->seeds().size());
+}
+

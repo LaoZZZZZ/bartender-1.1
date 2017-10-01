@@ -29,6 +29,11 @@ namespace barcodeSpace {
         void shatter(const std::list<std::shared_ptr<BarcodeCluster>>& clusters);
         const std::vector<CBin>& Bins() const {return _bins;}
         size_t round() const {return _indexers.size();}
+        
+        // just for testing
+        const std::vector<std::unique_ptr<BarcodeIndexer>>& getIndexers() const{
+            return _indexers;
+        }
     private:
         std::vector<int> _seed_positions;
         size_t _seed_len;

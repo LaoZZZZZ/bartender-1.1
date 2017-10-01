@@ -68,6 +68,7 @@ void drive(std::string barcodefile,  // original read file
     //2.Calculate the position weight matrix and the entropy.
     //  Estimate the sequence error from the spacers.
     std::pair<size_t, size_t> barcode_length_range = loader.lengthRange();
+    std::cout << "shortest barcode length: " << barcode_length_range.first << std::endl << "longest barcode: " << barcode_length_range.second << std::endl;
     BarcodePool::createInstance(loader.barcodeTable());
     std::shared_ptr<BarcodePool> barcode_pool = BarcodePool::getAutoInstance();
     BarcodeCluster::setBarcodePool(barcode_pool);

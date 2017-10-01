@@ -6,8 +6,7 @@
 namespace barcodeSpace {
 
 MixtureBPTester::MixtureBPTester(double p_value, double error_rate)
-    : _p_value(p_value), _error_rate(error_rate)
-{}
+    : _p_value(p_value), _error_rate(error_rate){}
 /**
   * TODO(lu): Finish this function. Try to use a hypothysis test instead of
   * the gating strategy.
