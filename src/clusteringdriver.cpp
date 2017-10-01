@@ -51,7 +51,7 @@ namespace barcodeSpace {
     {
         assert(this->_stopThres < 1);
 	// The initial split threshold is hard coded here.
-	_splitThreshold = 3;
+        _splitThreshold = 3;
         init();
     }
     void ClusteringDriver::init() {
@@ -75,7 +75,7 @@ namespace barcodeSpace {
         this->transform(barcode_pool);
 	    std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
         vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
-        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length,_step));
+        _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length, _step));
         
         MeanEstimator mean_estimator(_trim);
         
@@ -94,7 +94,7 @@ namespace barcodeSpace {
             if (sz == 0)
                 break;
             total++;
-            cout<<"Clustering iteration "<<total<<endl;
+            cout << "Clustering iteration " << total << endl;
             _shatter_machine->shatter(_clusters);
             this->crossBinClustering(_shatter_machine->Bins());
             this->_splitThreshold = ceil(mean_estimator.mean(_clusters)) + 1;
