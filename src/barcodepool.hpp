@@ -84,8 +84,9 @@ namespace barcodeSpace {
         std::vector<std::vector<std::string> > _primers;
         size_t _total_raw_barcodes;
         size_t _num_replicates;
-        static std::shared_ptr<BarcodePool> _instance;
         std::unordered_map<std::string, size_t> _barcodeIndex;
+        
+        static std::shared_ptr<BarcodePool> _instance;
     };
 }   // namespace barcodeSpace
 
