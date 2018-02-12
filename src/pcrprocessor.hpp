@@ -41,7 +41,7 @@ namespace barcodeSpace {
         }
     private:
         void removePCR(std::shared_ptr<BarcodeCluster>&, std::shared_ptr<BarcodePool>&);
-        size_t uniqueElement(const std::vector<std::string>& p) {
+        size_t uniqueElementSize(const std::vector<std::string>& p) {
             if (p.empty()) {
                 return 0U;
             }
