@@ -16,7 +16,7 @@
 #include <unordered_map>
 using namespace std;
 namespace barcodeSpace {
-    PCRProcessor::PCRProcessor() : _replicates(0), _total_number_barcodes(0) {}
+    PCRProcessor::PCRProcessor() : _total_number_barcodes(0),_num_of_duplicates(0) {}
 
     void PCRProcessor::removePCR(std::shared_ptr<BarcodeCluster>& c,
                                  std::shared_ptr<BarcodePool>& pool) {
@@ -48,32 +48,30 @@ namespace barcodeSpace {
             }
             // Remove all the barcode except the most frequent barcode for this UMI
             for (const auto& b : u_b.second) {
-                if (b != max) {
-                    assert(b_2_freq[b] > 0);
-                    --b_2_freq[b];
-                }
+                assert(b_2_freq[b] > 0);
+                --b_2_freq[b];
             }
+            // bring back the count of this umi for the barcode with maximum size.
+            b_2_freq[max] += 1;
             u_b.second.assign(1,max);
         }
         
         // Now get the updated barcode frequency and form a new cluster.
         for (const auto& b_f : b_2_freq) {
-            if (b_f.second > 0) {
-                vector<string> my_primes;
-                for (const auto& p : pool->primers(b_f.first)) {
-                    if (u_2_b[p].front() == b_f.first) {
-                        my_primes.push_back(p);
-                    }
+            unordered_set<string> my_primes;
+            for (const auto& p : pool->primers(b_f.first)) {
+                if (u_2_b[p].front() == b_f.first) {
+                    my_primes.insert(p);
                 }
-                std::swap(pool->primers(b_f.first), my_primes);
-                std::shared_ptr<BarcodeCluster> ptemp(new BarcodeCluster(b_f.first));
-                if (updated_result.get()) {
-                    updated_result->merge(ptemp);
-                } else {
-                    updated_result = ptemp;
-                }
+            }
+            assert(b_f.second == my_primes.size());
+            _num_of_duplicates += pool->primers(b_f.first).size() - my_primes.size();
+            pool->primers(b_f.first).assign(my_primes.begin(), my_primes.end());
+            std::shared_ptr<BarcodeCluster> ptemp(new BarcodeCluster(b_f.first));
+            if (updated_result.get()) {
+                updated_result->merge(ptemp);
             } else {
-                pool->primers(b_f.first).clear();
+                updated_result = ptemp;
             }
         }
         c = updated_result;
