@@ -206,4 +206,4 @@ It was caused by a wrong array initialization. Combiner should work fine now.
 * Bartender extractor could not accept other mismatch number except 2. This bug is in the bartender_extractor_com pythong script. There was some logic issue in the regular expression pattern generation function.
 It was fixed at Jun 24 2017.
 * Bartender segments high diversity seeds into range by the seed length and steps. It will extends the last range if it has less number seeds positions than seed length by borrowing some left side positions. But there is a bug in borrowing left side seeds. It was fixed at Oct 1st 2017.
-* Bartender always dedups the uni for initial unique reads even before the clustering result before pcr process, which is a confustin behavior. The behavior is changed to more intuitive pattern which does not dedup anything before pcr process. It was changed at Feb 24 2018
+* Bartender always dedups the uni for initial unique reads even for the clustering result before pcr process, which is a confusing behavior. The behavior is changed to more intuitive pattern which does not dedup anything before pcr process. It was changed at Feb 24 2018.
