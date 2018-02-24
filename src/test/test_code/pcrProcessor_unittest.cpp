@@ -41,8 +41,8 @@ TEST_F(PcrProcessorTest, withPcrDup) {
     ///////////////////////////////////////////////////////
     std::shared_ptr<BarcodeCluster> first_cluster(new BarcodeCluster(poolPtr->barcodeIndex("AAAAA")));
     std::shared_ptr<BarcodeCluster> second_cluster(new BarcodeCluster(poolPtr->barcodeIndex("AAAAT")));
-    std::shared_ptr<BarcodeCluster> third_cluster(new BarcodeCluster(poolPtr->barcodeIndex("TAAAA")));
-    std::shared_ptr<BarcodeCluster> fourth_cluster(new BarcodeCluster(poolPtr->barcodeIndex("AACAT")));
+    std::shared_ptr<BarcodeCluster> third_cluster(new BarcodeCluster(poolPtr->barcodeIndex("AACAT")));
+    std::shared_ptr<BarcodeCluster> fourth_cluster(new BarcodeCluster(poolPtr->barcodeIndex("TAAAA")));
     std::shared_ptr<BarcodeCluster> fifth_cluster(new BarcodeCluster(poolPtr->barcodeIndex("TCCCC")));
 
     // merge clusters with AAAAA, AAAAT, TAAAA
@@ -53,10 +53,13 @@ TEST_F(PcrProcessorTest, withPcrDup) {
     clusters.push_back(fifth_cluster);
 
     pcrDealerPtr->process(clusters, poolPtr);
-    ASSERT_EQ(6, clusters.front()->size());
+    ASSERT_EQ(5, clusters.front()->size());
+    ASSERT_EQ(3, clusters.back()->size());
     ASSERT_EQ(3, poolPtr->primers(poolPtr->barcodeIndex("AAAAA")).size());
     ASSERT_EQ(0, poolPtr->primers(poolPtr->barcodeIndex("AAAAT")).size());
-    ASSERT_EQ(3, poolPtr->primers(poolPtr->barcodeIndex("TAAAA")).size());
     ASSERT_EQ(2, poolPtr->primers(poolPtr->barcodeIndex("AACAT")).size());
+    ASSERT_EQ(3, poolPtr->primers(poolPtr->barcodeIndex("TAAAA")).size());
     ASSERT_EQ(3, poolPtr->primers(poolPtr->barcodeIndex("TCCCC")).size());
+
+    ASSERT_EQ(9, pcrDealerPtr->numberOfReplicates());
 }

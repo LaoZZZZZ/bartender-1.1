@@ -29,19 +29,19 @@ namespace barcodeSpace {
                 removePCR(c, barcode_pool);
             }
         }
-        size_t numberOfReplicates() const { return _replicates; }
+        size_t numberOfReplicates() const { return _num_of_duplicates; }
         double PCREffect() const {
             if (_total_number_barcodes == 0) {
                 return 0;
             }
-            return static_cast<double>(_replicates)/ _total_number_barcodes;
+            return static_cast<double>(_num_of_duplicates)/ _total_number_barcodes;
         }
         void reset() {
-            _replicates = _total_number_barcodes = 0;
+           _total_number_barcodes = _num_of_duplicates = 0;
         }
     private:
         void removePCR(std::shared_ptr<BarcodeCluster>&, std::shared_ptr<BarcodePool>&);
-        size_t uniqueElement(const std::vector<std::string>& p) {
+        size_t uniqueElementSize(const std::vector<std::string>& p) {
             if (p.empty()) {
                 return 0U;
             }
@@ -57,8 +57,8 @@ namespace barcodeSpace {
 
             return total;
         }
-        size_t  _replicates;
         size_t  _total_number_barcodes;
+        size_t  _num_of_duplicates;
     };
 }
 

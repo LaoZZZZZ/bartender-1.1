@@ -132,6 +132,7 @@ void drive(std::string barcodefile,  // original read file
     cout << "The clustering process takes ";
     delete cluster_timer;
     cout << endl;
+    
     if (!clusters.empty()) {
         cout<<"start to dump clusters to file with prefix "<< outprefix <<endl;
         ClusterOutput out(outprefix);
@@ -139,39 +140,31 @@ void drive(std::string barcodefile,  // original read file
         out.WriteToFile(clusters, barcode_pool,barcode_length_range.second);
         
         // Remove the PCR effects
-        if (barcode_pool->NumOfReplicates() != 0) {
-            cout << "Start to remove pcr effects" << endl;
-            PCRProcessor pcr_dealer;
-            pcr_dealer.process(clusters,barcode_pool);
-            
-            // Merge clusters that share the same center.
-            MergeByCenters merger;
-            merger.merge(clusters);
-            //cluster_pruner.prune(clusters);
-            ClusterOutput out_pcr(outprefix + "_pcr");
-            cout << "***(Overall error rate estimated from the clustering result)***" << endl;
-            std::shared_ptr<ErrorRateEstimator> error_estimator(
-                 new ErrorRateEstimator(entropy_threshold_for_error,
-                                        cluster_size_threshold_for_error,
-                                        number_barcode_for_error_estimator));
-            cout << "Total number of clusters after removing PCR effects: " << merger.clusters().size() << endl;
-            error_estimator->Estimate(merger.clusters(), false); // not silent, print out the information
-            cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
-     
-            // Dumps the cluster information.
-            cout<<"starting to dump clusters to file with prefix "<< outprefix + "_pcr"<<endl;
+        cout << "Start to remove pcr effects" << endl;
+        PCRProcessor pcr_dealer;
+        pcr_dealer.process(clusters,barcode_pool);
+        
+        // Merge clusters that share the same center.
+        MergeByCenters merger;
+        merger.merge(clusters);
+        //cluster_pruner.prune(clusters);
+        ClusterOutput out_pcr(outprefix + "_pcr");
+        cout << "***(Overall error rate estimated from the clustering result)***" << endl;
+        std::shared_ptr<ErrorRateEstimator> error_estimator(
+             new ErrorRateEstimator(entropy_threshold_for_error,
+                                    cluster_size_threshold_for_error,
+                                    number_barcode_for_error_estimator));
+        cout << "Total number of clusters after removing PCR effects: " << merger.clusters().size() << endl;
+        error_estimator->Estimate(merger.clusters(), false); // not silent, print out the information
+        cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
+ 
+        // Dumps the cluster information post-pcr processing.
+        if (pcr_dealer.numberOfReplicates() != 0) {
+            cout <<"starting to dump clusters to file with prefix "<< outprefix + "_pcr" << endl;
+            cout << "Removed " << pcr_dealer.numberOfReplicates() << " reads based on the initial clustering result." << std::endl;
             out_pcr.WriteToFile(merger.clusters(), barcode_pool,barcode_length_range.second);
-        } else {
-            cout << "There is no pcr effects in the original data" << endl;
-	    std::shared_ptr<ErrorRateEstimator> error_estimator(
-                 new ErrorRateEstimator(entropy_threshold_for_error,
-                                        cluster_size_threshold_for_error,
-                                        number_barcode_for_error_estimator));
-            error_estimator->Estimate(clusters, false); // not silent, print out the information
-            cout << "The estimated error rate is " << error_estimator->ErrorRate() << endl;
         }
     }
-
 }
 
 int main(int argc,char* argv[])
