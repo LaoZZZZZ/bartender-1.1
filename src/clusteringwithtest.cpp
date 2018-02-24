@@ -119,7 +119,7 @@ void ClusteringWithTest::clusterImp(const std::list<std::shared_ptr<Cluster>>& c
             similar_clusters.pop_front();
 
             // Compare the first cluster in the temp list with the remaining clusters in the temp list.
-            // merge them if necessary and erase the merges clusters from the global cluster list (_cluster).
+            // merge them if necessary and erase the two merged clusters from the global cluster list (_cluster).
             while(!similar_clusters.empty()){
                 firstcluster = similar_clusters.begin();
                 while(firstcluster != similar_clusters.end()){

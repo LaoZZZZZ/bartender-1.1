@@ -12,6 +12,7 @@
 
 #include "csvreader.h"
 #include "typdefine.h"
+#include "formats.h"
 
 #include <memory>
 #include <string>
@@ -22,7 +23,7 @@ namespace barcodeSpace {
     class RawBarcodeLoader {
     public:
         typedef std::unordered_map<std::string, std::vector<std::string>> RawTable;
-        RawBarcodeLoader(const std::string& filename);
+        RawBarcodeLoader(const std::string& filename, const StrandDirection& strand_direction);
         void process();
         std::pair<size_t, size_t> lengthRange() const {return _barcode_length_range;}
         RawTable& barcodeTable() {return _table;}
@@ -31,6 +32,7 @@ namespace barcodeSpace {
         std::unordered_map<std::string, std::vector<std::string>> _table;
         std::unique_ptr<CSVReader<std::string>>  _csv_reader;
         std::pair<size_t, size_t>  _barcode_length_range;
+        StrandDirection _strand_direction;
     };
 }   // namespace barcodeSpace
 #endif /* rawbarcodeloader_hpp */

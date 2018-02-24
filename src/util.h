@@ -18,17 +18,16 @@ namespace barcodeSpace {
 
 // Check if the average quality is larger than the given threshold.
 bool qualityCheck(const std::string& qualities, double threshold);
-//TODO(lu): Implement a in-place version.
 void reverseComplementInplace(std::string& seq);
 std::string reverseComplement(const std::string& seq);
 template<typename T>
-int     hammingDist(const T& seq1,const T& seq2){
+int hammingDist(const T& seq1,const T& seq2){
     int dist = 0;
-    if(seq1.length() != seq2.length()){
+    if (seq1.length() != seq2.length()) {
         throw std::runtime_error(" Can not calculate hamming distance between unequal length strings!\n");
-    }else{
+    } else {
         size_t l = seq1.length();
-        for(size_t i = 0; i < l ; i++){
+        for(size_t i = 0; i < l; i++){
             if(seq1[i] != seq2[i])
                 ++dist;
         }
@@ -36,7 +35,7 @@ int     hammingDist(const T& seq1,const T& seq2){
     return dist;
 }
 
-size_t kmerDistance(const kmer&,const kmer&,size_t);
+size_t kmerDistance(const kmer&, const kmer&, size_t);
 
 /**
   * Calculates the the similarity score by doing pair comparison.

@@ -14,12 +14,14 @@
 
 using namespace std;
 namespace barcodeSpace {
-    RawBarcodeLoader::RawBarcodeLoader(const string& file) {
+    RawBarcodeLoader::RawBarcodeLoader(const string& file,
+                                       const StrandDirection& strand_direction) {
         CSVReader<std::string>* csv_reader_ptr = new CSVReader<std::string>(file, false);
         assert(csv_reader_ptr);
         _csv_reader.reset(csv_reader_ptr);
         _barcode_length_range.first = INT_MAX;
         _barcode_length_range.second = 0;
+        _strand_direction = strand_direction;
     }
     void RawBarcodeLoader::process() {
         vector<string> row;
@@ -27,14 +29,16 @@ namespace barcodeSpace {
             assert(row.size() == 2);
             const std::string rawBarcode = toUpper(row.front());
             if (_table.find(rawBarcode) == _table.end()) {
-                const string revComplement = reverseComplement(rawBarcode);
-                if (_table.find(revComplement) == _table.end()) {
-                    _table.insert({row.front(),{row[1]}});
-                } else {
-                    if (isDnaSequence(row.back())) {
-                        _table[revComplement].push_back(reverseComplement(row.back()));
+                if (_strand_direction == BOTH_DIRECTION) {
+                    const string revComplement = reverseComplement(rawBarcode);
+                    if (_table.find(revComplement) == _table.end()) {
+                        _table.insert({row.front(),{row[1]}});
                     } else {
-                        _table[revComplement].push_back(row[1]);
+                        if (isDnaSequence(row.back())) {
+                            _table[revComplement].push_back(reverseComplement(row.back()));
+                        } else {
+                            _table[revComplement].push_back(row[1]);
+                        }
                     }
                 }
             } else {

@@ -45,6 +45,7 @@ void drive(std::string barcodefile,  // original read file
            std::string outprefix, // output prefix
            double entropy_threshold, // Entopy value for considering as mixture position
            size_t maximum_centers, // The maximum centers for each cluster
+           StrandDirection strand_direction = FORWARD_DIRECTION, // the strand direction that should be considered. Default is forward only
            double zvalue = 4.0,
            TESTSTRATEGY test_method = TWOPROPORTIONUNPOOLED,
            double entropy_threshold_for_error = 0.33, // the majority bp accounts at least 95%.
@@ -59,7 +60,7 @@ void drive(std::string barcodefile,  // original read file
     //   Load the barcode from the input file
     cout << "Loading barcodes from the file" << endl;
     Timer* timer = new realTimer(cout);
-    RawBarcodeLoader loader(barcodefile);
+    RawBarcodeLoader loader(barcodefile, strand_direction);
     loader.process();
     cout << "It takes ";
     delete timer;
@@ -216,6 +217,17 @@ int main(int argc,char* argv[])
         maximum_centers = atoi(argv[11]);
     }
     
+    StrandDirection direction = FORWARD_DIRECTION;
+    if (argc >= 13) {
+        int dir = atoi(argv[8]);
+        assert(dir == 0 || dir == -1 || dir == 1);
+        if (dir == 0) {
+            direction = BOTH_DIRECTION;
+        } else if (dir == -1) {
+            direction = REVERSE_DIRECTION;
+        }
+    }
+    
     drive(sequencefile,
           freq_cutoff,
           seedlen,
@@ -225,6 +237,7 @@ int main(int argc,char* argv[])
           outprefix,
           entropy_threshold,
           maximum_centers,
+          direction,
           zvalue,
           pool
           );
