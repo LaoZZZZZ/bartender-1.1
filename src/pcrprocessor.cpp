@@ -58,20 +58,25 @@ namespace barcodeSpace {
         
         // Now get the updated barcode frequency and form a new cluster.
         for (const auto& b_f : b_2_freq) {
-            unordered_set<string> my_primes;
-            for (const auto& p : pool->primers(b_f.first)) {
-                if (u_2_b[p].front() == b_f.first) {
-                    my_primes.insert(p);
+            if (b_f.second > 0) {
+                unordered_set<string> my_primes;
+                for (const auto& p : pool->primers(b_f.first)) {
+                    if (u_2_b[p].front() == b_f.first) {
+                        my_primes.insert(p);
+                    }
                 }
-            }
-            assert(b_f.second == my_primes.size());
-            _num_of_duplicates += pool->primers(b_f.first).size() - my_primes.size();
-            pool->primers(b_f.first).assign(my_primes.begin(), my_primes.end());
-            std::shared_ptr<BarcodeCluster> ptemp(new BarcodeCluster(b_f.first));
-            if (updated_result.get()) {
-                updated_result->merge(ptemp);
+                assert(b_f.second == my_primes.size());
+                _num_of_duplicates += pool->primers(b_f.first).size() - my_primes.size();
+                pool->primers(b_f.first).assign(my_primes.begin(), my_primes.end());
+                std::shared_ptr<BarcodeCluster> ptemp(new BarcodeCluster(b_f.first));
+                if (updated_result.get()) {
+                    updated_result->merge(ptemp);
+                } else {
+                    updated_result = ptemp;
+                }
             } else {
-                updated_result = ptemp;
+                _num_of_duplicates += pool->primers(b_f.first).size();
+                pool->primers(b_f.first).clear();
             }
         }
         c = updated_result;
