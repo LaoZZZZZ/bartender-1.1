@@ -44,6 +44,12 @@ typedef enum SEEDSELECTIONSTRATEGY {
     JOINTENTROPY,
     PAIRWISEMI 
 }SEEDSELECTIONSTRATEGY;
+  
     
+typedef enum StrandDirection {
+    FORWARD_DIRECTION = 0,
+    BOTH_DIRECTION,
+    REVERSE_DIRECTION
+} StrandDirection;
 }   // namespace barcodeSpace
 #endif /*FORMATS_H_*/

@@ -45,6 +45,7 @@ void drive(std::string barcodefile,  // original read file
            std::string outprefix, // output prefix
            double entropy_threshold, // Entopy value for considering as mixture position
            size_t maximum_centers, // The maximum centers for each cluster
+           StrandDirection strand_direction = FORWARD_DIRECTION, // the strand direction that should be considered. Default is forward only
            double zvalue = 4.0,
            TESTSTRATEGY test_method = TWOPROPORTIONUNPOOLED,
            double entropy_threshold_for_error = 0.33, // the majority bp accounts at least 95%.
@@ -59,7 +60,7 @@ void drive(std::string barcodefile,  // original read file
     //   Load the barcode from the input file
     cout << "Loading barcodes from the file" << endl;
     Timer* timer = new realTimer(cout);
-    RawBarcodeLoader loader(barcodefile);
+    RawBarcodeLoader loader(barcodefile, strand_direction);
     loader.process();
     cout << "It takes ";
     delete timer;
@@ -118,7 +119,7 @@ void drive(std::string barcodefile,  // original read file
     Timer* cluster_timer = new realTimer(cout);
     for (size_t blen = barcode_length_range.first; blen <= barcode_length_range.second; ++ blen) {
         cout << "Start to clustering barcode with length " << blen << endl;
-        ClusteringDriver cluster_drive(blen, seedlen, step,num_threads, default_error_rate, zvalue, test_method, distance,0);
+        ClusteringDriver cluster_drive(blen, seedlen, step, num_threads, default_error_rate, zvalue, test_method, distance,0);
         cluster_drive.clusterDrive(BarcodePool::getAutoInstance());
         std::list<std::shared_ptr<BarcodeCluster>> cur_clusters = cluster_drive.clusters();
         cluster_pruner.prune(cur_clusters);
@@ -173,7 +174,7 @@ int main(int argc,char* argv[])
     assert(argc >= 3);
     //1. first argument is the sequence file
     string sequencefile(argv[1]);
-    //2. out put file
+    //2. output file
     string outprefix(argv[2]);
     size_t freq_cutoff = 1;
     
@@ -201,19 +202,28 @@ int main(int argc,char* argv[])
     if (argc >= 9)
 	distance = atoi(argv[8]);
     
-    TESTSTRATEGY pool = TWOPROPORTIONUNPOOLED;
+    StrandDirection direction = FORWARD_DIRECTION;
     if (argc >= 10) {
-        pool = static_cast<TESTSTRATEGY>(atoi(argv[9]));
+        int dir = atoi(argv[9]);
+        assert(dir == 0 || dir == 1);
+        if (dir == 0) {
+            direction = BOTH_DIRECTION;
+        }
+    }
+    
+    TESTSTRATEGY pool = TWOPROPORTIONUNPOOLED;
+    if (argc >= 11) {
+        pool = static_cast<TESTSTRATEGY>(atoi(argv[10]));
     }
 
     double entropy_threshold = 0.46;
-    if (argc >= 11) {
-        entropy_threshold = atof(argv[10]);
+    if (argc >= 12) {
+        entropy_threshold = atof(argv[11]);
     }
     
     size_t maximum_centers = 4;
-    if (argc >= 12) {
-        maximum_centers = atoi(argv[11]);
+    if (argc >= 13) {
+        maximum_centers = atoi(argv[12]);
     }
     
     drive(sequencefile,
@@ -225,6 +235,7 @@ int main(int argc,char* argv[])
           outprefix,
           entropy_threshold,
           maximum_centers,
+          direction,
           zvalue,
           pool
           );

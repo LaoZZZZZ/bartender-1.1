@@ -2,6 +2,7 @@
 #define BARCODEEXTRACTOR_H
 
 #include "sequence.h"
+#include "formats.h"
 
 #include <boost/regex.hpp>
 #include <cassert>
@@ -15,12 +16,7 @@ enum ExtractionResultType {
     REVERSE_COMPLEMENT = -1,
     FAIL = 0
 };
-    
-    enum StrandDirection {
-        FORWARD_DIRECTION = 0,
-        BOTH_DIRECTION,
-        REVERSE_DIRECTION
-    };
+
 class BarcodeExtractor
 {
 public:
