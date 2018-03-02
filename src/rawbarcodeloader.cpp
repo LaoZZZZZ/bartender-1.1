@@ -40,6 +40,8 @@ namespace barcodeSpace {
                             _table[revComplement].push_back(row[1]);
                         }
                     }
+                } else {
+                    _table.insert({row.front(),{row[1]}});
                 }
             } else {
                 _table[rawBarcode].push_back(row[1]);

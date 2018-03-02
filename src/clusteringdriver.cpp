@@ -69,6 +69,7 @@ namespace barcodeSpace {
         }
         generateBucketRange();
     }
+    
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
         std::cout << "transforming the barcodes into clusters" << std::endl;
         // 1. Transform the barcode table into a list of clusters

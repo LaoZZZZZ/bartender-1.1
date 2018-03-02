@@ -20,6 +20,7 @@ def usage():
 	print "\t -t The number of threads. The default value is 1."
 	print "\t -s The number of non-overlapping positions between two adjacent seeds. The default value is 1 (recommended). For example, using l=5 and s=2, will result in adjacent seeds that have 2 unique positions and 3 positions in common. If the step value is equal to or larger than the seed length, then there will be no overlap between seeds"
 	print "\t -d The maximum cluster distance that may be merged. The default value is 2. If the distance between two cluster sequences is within this threshold, these two sequences will be merged if they pass the statistical test set by the cluster merging threshold (z)"
+	print("\t --direction: the strand direction when matching barcodes. There are two possible options-forward and both. For example, --forward means forward direction, --both means both forward and reverse complement direction both considered. The default value is forward, which means only the forward direction of each sequence will be considered when performing the comparison.")
 def driver():
 	inputfile = ''
 	outprefix = ''
@@ -30,9 +31,11 @@ def driver():
 	num_threads = 1
 	step = 5 
 	distance = 2
+	strand_direction = 1 # forward
     	try:
-        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help"])
+        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help", "forward", "both"])
     	except getopt.error,msg:
+		print msg
 		print("Invalid parameters!")
         	usage()
         	sys.exit(2)
@@ -96,7 +99,17 @@ def driver():
 			except Exception as err:
 				print("Invalid zvalue!\n")
 				sys.exit(2)
-        	elif o in  ("-h","--help"):
+		elif o in ("--forward", "--both"):
+			print("the strand direction is " + a)
+			if o == '--forward':
+				strand_direction = 1
+			elif o == '--both':
+				strand_direction = 0
+			else:
+				print usage()
+				raise Exception("The strand direction value is not valid")
+				
+        	elif o in ("-h","--help"):
             		print usage()
                 	sys.exit(0)
 		else:
@@ -113,7 +126,7 @@ def driver():
 	if seed_len < step:
 		print ("The default or specified step is larger than the seed length, reset the step be the seed length!")
 		step = seed_len
-	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance))
+	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance) + ' ' + str(strand_direction))
 if __name__=="__main__":
 	print('Running bartender')
 	driver()
