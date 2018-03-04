@@ -6,128 +6,128 @@ import pdb
 '''
 print("Current path is ")
 p = os.getcwd()
-print p
+print(p)
 sys.path.append(p)
 '''
 def usage():
-	print "\tthere are 7 options, the first 2 is required, the remainings are optional,for help use -h or --help:"
-	print " \t -f the input file, a two column csv file  "
-	print "\t -o the output prefix"
-	print "\t -c tthe frequency cutoff. All clusters with size less then this threshold will not be reported in the results."
-	#print "\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components."
-	print "\t -z The cluster merging threshold. Higher z values result in more cluster merging (see the publication for a full description).  This should be set according to the expected coverage per barcode and the barcode library complexity. Please read README for more detail."
-	print "\t -l The seed length. The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging."
-	print "\t -t The number of threads. The default value is 1."
-	print "\t -s The number of non-overlapping positions between two adjacent seeds. The default value is 1 (recommended). For example, using l=5 and s=2, will result in adjacent seeds that have 2 unique positions and 3 positions in common. If the step value is equal to or larger than the seed length, then there will be no overlap between seeds"
-	print "\t -d The maximum cluster distance that may be merged. The default value is 2. If the distance between two cluster sequences is within this threshold, these two sequences will be merged if they pass the statistical test set by the cluster merging threshold (z)"
-	print("\t --direction: the strand direction when matching barcodes. There are two possible options-forward and both. For example, --forward means forward direction, --both means both forward and reverse complement direction both considered. The default value is forward, which means only the forward direction of each sequence will be considered when performing the comparison.")
+    print("\tthere are 7 options, the first 2 is required, the remainings are optional,for help use -h or --help:")
+    print(" \t -f the input file, a two column csv file")
+    print("\t -o the output prefix")
+    print("\t -c tthe frequency cutoff. All clusters with size less then this threshold will not be reported in the results.")
+    #print("\t -e the sequencing error. The default value is 0.01. Could be obtained by running the extraction components.")
+    print("\t -z The cluster merging threshold. Higher z values result in more cluster merging (see the publication for a full description).  This should be set according to the expected coverage per barcode and the barcode library complexity. Please read README for more detail.")
+    print("\t -l The seed length. The possible values range from 3 to 8, with a default of 5 (recommended). The larger this value, the faster the program will run. In some cases with high sequence error rates, a higher setting will result in under-merging.")
+    print("\t -t The number of threads. The default value is 1.")
+    print("\t -s The number of non-overlapping positions between two adjacent seeds. The default value is 1 (recommended). For example, using l=5 and s=2, will result in adjacent seeds that have 2 unique positions and 3 positions in common. If the step value is equal to or larger than the seed length, then there will be no overlap between seeds")
+    print("\t -d The maximum cluster distance that may be merged. The default value is 2. If the distance between two cluster sequences is within this threshold, these two sequences will be merged if they pass the statistical test set by the cluster merging threshold (z)")
+    print("\t --direction: the strand direction when matching barcodes. There are two possible options-forward and both. For example, --forward means forward direction, --both means both forward and reverse complement direction both considered. The default value is forward, which means only the forward direction of each sequence will be considered when performing the comparison.")
 def driver():
-	inputfile = ''
-	outprefix = ''
-	freq_cutoff = 1 
-	#error_rate = 0.01
-	zvalue = 5.0
-	seed_len = 5
-	num_threads = 1
-	step = 5 
-	distance = 2
-	strand_direction = 1 # forward
-    	try:
-        	opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help", "forward", "both"])
-    	except getopt.error,msg:
-		print msg
-		print("Invalid parameters!")
-        	usage()
-        	sys.exit(2)
-    	for o,a in opt:
-        	if o == '-f':
-            		inputfile = a
-            		if not os.path.isfile(inputfile):
-                		print inputfile + " probably is not a valid file!\n"
-                		sys.exit(2)
-        	elif o == '-o':
-            		outprefix = a 
-			if not outprefix:
-                		print "No output file was specified!" 
-                		sys.exit(2)
-        	elif o == '-c':
-			try:
-				freq_cutoff = int(a)
-				assert(freq_cutoff > 0)
-			except Exception as err:
-                		print "Frequency cutoff " + a + " is not a valid input!\n"
-                		sys.exit(2)
-        	elif o == '-d':
-			try:
-				distance = int(a)
-				assert(distance > 0)
-			except Exception as err:
-                		print "The distance " + a + " is not a valid input!\n"
-                		sys.exit(2)
-        	elif o == '-s':
-			try:
-				step = int(a)
-				assert(step > 0)
-			except Exception as err:
-                		print "The step parameter " + a + " is not a valid input!\n"
-                		sys.exit(2)
-        	elif o == '-t':
-			try:
-				num_threads = int(a)
-				assert(num_threads > 0)
-			except Exception as err:
-                		print "Threads parameter " + a + " is not a valid input!\n"
-                		sys.exit(2)
-        	elif o == '-l':
-			try:
-				seed_len = int(a)
-				if seed_len < 3:
-					print("Invalid seed length!Seed length is setted as 3! ")
-					seed_len = 4
-				if seed_len > 8:
-					print("Invalid seed length!Seed length is setted as 8! ")
-					seed_len = 8
-			except Exception as err:
-                		print "Seed length " + a + " is not a valid input!\n"
-                		sys.exit(2)
-		elif o == '-z':
-			try:
-				zvalue = float(a)
-				if zvalue == -1:
-					zvalue = 1e8
-				assert(zvalue >= 0)
-			except Exception as err:
-				print("Invalid zvalue!\n")
-				sys.exit(2)
-		elif o in ("--forward", "--both"):
-			print("the strand direction is " + a)
-			if o == '--forward':
-				strand_direction = 1
-			elif o == '--both':
-				strand_direction = 0
-			else:
-				print usage()
-				raise Exception("The strand direction value is not valid")
-				
-        	elif o in ("-h","--help"):
-            		print usage()
-                	sys.exit(0)
-		else:
-			print("Invalid parameter " + o)
-			print usage()
-			sys.exit(0)
-	if not inputfile:
-		print("There is no input sequence file specified")
-		sys.exit(0)
-	if not outprefix:
-		print("There is no output file specified")
-		sys.exit(0)
-			
-	if seed_len < step:
-		print ("The default or specified step is larger than the seed length, reset the step be the seed length!")
-		step = seed_len
-	os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance) + ' ' + str(strand_direction))
+    inputfile = ''
+    outprefix = ''
+    freq_cutoff = 1 
+    #error_rate = 0.01
+    zvalue = 5.0
+    seed_len = 5
+    num_threads = 1
+    step = 5 
+    distance = 2
+    strand_direction = 1 # forward
+    try:
+        opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help", "forward", "both"])
+    except getopt.error,msg:
+        print(msg)
+        print("Invalid parameters!")
+        usage()
+        sys.exit(2)
+    for o,a in opt:
+        if o == '-f':
+            inputfile = a
+            if not os.path.isfile(inputfile):
+                print(inputfile + " probably is not a valid file!\n")
+                sys.exit(2)
+        elif o == '-o':
+            outprefix = a 
+            if not outprefix:
+                print("No output file was specified!")
+                sys.exit(2)
+        elif o == '-c':
+            try:
+                freq_cutoff = int(a)
+                assert(freq_cutoff > 0)
+            except Exception as err:
+                print("Frequency cutoff " + a + " is not a valid input!\n")
+                sys.exit(2)
+        elif o == '-d':
+            try:
+                distance = int(a)
+                assert(distance > 0)
+            except Exception as err:
+                print("The distance " + a + " is not a valid input!\n")
+                sys.exit(2)
+        elif o == '-s':
+            try:
+                step = int(a)
+                assert(step > 0)
+            except Exception as err:
+                print("The step parameter " + a + " is not a valid input!\n")
+                sys.exit(2)
+        elif o == '-t':
+            try:
+                num_threads = int(a)
+                assert(num_threads > 0)
+            except Exception as err:
+                print("Threads parameter " + a + " is not a valid input!\n")
+                sys.exit(2)
+        elif o == '-l':
+            try:
+                seed_len = int(a)
+                if seed_len < 3:
+                    print("Invalid seed length!Seed length is setted as 3! ")
+                    seed_len = 4
+                if seed_len > 8:
+                    print("Invalid seed length!Seed length is setted as 8! ")
+                    seed_len = 8
+            except Exception as err:
+                print("Seed length " + a + " is not a valid input!\n")
+                sys.exit(2)
+        elif o == '-z':
+            try:
+                zvalue = float(a)
+                if zvalue == -1:
+                    zvalue = 1e8
+                assert(zvalue >= 0)
+            except Exception as err:
+                print("Invalid zvalue!\n")
+                sys.exit(2)
+        elif o in ("--forward", "--both"):
+            print("the strand direction is " + a)
+            if o == '--forward':
+                strand_direction = 1
+            elif o == '--both':
+                strand_direction = 0
+            else:
+                print(usage())
+                raise Exception("The strand direction value is not valid")
+
+        elif o in ("-h","--help"):
+            print(usage())
+            sys.exit(0)
+        else:
+            print("Invalid parameter " + o)
+            print(usage())
+            sys.exit(0)
+    if not inputfile:
+        print("There is no input sequence file specified")
+        sys.exit(0)
+    if not outprefix:
+        print("There is no output file specified")
+        sys.exit(0)
+
+    if seed_len < step:
+        print ("The default or specified step is larger than the seed length, reset the step be the seed length!")
+        step = seed_len
+    os.system('bartender_single ' + inputfile + ' ' + outprefix + ' ' + str(freq_cutoff) + ' ' + str(zvalue) + ' ' + str(seed_len) + ' ' + str(step) + ' ' + str(num_threads) + ' ' + str(distance) + ' ' + str(strand_direction))
 if __name__=="__main__":
-	print('Running bartender')
-	driver()
+    print('Running bartender')
+    driver()
 
