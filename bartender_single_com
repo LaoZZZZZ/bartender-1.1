@@ -34,7 +34,7 @@ def driver():
     strand_direction = 1 # forward
     try:
         opt,args = getopt.getopt(sys.argv[1:],"f:o:c:e:z:l:t:s:d:h",["help", "forward", "both"])
-    except getopt.error,msg:
+    except getopt.GetoptError as msg:
         print(msg)
         print("Invalid parameters!")
         usage()
