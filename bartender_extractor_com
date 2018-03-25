@@ -126,7 +126,8 @@ def driver():
     direction = 1	
     try:
         opt,args = getopt.getopt(sys.argv[1:],"hd:p:m:u:f:o:q:",["help", "direction="])
-    except getopt.error,msg:
+    except getopt.GetoptError as msg:
+	print(msg)
         usage()
         sys.exit(2)
     for o, a in opt:

@@ -16,8 +16,8 @@ def driver():
     outprefix = ''
     try:
         opt,args = getopt.getopt(sys.argv[1:],"f:o:c:h",["help"])
-    except getopt.error,msg:
-        print("Invalid parameters!")
+    except getopt.GetoptError as msg:
+	print(msg)
         usage()
         sys.exit(2)
     for o,a in opt:
