@@ -10,14 +10,14 @@ class ClusterMergerTester
 {
 public:
     ClusterMergerTester();
-    virtual bool shouldMerge(const std::vector<std::array<int,4>>& freq_c1,
-                             const std::vector<std::array<int,4>>& freq_c2) = 0;
+    virtual bool shouldMerge(const std::vector<std::array<uint64_t,4>>& freq_c1,
+                             const std::vector<std::array<uint64_t,4>>& freq_c2) = 0;
     virtual ~ClusterMergerTester() {}
 protected:
     
-    std::pair<int, int> getErrorAndBase(const std::vector<std::array<int,4>>& freq_c1);
-    std::vector<std::array<int, 4>> PoolFrequencyTable(const std::vector<std::array<int,4>>& freq_c1,
-                                                       const std::vector<std::array<int,4>>& freq_c2);
+    std::pair<uint64_t, uint64_t> getErrorAndBase(const std::vector<std::array<uint64_t,4>>& freq_c1);
+    std::vector<std::array<uint64_t, 4>> PoolFrequencyTable(const std::vector<std::array<uint64_t,4>>& freq_c1,
+                                                            const std::vector<std::array<uint64_t,4>>& freq_c2);
 };
 }
 

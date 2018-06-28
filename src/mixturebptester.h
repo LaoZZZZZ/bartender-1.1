@@ -9,7 +9,7 @@ class MixtureBPTester
 {
 public:
     MixtureBPTester(double p_value, double error_rate);
-    bool IsPotentialMixture(const std::array<int, 4>& frequency, size_t bp);
+    bool IsPotentialMixture(const std::array<uint64_t, 4>& frequency, size_t bp);
 private:
     bool    _p_value;
     double  _error_rate;

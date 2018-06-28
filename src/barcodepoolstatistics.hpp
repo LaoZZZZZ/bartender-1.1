@@ -20,7 +20,7 @@
 namespace barcodeSpace {
     
     class BarcodeStatistics {
-        typedef std::vector<std::array<int,4>>  PositionWeightMatrix;
+        typedef std::vector<std::array<uint64_t,4>>  PositionWeightMatrix;
         typedef std::unordered_map<int, PositionWeightMatrix> pwmDictionary;
         typedef std::unordered_map<int, std::vector<double>> entropyDictionary;
     public:
@@ -47,7 +47,7 @@ namespace barcodeSpace {
          * Return the position weight matrix of all barcodes with the specified length.
          * The frequency table takes into acount the barcode frequency
          */
-        const std::vector<std::array<int, 4>>& UniqueFrequencyTable(int barcode_length)const {
+        const std::vector<std::array<uint64_t, 4>>& UniqueFrequencyTable(int barcode_length)const {
             assert(_unique_pwms.count(barcode_length));
             return _unique_pwms.at(barcode_length);
         }

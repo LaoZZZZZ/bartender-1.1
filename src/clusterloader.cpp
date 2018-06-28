@@ -52,7 +52,7 @@ bool ClusterLoader::LoadClusters(std::unordered_map<int, list<std::shared_ptr<Cl
                 time_points.push_back(stoi(*iter));
             }
             //assert(std::accumulate(time_points.begin(), time_points.end(),0u) == cluster_record[1]);
-            vector<array<int,4>>    frequency_record(center.length(), array<int,4>()); // Frequency table for each cluster.
+            vector<array<uint64_t,4>>    frequency_record(center.length(), array<uint64_t,4>()); // Frequency table for each cluster.
             for(size_t i = 0; i < 4; ++i) {
                if (_frequency_loader.nextRow(&frequency_each)) {
                    if (frequency_each.size() < center.length() + 2) {
@@ -71,10 +71,10 @@ bool ClusterLoader::LoadClusters(std::unordered_map<int, list<std::shared_ptr<Cl
             Cluster* temp_cluster = new Cluster(center, frequency_record, stoi(cluster_record[0]));
             std::shared_ptr<Cluster> temp(temp_cluster);
             cluster_record.clear();
-            if (clusters->find(center.length()) == clusters->end()) {
-                clusters->insert({center.length(),{temp}});
+            if (clusters->find(static_cast<int>(center.length())) == clusters->end()) {
+                clusters->insert({static_cast<int>(center.length()),{temp}});
             } else {
-                clusters->at(center.length()).push_back(temp);
+                clusters->at(static_cast<int>(center.length())).push_back(temp);
             }
         } catch (const std::exception& e) {
             std::cerr << e.what() << std::endl;

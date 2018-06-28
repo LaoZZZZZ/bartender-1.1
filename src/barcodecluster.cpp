@@ -22,7 +22,7 @@ namespace barcodeSpace {
         _center = _barcode_pool->barcode(barcode_index);
         _size = _barcode_pool->barcodeFrequency(barcode_index);
         for (const char& c : _center) {
-            _bpFrequency.push_back(std::array<int,4>());
+            _bpFrequency.push_back(std::array<uint64_t,4>());
             _bpFrequency.back().fill(0);
             _bpFrequency.back()[_dict->asc2dna(c)] = static_cast<int>(_size);
 
@@ -34,7 +34,7 @@ namespace barcodeSpace {
     }
 
     BarcodeCluster::BarcodeCluster(const std::string& center,
-                                   const std::vector< std::array<int, 4> >& frequency_table,
+                                   const std::vector< std::array<uint64_t, 4> >& frequency_table,
                                    int cluster_id) :
         _center(center), _bpFrequency(frequency_table),_cid(cluster_id){
         assert(frequency_table.size() == center.length());

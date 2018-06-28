@@ -22,8 +22,8 @@ class ClusterMergerUnPoolTester : public ClusterMergerTester
 {
 public:
     ClusterMergerUnPoolTester(double zvalue);
-    bool shouldMerge(const std::vector<std::array<int,4>>& freq_c1,
-                     const std::vector<std::array<int,4>>& freq_c2);
+    bool shouldMerge(const std::vector<std::array<uint64_t,4>>& freq_c1,
+                     const std::vector<std::array<uint64_t,4>>& freq_c2);
 private:
     std::unique_ptr<HypothesisTester>  _tester;
 };

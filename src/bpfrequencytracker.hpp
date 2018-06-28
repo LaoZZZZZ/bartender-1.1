@@ -22,7 +22,7 @@ namespace barcodeSpace {
     // Keep track marginal and conditional frequency tables of all positions.
     class BPFrequencyTracker {
     public:
-        typedef std::array<std::array<int,4>,4>  ConditionFrequencyTable;
+        typedef std::array<std::array<uint64_t,4>,4>  ConditionFrequencyTable;
         BPFrequencyTracker(size_t num_positions);
         
         // Given the conditional position and target position,
@@ -36,7 +36,7 @@ namespace barcodeSpace {
         void addFrequency(const std::string& seq,
                           size_t freq = 1);
         // Get the marginal frequency table for a single position.
-        const std::array<int,4>& getMarginalFrequency(int position) const {
+        const std::array<uint64_t,4>& getMarginalFrequency(int position) const {
             return _self_marginal_frequency[position];
         }
         
@@ -44,7 +44,7 @@ namespace barcodeSpace {
         size_t totalFrequency() const {
             return _totalFrequency;
         }
-        const std::vector<std::array<int, 4>>& getMarginalFrequencyTable() const {return _self_marginal_frequency;}
+        const std::vector<std::array<uint64_t, 4>>& getMarginalFrequencyTable() const {return _self_marginal_frequency;}
     private:
         
         // Diction used to transfer nucleotide into integer.
@@ -55,7 +55,7 @@ namespace barcodeSpace {
         // hold the conditional bp frequency for each nucleotide position.
         std::vector<std::vector<ConditionFrequencyTable>>_condition_frequency_tracker;
         // keep track the marginal nucleotide frequency for each position.
-        std::vector<std::array<int, 4>>    _self_marginal_frequency;
+        std::vector<std::array<uint64_t, 4>>    _self_marginal_frequency;
         
         size_t _totalFrequency;
         std::vector<int> _bps_buffer;

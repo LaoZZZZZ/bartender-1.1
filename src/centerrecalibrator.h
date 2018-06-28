@@ -23,17 +23,17 @@ public:
     // Identify the centers for the given base pair frequncy.
     // Return true if the given cluster has more than then maximum_centers threshold.
     // Just for logging the low quality clusters.
-    bool IdentifyCenters(const std::vector<std::array<int, 4>>& cluster_bp_frequency,
+    bool IdentifyCenters(const std::vector<std::array<uint64_t, 4>>& cluster_bp_frequency,
                          const std::vector<double>& entropies,
                          std::vector<std::string>* centers);
-    bool IdentifyCenters(const std::vector<std::array<int, 4>>& cluster_bp_frequency,
+    bool IdentifyCenters(const std::vector<std::array<uint64_t, 4>>& cluster_bp_frequency,
                          std::vector<std::string>* centers);
 private:
-    std::vector<kmer> IdentifyCentersImp(const std::vector<std::array<int, 4>>& base_freq,
+    std::vector<kmer> IdentifyCentersImp(const std::vector<std::array<uint64_t, 4>>& base_freq,
                                          const std::vector<double>& entropies,
                                          bool& truncated);
      
-    std::vector<std::string> IdentifyCentersOptimalImp(const std::vector<std::array<int, 4>>& base_freq,
+    std::vector<std::string> IdentifyCentersOptimalImp(const std::vector<std::array<uint64_t, 4>>& base_freq,
                                          const std::vector<double>& entropies,
                                          bool& truncated);
     double _entropy_threshold;    //
