@@ -67,7 +67,7 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
             checked[index] = true;
 
             size_t sz = centers.size();
-            for (int bp = 0; bp < 4; ++bp) {
+            for (uint64_t bp = 0; bp < 4; ++bp) {
                 if (bp == majorities[index]) continue;
                 //proportion = base_freq[index][bp] / total;
                 // mixture base pair position

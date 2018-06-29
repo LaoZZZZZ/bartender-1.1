@@ -10,7 +10,7 @@ using barcodeSpace::BPFrequencyTracker;
 TEST(BpFrequencyTracker, marginalFrequency) {
     BPFrequencyTracker bpFrequencyTracker(5);
     bpFrequencyTracker.addFrequency("AAAAA", 5);
-    std::vector<std::array<int, 4>> pwm = bpFrequencyTracker.getMarginalFrequencyTable();
+    std::vector<std::array<uint64_t, 4>> pwm = bpFrequencyTracker.getMarginalFrequencyTable();
     for (const auto& position : pwm) {
         ASSERT_EQ(1, position[0]);
         ASSERT_EQ(0, position[1]);
