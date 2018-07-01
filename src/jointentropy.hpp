@@ -21,7 +21,7 @@ namespace barcodeSpace {
      */
     class JointEntropy {
     public:
-        typedef std::array<std::array<int,4>,4>  ConditionFrequencyTable;
+        typedef std::array<std::array<uint64_t,4>,4>  ConditionFrequencyTable;
         JointEntropy(int total_num_barcodes);
         double pairedEntropy(const ConditionFrequencyTable& cond_table);
         void reset(int total);

@@ -28,10 +28,10 @@ namespace barcodeSpace {
     void BarcodeStatistics::calculatePWM() {
         if (_barcode_pool->size() > 0) {
             for (size_t i = 0; i < _barcode_pool->size(); ++i) {
-                int b_len = _barcode_pool->barcode(i).length();
+                int b_len = static_cast<int>(_barcode_pool->barcode(i).length());
                 if (!_full_pwms.count(b_len)) {
-                    _full_pwms.insert({b_len, PositionWeightMatrix(b_len,array<int,4>({0,0,0,0}))});
-                    _unique_pwms.insert({b_len, PositionWeightMatrix(b_len,array<int,4>({0,0,0,0}))});
+                    _full_pwms.insert({b_len, PositionWeightMatrix(b_len,array<uint64_t,4>({0,0,0,0}))});
+                    _unique_pwms.insert({b_len, PositionWeightMatrix(b_len,array<uint64_t,4>({0,0,0,0}))});
                     _full_entropies.insert({b_len, vector<double>(b_len,0)});
                     _unique_entropies.insert({b_len, vector<double>(b_len,0)});
                 }

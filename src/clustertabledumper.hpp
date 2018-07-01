@@ -76,7 +76,7 @@ namespace barcodeSpace {
             }
             return kmer_decoders[klen]->DNASequence(k);
         }
-        double maxEntropy(const std::vector<std::array<int, 4>>& frequency_table);
+        double maxEntropy(const std::vector<std::array<uint64_t, 4>>& frequency_table);
 
         
         std::vector<std::string>    _cash;

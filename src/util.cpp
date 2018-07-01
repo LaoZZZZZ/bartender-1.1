@@ -91,10 +91,10 @@ double similarityScore(const kmer& k, const list<kmers_freq>& barcodes, size_t k
     return result;
 }*/
 double similarityScore(const kmer& center,
-                       const std::vector<std::array<int, 4>>& frequency_table) {
-    size_t total = 0;
+                       const std::vector<std::array<uint64_t, 4>>& frequency_table) {
+    double total = 0;
     const auto& first = frequency_table.front();
-    int total_freq = 0;
+    uint64_t total_freq = 0;
     for(const auto& c : first) {
         total_freq += c;
     }
@@ -121,7 +121,7 @@ void outputPositionWeightMatrix(const std::string& filename,
 
     fstream outhandler(filename.c_str(), fstream::out);
     for(const auto& c : clusters) {
-        const std::vector<std::array<int,4>>& freq = c->bpFrequency();
+        const std::vector<std::array<uint64_t,4>>& freq = c->bpFrequency();
         for(int bp = 0; bp < 4; ++bp) {
             outhandler << c->center();
             for(size_t pos = 0; pos < freq.size(); ++pos) {

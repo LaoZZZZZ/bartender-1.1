@@ -20,7 +20,7 @@ namespace barcodeSpace {
         assert(_total_position > 0);
         _totalFrequency = 0;
         _condition_frequency_tracker.assign(num_positions, vector<ConditionFrequencyTable>(num_positions,ConditionFrequencyTable()));
-        _self_marginal_frequency.assign(_total_position,array<int,4>());
+        _self_marginal_frequency.assign(_total_position,array<uint64_t,4>());
        
         for (size_t pos = 0; pos < _total_position; ++pos) {
             for (auto& t : _condition_frequency_tracker[pos]) {

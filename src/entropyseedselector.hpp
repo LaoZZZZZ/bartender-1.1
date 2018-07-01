@@ -19,7 +19,7 @@ namespace barcodeSpace {
     
     class EntropySeedSelector : public SeedSelector {
     public:
-        typedef std::vector<std::array<int, 4>> PositionWeightMatrix;
+        typedef std::vector<std::array<uint64_t, 4>> PositionWeightMatrix;
         // Given the total number of bp for seed
         // this class will pick up the first seed_length bps as the seed pattern
         // If the total number of qualified positions is less than the seed_length,

@@ -21,7 +21,7 @@ CenterRecalibrator::CenterRecalibrator(double entropy_threshold,
     kmersDictionaryPtr = kmersDictionary::getAutoInstance();
 }
 
-bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<int, 4>>& base_freq,
+bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<uint64_t, 4>>& base_freq,
                                          const std::vector<double>& entropies,
                                          std::vector<std::string>* centers) {
     bool more_centers = false;
@@ -34,7 +34,7 @@ bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<int, 4>>& 
     return more_centers;
 
 }
-bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<int, 4>>& cluster_bp_frequency,
+bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<uint64_t, 4>>& cluster_bp_frequency,
                                          std::vector<std::string>* centers) {
     std::vector<double> entropies;
     for (const auto& bp_freq : cluster_bp_frequency) {
@@ -45,12 +45,12 @@ bool CenterRecalibrator::IdentifyCenters(const std::vector<std::array<int, 4>>& 
 // This function is the replacement of function IdentifyCentersImp.
 // Cause this function will pick up the most representative centers.
 std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
-                    const std::vector<std::array<int, 4>>& base_freq,
+                    const std::vector<std::array<uint64_t, 4>>& base_freq,
                     const std::vector<double>& entropies,
                     bool& truncated) {
     assert(!entropies.empty());
     std::vector<string>   centers;
-    std::vector<int> majorities = center(base_freq);
+    std::vector<uint64_t> majorities = center(base_freq);
     centers.push_back("");
     for(const auto& bp : majorities) {
         centers.back().push_back(kmersDictionaryPtr->dna2asc(bp));
@@ -67,7 +67,7 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
             checked[index] = true;
 
             size_t sz = centers.size();
-            for (int bp = 0; bp < 4; ++bp) {
+            for (uint64_t bp = 0; bp < 4; ++bp) {
                 if (bp == majorities[index]) continue;
                 //proportion = base_freq[index][bp] / total;
                 // mixture base pair position
@@ -102,7 +102,7 @@ std::vector<std::string> CenterRecalibrator::IdentifyCentersOptimalImp(
 //           Improvement: Find the first k most representative centers(those centers that
 //           represent the most base pairs.
 
-std::vector<kmer> CenterRecalibrator::IdentifyCentersImp(const std::vector<std::array<int, 4>>& base_freq,
+std::vector<kmer> CenterRecalibrator::IdentifyCentersImp(const std::vector<std::array<uint64_t, 4>>& base_freq,
                                                          const std::vector<double>& entropies,
                                                          bool& truncated) {
     std::vector<kmer>   centers;

@@ -47,7 +47,7 @@ size_t kmerDistance(const kmer&, const kmer&, size_t);
   * which should be faster than the pairwise compairson method.
 */
 double similarityScore(const kmer& center,
-                       const std::vector<std::array<int, 4>>& frequency_table);
+                       const std::vector<std::array<uint64_t, 4>>& frequency_table);
 
 std::list<std::string> strSplit(const std::string&);
 

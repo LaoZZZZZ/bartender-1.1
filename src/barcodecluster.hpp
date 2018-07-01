@@ -37,14 +37,14 @@ namespace barcodeSpace {
         BarcodeCluster(const std::string& center, size_t freq);
         // used for multiple time points
         BarcodeCluster(const std::string& center,
-                       const std::vector< std::array<int, 4> >& frequency_table,
+                       const std::vector< std::array<uint64_t, 4> >& frequency_table,
                        int cluster_id);
         static int MaximumID() {return ClusterCount;}
         static void setBarcodePool(const std::shared_ptr<BarcodePool>& pool) {
             _barcode_pool = pool;
         }
         size_t barcodeLength() const {return _center.length();}
-        const std::vector< std::array<int, 4> >& bpFrequency() const {
+        const std::vector< std::array<uint64_t, 4> >& bpFrequency() const {
             return _bpFrequency;
         }
         
@@ -93,7 +93,7 @@ namespace barcodeSpace {
         
     private:
         //void updateFrequency(const kmers_freq&);
-        void AddFrequency(const std::vector< std::array<int, 4> >& extra) {
+        void AddFrequency(const std::vector< std::array<uint64_t, 4> >& extra) {
             assert(extra.size() == _bpFrequency.size());
             for (size_t pos = 0; pos < extra.size(); ++pos) {
                 for (size_t i = 0; i < 4; ++i) {
@@ -119,7 +119,7 @@ namespace barcodeSpace {
         // The base pair frequency at each position.
         // There are four elements in this vector
         // 0 : A, 1: C, 2: G, 3: T
-        std::vector< std::array<int, 4> >                 _bpFrequency;
+        std::vector< std::array<uint64_t, 4> >            _bpFrequency;
         int                                               _cid;
         
         static int                                        ClusterCount;

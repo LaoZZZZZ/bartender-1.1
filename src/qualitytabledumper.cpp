@@ -26,7 +26,7 @@ namespace barcodeSpace {
             buffer.str("");
         }
     }
-    void QualityTableDumper::WritePWM(int cluster_id, const std::vector<std::array<int, 4>>& pwm) {
+    void QualityTableDumper::WritePWM(int cluster_id, const std::vector<std::array<uint64_t, 4>>& pwm) {
         
         assert(_max_barcode_length >= pwm.size());
         _cash[0] = to_string(cluster_id);

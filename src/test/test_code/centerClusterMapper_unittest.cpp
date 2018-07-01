@@ -29,7 +29,7 @@ TEST(CenterClusterMapperTest, empty) {
 TEST(CenterClusterMapperTest, addAndRemoveCluster) {
     CenterClusterMapper centerClusterMapper(10);
     
-    const vector<array<int,4>> frequency_table({{{17, 3, 0, 0}},
+    const vector<array<uint64_t,4>> frequency_table({{{17, 3, 0, 0}},
         {{20, 0, 0, 0}},
         {{20, 0, 0, 0}},
         {{20, 0, 0, 0}},

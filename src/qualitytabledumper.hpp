@@ -38,7 +38,7 @@ namespace barcodeSpace {
             _out.Write(_cash);
             
         }
-        void WritePWM(int cluster_id, const std::vector<std::array<int, 4>>& pwm);
+        void WritePWM(int cluster_id, const std::vector<std::array<uint64_t, 4>>& pwm);
         ~QualityTableDumper() {
         }
     private:

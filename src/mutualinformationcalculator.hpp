@@ -19,8 +19,8 @@ namespace barcodeSpace {
     // between two positions.
     class MutualInformationCalculator {
     public:
-        typedef std::array<std::array<int,4>,4>  ConditionFrequencyTable;
-        typedef std::array<int, 4>   MarginalFrequencyTable;
+        typedef std::array<std::array<uint64_t,4>,4>  ConditionFrequencyTable;
+        typedef std::array<uint64_t, 4>   MarginalFrequencyTable;
         
         MutualInformationCalculator(size_t total) : _total_frequency(total) {
             _log_total = log2(_total_frequency);

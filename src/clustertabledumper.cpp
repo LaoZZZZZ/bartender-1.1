@@ -30,7 +30,7 @@ namespace barcodeSpace {
         
     }
 
-    double ClusterTableDumper::maxEntropy(const std::vector<std::array<int, 4>>& frequency_table) {
+    double ClusterTableDumper::maxEntropy(const std::vector<std::array<uint64_t, 4>>& frequency_table) {
         double score(0);
         for (const auto& bp_freq : frequency_table) {
             score = fmax(score, Entropy(bp_freq));

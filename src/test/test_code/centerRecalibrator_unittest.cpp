@@ -24,7 +24,7 @@ protected:
 };
 
 TEST_F(CenterCalibratorTest, oneCenter) {
-    const vector<array<int, 4>> frequency_table({{{20, 0, 0, 0}},
+    const vector<array<uint64_t, 4>> frequency_table({{{20, 0, 0, 0}},
         {{0, 0, 20, 0}},
         {{20, 0, 0, 0}},
         {{0, 20, 0, 0}},
@@ -36,7 +36,7 @@ TEST_F(CenterCalibratorTest, oneCenter) {
 }
  
 TEST_F(CenterCalibratorTest, twoCenters) {
-    const vector<array<int, 4>> frequency_table({{{17, 3, 0, 0}},
+    const vector<array<uint64_t, 4>> frequency_table({{{17, 3, 0, 0}},
         {{0, 0, 20, 0}},
         {{20, 0, 0, 0}},
         {{0, 20, 0, 0}},
@@ -51,7 +51,7 @@ TEST_F(CenterCalibratorTest, twoCenters) {
 }
 
 TEST_F(CenterCalibratorTest, threeCenters) {
-    const vector<array<int, 4>> frequency_table({
+    const vector<array<uint64_t, 4>> frequency_table({
         {{14, 3, 3, 0}},
         {{0, 0, 20, 0}},
         {{20, 0, 0, 0}},
