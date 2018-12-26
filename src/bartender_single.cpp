@@ -69,7 +69,7 @@ void drive(std::string barcodefile,  // original read file
     //2.Calculate the position weight matrix and the entropy.
     //  Estimate the sequence error from the spacers.
     std::pair<size_t, size_t> barcode_length_range = loader.lengthRange();
-    std::cout << "shortest barcode length: " << barcode_length_range.first << std::endl << "longest barcode: " << barcode_length_range.second << std::endl;
+    std::cout << "Shortest barcode length: " << barcode_length_range.first << std::endl << "Longest barcode: " << barcode_length_range.second << std::endl;
     BarcodePool::createInstance(loader.barcodeTable());
     std::shared_ptr<BarcodePool> barcode_pool = BarcodePool::getAutoInstance();
     BarcodeCluster::setBarcodePool(barcode_pool);
@@ -118,7 +118,7 @@ void drive(std::string barcodefile,  // original read file
     // The group is defined as all barcode with same length.
     Timer* cluster_timer = new realTimer(cout);
     for (size_t blen = barcode_length_range.first; blen <= barcode_length_range.second; ++ blen) {
-        cout << "Start to clustering barcode with length " << blen << endl;
+        cout << "Start to group barcode with length " << blen << endl;
         ClusteringDriver cluster_drive(blen, seedlen, step, num_threads, default_error_rate, zvalue, test_method, distance,0);
         cluster_drive.clusterDrive(BarcodePool::getAutoInstance());
         std::list<std::shared_ptr<BarcodeCluster>> cur_clusters = cluster_drive.clusters();
@@ -135,7 +135,7 @@ void drive(std::string barcodefile,  // original read file
     cout << endl;
     
     if (!clusters.empty()) {
-        cout<<"start to dump clusters to file with prefix "<< outprefix <<endl;
+        cout<<"Start to dump clusters to file with prefix "<< outprefix <<endl;
         ClusterOutput out(outprefix);
         // Dumps the cluster information.
         out.WriteToFile(clusters, barcode_pool,barcode_length_range.second);

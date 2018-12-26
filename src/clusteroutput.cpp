@@ -31,17 +31,16 @@ ClusterOutput::ClusterOutput(const string& prefix):_filename_prefix(prefix)
     if (clusters.empty())
         return;
     size_t num_time_points = clusters.front()->columns().size();
-        std::cout << "Dumping result in parallel ******" << std::endl;
-    ClusterTableDumper cluster_dumper(_filename_prefix + "_cluster.csv", num_time_points, clusters);
-    
-    QualityTableDumper quality_dumper(_filename_prefix + "_quality.csv", max_barcode_length, clusters);
-    BarcodeTableDumper barcode_dumper(_filename_prefix + "_barcode.csv", clusters, barcode_pool);
-    cluster_dumper.start();
-    quality_dumper.start();
-    barcode_dumper.start();
-    cluster_dumper.join();
-    quality_dumper.join();
-    barcode_dumper.join();
+    std::vector<std::unique_ptr<ThreadWrapper>> dumpers;
+        dumpers.push_back(std::unique_ptr<ThreadWrapper>(new ClusterTableDumper(_filename_prefix + "_cluster.csv", num_time_points, clusters)));
+    dumpers.push_back(std::unique_ptr<ThreadWrapper>(new QualityTableDumper(_filename_prefix + "_quality.csv", max_barcode_length, clusters)));
+    dumpers.push_back(std::unique_ptr<ThreadWrapper>(new BarcodeTableDumper(_filename_prefix + "_barcode.csv", clusters, barcode_pool)));
+    for (auto& dumper : dumpers) {
+        dumper->start();
+    }
+    for (auto& dumper : dumpers) {
+        dumper->join();
+    }
 }
     
 void ClusterOutput::WriteToFile(const std::list<std::shared_ptr<Cluster>>& clusters,size_t max_barcode_length) {
