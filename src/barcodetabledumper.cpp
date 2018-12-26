@@ -15,14 +15,17 @@
 
 using namespace std;
 namespace barcodeSpace {
-    void BarcodeTableDumper::writeBarcodeLine(int cluster_id, const std::vector<size_t>& barcodes,
-                                              const std::shared_ptr<BarcodePool>& pool) {
-        _cash[2] = to_string(cluster_id);
-        for (const auto& b : barcodes) {
-            _cash[0] = pool->barcode(b);
-            _cash[1] = to_string(pool->barcodeFrequency(b));
-            _out.Write(_cash);
+    void BarcodeTableDumper::run() {
+        int id = 0;
+        for (const auto& c : _clusters) {
+            ++id;
+            _cash[2] = to_string(id);
+            for (const auto& b : c->barcodes()) {
+                _cash[0] = _pool->barcode(b);
+                _cash[1] = to_string(_pool->barcodeFrequency(b));
+                _out.Write(_cash);
+            }
         }
     }
- 
 }
+

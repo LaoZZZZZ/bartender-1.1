@@ -31,18 +31,15 @@ ClusterOutput::ClusterOutput(const string& prefix):_filename_prefix(prefix)
     if (clusters.empty())
         return;
     size_t num_time_points = clusters.front()->columns().size();
-    ClusterTableDumper cluster_dumper(_filename_prefix + "_cluster.csv", num_time_points);
-    
-    QualityTableDumper quality_dumper(_filename_prefix + "_quality.csv", max_barcode_length);
-    BarcodeTableDumper barcode_dumper(_filename_prefix + "_barcode.csv");
-    
-    int id = 1;
-    for (auto& c : clusters) {
-        c->SetClusterID(id);
-        ++id;
-        cluster_dumper.WriteCluster(c);
-        quality_dumper.WritePWM(c->ClusterID(), c->bpFrequency());
-        barcode_dumper.writeBarcodeLine(c->ClusterID(), c->barcodes(), barcode_pool);
+    std::vector<std::unique_ptr<ThreadWrapper>> dumpers;
+        dumpers.push_back(std::unique_ptr<ThreadWrapper>(new ClusterTableDumper(_filename_prefix + "_cluster.csv", num_time_points, clusters)));
+    dumpers.push_back(std::unique_ptr<ThreadWrapper>(new QualityTableDumper(_filename_prefix + "_quality.csv", max_barcode_length, clusters)));
+    dumpers.push_back(std::unique_ptr<ThreadWrapper>(new BarcodeTableDumper(_filename_prefix + "_barcode.csv", clusters, barcode_pool)));
+    for (auto& dumper : dumpers) {
+        dumper->start();
+    }
+    for (auto& dumper : dumpers) {
+        dumper->join();
     }
 }
     
@@ -50,17 +47,13 @@ void ClusterOutput::WriteToFile(const std::list<std::shared_ptr<Cluster>>& clust
     if (clusters.empty())
         return;
     size_t num_time_points = clusters.front()->columns().size();
-    ClusterTableDumper cluster_dumper(_filename_prefix + "_cluster.csv", num_time_points);
+    ClusterTableDumper cluster_dumper(_filename_prefix + "_cluster.csv", num_time_points, clusters);
     
-    QualityTableDumper quality_dumper(_filename_prefix + "_quality.csv", max_barcode_length);
-    
-    int id = 1;
-    for (auto& c : clusters) {
-        c->SetClusterID(id);
-        ++id;
-        cluster_dumper.WriteCluster(c);
-        quality_dumper.WritePWM(c->ClusterID(), c->bpFrequency());
-    }
+    QualityTableDumper quality_dumper(_filename_prefix + "_quality.csv", max_barcode_length, clusters);
+    cluster_dumper.start();
+    quality_dumper.start();
+    cluster_dumper.join();
+    quality_dumper.join();
 }
 
 }   //namespace barcodeSpace

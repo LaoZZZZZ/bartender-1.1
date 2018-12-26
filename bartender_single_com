@@ -100,7 +100,7 @@ def driver():
                 print("Invalid zvalue!\n")
                 sys.exit(2)
         elif o in ("--forward", "--both"):
-            print("the strand direction is " + a)
+            print("The strand direction is " + o.strip('--'))
             if o == '--forward':
                 strand_direction = 1
             elif o == '--both':

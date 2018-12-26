@@ -37,7 +37,7 @@ namespace barcodeSpace {
             if(!arg) throw invalid_argument("invalid thread argument");
             ((ThreadWrapper*)arg)->run();
         }catch(const exception& e){
-            cerr<<e.what()<<endl;
+            cerr << e.what() << endl;
             cerr.flush();
             exit(-1);
         }

@@ -37,4 +37,21 @@ namespace barcodeSpace {
         }
         return score;
     }
+    
+    void ClusterTableDumper::run() {
+        int id = 0;
+        for (const auto& c : _clusters) {
+            ++id;
+            _cash[0] = std::to_string(id);
+            _cash[1] = c->center();
+            _cash[2] = std::to_string(maxEntropy(c->bpFrequency()));
+            size_t pos = 3;
+            assert(_cash.size() - pos == c->columns().size());
+            for (const auto& f : c->columns()) {
+                _cash[pos] = std::to_string(f);
+                ++pos;
+            }
+            _out.Write(_cash);
+        }
+    }
 }   // namespace barcodeSpace
