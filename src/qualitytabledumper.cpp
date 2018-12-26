@@ -26,6 +26,7 @@ namespace barcodeSpace {
             buffer.str("");
         }
     }
+    
     void QualityTableDumper::WritePWM(int cluster_id, const std::vector<std::array<uint64_t, 4>>& pwm) {
         
         assert(_max_barcode_length >= pwm.size());
@@ -44,4 +45,11 @@ namespace barcodeSpace {
         }
     }
  
+    void QualityTableDumper::run() {
+        int id = 0;
+        for (const auto& c : _clusters) {
+            ++id;
+            WritePWM(id, c->bpFrequency());
+        }
+    }
 }

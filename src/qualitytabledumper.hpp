@@ -9,9 +9,14 @@
 #ifndef qualitytabledumper_hpp
 #define qualitytabledumper_hpp
 
-#include "kmers_dictionary.h"
+#include "barcodecluster.hpp"
 #include "csvoutput.h"
+#include "kmers_dictionary.h"
+#include "threadwrapper.hpp"
+
 #include <array>
+#include <list>
+#include <memory>
 #include <vector>
 
 namespace barcodeSpace {
@@ -29,10 +34,11 @@ namespace barcodeSpace {
         }
     };
     // This class could dump position weight matrix to file.
-    class QualityTableDumper {
+    class QualityTableDumper : public ThreadWrapper {
     public:
-        QualityTableDumper(const std::string& filename, size_t max_length_barcode) :
-        _out(filename), _max_barcode_length(max_length_barcode) {
+        QualityTableDumper(const std::string& filename, size_t max_length_barcode,
+                           const std::list<std::shared_ptr<BarcodeCluster>>& clusters) :
+        _out(filename), _max_barcode_length(max_length_barcode), _clusters(clusters) {
             _dict = kmersDictionary::getAutoInstance();
             generateHeader();
             _out.Write(_cash);
@@ -43,11 +49,13 @@ namespace barcodeSpace {
         }
     private:
         void generateHeader();
+        void run();
         
         CSVOutput<std::string> _out;
         std::vector<std::string>    _cash;
         std::shared_ptr<kmersDictionary> _dict;
         size_t _max_barcode_length;
+        const std::list<std::shared_ptr<BarcodeCluster>>& _clusters;
     };
 }   // namespace barcodeSpace
 

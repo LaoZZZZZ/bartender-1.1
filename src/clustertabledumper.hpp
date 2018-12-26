@@ -13,6 +13,7 @@
 #include "barcodecluster.hpp"
 #include "kmerdecoder.hpp"
 #include "csvoutput.h"
+#include "threadwrapper.hpp"
 #include "typdefine.h"
 
 #include <array>
@@ -42,29 +43,17 @@ namespace barcodeSpace {
         }
     };
     
-    class ClusterTableDumper{
+    class ClusterTableDumper : public ThreadWrapper {
     public:
         typedef BarcodeCluster Cluster;
-        ClusterTableDumper(const std::string& filename, size_t num_time_points): _out(filename)
+        ClusterTableDumper(const std::string& filename,
+                           size_t num_time_points,
+                           const std::list<std::shared_ptr<Cluster>>& clusters) : _out(filename), _clusters(clusters)
         {
             generateHeader(num_time_points);
             _out.Write(_cash);
         }
         
-        void WriteCluster(const std::shared_ptr<Cluster>& c) {
-            _cash[0] = std::to_string(c->ClusterID());
-            //_cash[1] = decodeKmer(c->center()->center(), c->center()->klen());
-            _cash[1] = c->center();
-            //_cash[1] = to_string(c->center()->center());
-            _cash[2] = std::to_string(maxEntropy(c->bpFrequency()));
-            size_t pos = 3;
-            assert(_cash.size() - pos == c->columns().size());
-            for (const auto& f : c->columns()) {
-                _cash[pos] = std::to_string(f);
-                ++pos;
-            }
-            _out.Write(_cash);
-        }
         ~ClusterTableDumper() {
         }
     private:
@@ -77,11 +66,12 @@ namespace barcodeSpace {
             return kmer_decoders[klen]->DNASequence(k);
         }
         double maxEntropy(const std::vector<std::array<uint64_t, 4>>& frequency_table);
-
+        void run();
         
         std::vector<std::string>    _cash;
         std::unordered_map<size_t, std::shared_ptr<KmerDecoder>> kmer_decoders;
         CSVOutput<std::string>  _out;
+        const std::list<std::shared_ptr<Cluster>>& _clusters;
     };
 }   // namespace barcodeSpace
 
