@@ -171,7 +171,11 @@ void drive(std::string barcodefile,  // original read file
 int main(int argc,char* argv[])
 {
     Timer* t = new realTimer(cout);
-    assert(argc >= 3);
+    if (argc < 3) {
+	std::cerr << "Please use bartender_single_com script instead! "
+                  << "Please refer to README about how to use Bartender." << std::endl;
+        return 1;
+    }
     //1. first argument is the sequence file
     string sequencefile(argv[1]);
     //2. output file
