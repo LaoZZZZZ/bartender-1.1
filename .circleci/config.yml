@@ -1,4 +1,6 @@
 version: 2
+jobs:
+    build:
 dependencies:
   pre:
    - sudo apt-get update
@@ -11,3 +13,4 @@ test:
   override:
     - cd src/test/test_code;make all
     - cd src/test/test_code;./bartenderUnitTests
+
