@@ -13,7 +13,6 @@
 #include "kmers_dictionary.h"
 #include "typdefine.h"
 
-
 #include <algorithm>
 #include <array>
 #include <list>
