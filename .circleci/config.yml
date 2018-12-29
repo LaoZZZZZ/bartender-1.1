@@ -1,14 +1,17 @@
 version: 2
 jobs:
-  dependencies:
-    pre:
-      - sudo apt-get update
-      - sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev 
-      - sudo apt-get install libboost-all-dev
-    compile:
-      override:
-        - make all 
-    test:
-      override:
-        - cd src/test/test_code;make all
-        - cd src/test/test_code;./bartenderUnitTests
+  build:
+    docker:
+      - image: ubuntu:14.04
+    working_directory: ~/bartender-1.1
+    steps:
+      - checkout
+      - run:
+          command: sudo apt-get update; echo "Y" | sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev
+      - run:
+          command: echo "Y" | sudo apt-get install libboost-all-dev
+      - run: |
+          make all && cd src/test/test_code && make all 
+      - run: |
+          cd src/test/test_code && ./bartenderUnitTests
+
