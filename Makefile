@@ -2,6 +2,7 @@ CC	= g++
 CFLAGS	= -O3 -std=c++11 -I${BOOST_INSTALL_DIR}/include -pthread
 EXTRACTORLDFLAGS	= -L${BOOST_INSTALL_DIR}/lib -lboost_regex -lboost_iostreams
 SINGLELDFLAGS	= -pthread
+COMBINERLDFLAGS	= -pthread
 
 SINGLE	= bartender_single
 EXTRACTOR = bartender_extractor
