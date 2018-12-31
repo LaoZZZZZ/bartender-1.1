@@ -2,14 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ubuntu:14.04
+      - image: ubuntu:18.04
     working_directory: ~/bartender-1.1
     steps:
       - checkout
       - run:
-          command: sudo apt-get update; echo "Y" | sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev
+          command: apt-get update; echo "Y" | apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev
       - run:
-          command: echo "Y" | sudo apt-get install libboost-all-dev
+          command: echo "Y" | apt-get install libboost-all-dev
       - run: |
           make all && cd src/test/test_code && make all 
       - run: |
