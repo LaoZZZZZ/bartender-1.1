@@ -20,14 +20,13 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <regex>
 #include <string>
 #include <vector>
 
-#include <boost/regex.hpp>
-
 using namespace std;
 using namespace barcodeSpace;
-using boost::regex;
+using std::regex;
 
 file_format FindInputFormat(const string& readsfile) {
     ifstream raw_handler(readsfile);
@@ -54,7 +53,7 @@ file_format FindInputFormat(const string& readsfile) {
 void drive(const string& reads_file,
            const string& output_prefix,
            double quality_threshold,
-           const boost::regex& pattern,
+           const std::regex& pattern,
            const string& preceeding,
            const string& suceeding,
 	       size_t num_sub_regex,
@@ -100,10 +99,10 @@ int main(int argc,char* argv[])
         qual_threshold = atof(argv[3]);
     }
     
-    boost::regex pattern;
+    std::regex pattern;
     if (argc >= 5) {
-        pattern.assign(argv[4]);
-	if (pattern.empty()) {
+        pattern.assign(argv[4], std::regex::ECMAScript);
+	if (strlen(argv[4]) == 0) {
 	   std::cerr << "The given pattern " << argv[4] << " is invalid"<< std::endl;
 	   exit(1);
 	}
