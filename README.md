@@ -11,7 +11,7 @@ It currently has three functionalities.
 3. It generates count trajectories for time-course data.
 
 # Installation
- Bartender uses a gcc compiler which should be no older than gcc47. If the Bartender is run in Ubuntu system, please make sure the system version is 16.04 or above.  Installation is simple.
+ Bartender uses a gcc compiler which should be no older than gcc47. If the Bartender is run in Ubuntu operating system, please make sure the system version is 16.04 or above as the built-in GCC compiler in old Ubuntu operating system does not support regex very well, which might cause failures of bartender extractors.  Installation is simple.
  * To build bartender_single (barcode clustering): make bartender_single
  * To build bartender_extractor (barcode extractor): make bartender_extractor
  * To build bartender_combiner (multiple time point mode): make bartender_combiner
