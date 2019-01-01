@@ -6,7 +6,6 @@
 #include <iostream>
 #include <list>
 #include <memory>
-#include <boost/algorithm/string.hpp>
 
 using std::string;
 using std::list;
@@ -143,6 +142,10 @@ bool isDnaSequence(const std::string& sequence) {
 }
 
 std::string toUpper(const string& str) {
-    return boost::to_upper_copy<std::string>(str);
+    std::string result(str);
+    for (size_t i = 0; i < str.length(); ++i) {
+        result[i] = toupper(str[i]);
+    }
+    return result;
 }
 }   // namespace barcodeSpace.

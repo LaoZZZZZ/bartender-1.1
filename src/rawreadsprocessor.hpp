@@ -12,13 +12,14 @@
 #include "formats.h"
 #include "inputprocessor.hpp"
 
-#include <boost/regex.hpp>
+#include <regex>
 #include <string>
+
 namespace barcodeSpace {
 class RawReadsProcessor : public InputProcessor {
 public:
     RawReadsProcessor(const std::string& seq_file,
-                      const boost::regex& pattern,
+                      const std::regex& pattern,
                       file_format format,
                       double quality_threshold);
 private:

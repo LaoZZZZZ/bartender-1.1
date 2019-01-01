@@ -9,13 +9,12 @@
 #include "rawreadsprocessor.hpp"
 #include "formats.h"
 
-#include <boost/regex.hpp>
+#include <regex>
 #include <string>
-using namespace std;
 namespace barcodeSpace {
     
     RawReadsProcessor::RawReadsProcessor(const std::string& seq_file,
-                                         const boost::regex& pattern,
+                                         const std::regex& pattern,
                                          file_format format,
                                          double quality_threshold) : InputProcessor(), _format(format) {
         
