@@ -4,9 +4,9 @@
 #include "sequence.h"
 #include "formats.h"
 
-#include <boost/regex.hpp>
 #include <cassert>
 #include <iostream>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -20,7 +20,7 @@ enum ExtractionResultType {
 class BarcodeExtractor
 {
 public:
-    BarcodeExtractor(const boost::regex& pattern,
+    BarcodeExtractor(const std::regex& pattern,
                      const std::string& preceeding = "",
                      const std::string& suceeding = "",
                      size_t parts = 0,
@@ -28,9 +28,8 @@ public:
                 : _pattern(pattern), _preceeding(preceeding),
                   _suceeding(suceeding), _parts(parts),
                   _error_bps(0), _total_bps(0), _strandDirection(strandDirection){
-                      
-                      assert(_preceeding.size());
-                      assert(_suceeding.size());
+                      assert(!_preceeding.empty());
+                      assert(!_suceeding.empty());
                       assert(_parts%2);
                       for (size_t i = 1; i <= _parts/2; ++i) {
                           _random_part_index.push_back(2*i);
@@ -55,10 +54,10 @@ private:
         return this->isMatched(seq, qual);
     }
 
-    void combinePieces(std::string& sequence, std::string& qual, boost::smatch& result);
+    void combinePieces(std::string& sequence, std::string& qual, std::smatch& result);
 
 private:
-    boost::regex    _pattern;
+    std::regex      _pattern;
     std::string     _preceeding;
     std::string     _suceeding;
     size_t          _parts;

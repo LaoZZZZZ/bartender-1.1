@@ -10,6 +10,8 @@
 #include "UmiExtractor.hpp"
 #include "util.h"
 #include <limits.h>
+#include <sstream>
+#include <string>
 
 namespace barcodeSpace {
     SingleReadProcessorWithUmi::SingleReadProcessorWithUmi(

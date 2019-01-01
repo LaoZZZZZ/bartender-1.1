@@ -4,7 +4,7 @@
 
 
 #include <algorithm>
-#include <boost/regex.hpp>
+#include <regex>
 #include <string>
 using std::string;
 
@@ -21,27 +21,27 @@ Sequence BarcodeExtractor::ExtractBarcode(const Sequence& read, ExtractionResult
 }
 
 ExtractionResultType BarcodeExtractor::isMatched(string& sequence, string& qual){
-    boost::smatch result;
+    std::smatch match_result;
     // if we consider forward or both, we first check the forward direction match.
     if (_strandDirection != REVERSE_DIRECTION) {
         // only consider full matched sequence
-        if(boost::regex_search(sequence, result, _pattern, boost::match_flag_type::match_posix) && !result.empty() && result[0].matched){
-            this->combinePieces(sequence, qual, result);
+        if(std::regex_search(sequence, match_result, _pattern) && !match_result.empty() && match_result[0].matched){
+            combinePieces(sequence, qual, match_result);
             return FORWARD;
         }
     }
     if (_strandDirection != FORWARD_DIRECTION) {
         reverseComplementInplace(sequence);
         std::reverse(qual.begin(),qual.end());
-        if(boost::regex_search(sequence, result, _pattern) && !result.empty()){
-            this->combinePieces(sequence, qual, result);
+        if(std::regex_search(sequence, match_result, _pattern) && !match_result.empty()){
+            this->combinePieces(sequence, qual, match_result);
             return REVERSE_COMPLEMENT;
         }
     }
     return FAIL;
 }
     
-void BarcodeExtractor::combinePieces(string& sequence, string& qual, boost::smatch& result)  {
+void BarcodeExtractor::combinePieces(string& sequence, string& qual, std::smatch& result)  {
     assert(result.size() == _parts + 1);
     string temp;
     string tempqual;

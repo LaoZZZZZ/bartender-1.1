@@ -7,14 +7,13 @@
 //
 
 #include "clustertabledumper.hpp"
-#include "minicsv.h"
 #include "split_util.h"
 
 #include <algorithm>
+#include <sstream>
 #include <string>
 
 using namespace std;
-using namespace csv;
 namespace barcodeSpace {
     void ClusterTableDumper::generateHeader(size_t num_time_points) {
         _cash.push_back("Cluster.ID");
