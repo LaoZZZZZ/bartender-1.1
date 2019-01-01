@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <boost/regex.hpp>
 #include <memory>
 #include <string>
 #include "../../SingleReadProcessorWithUmi.hpp"
@@ -18,7 +17,6 @@ using barcodeSpace::UmiExtractor;
 using barcodeSpace::BarcodeExtractor;
 using barcodeSpace::UmiConfig;
 using barcodeSpace::file_format;
-using boost::regex;
 using std::shared_ptr;
 using std::string;
 using std::vector;
@@ -34,7 +32,7 @@ protected:
         // This file contains 5 reads, 4 of them has valid barcode.
         const string readsFile = "../resource/reads/singleReadsProcessorTest.fq";
         const string output = "../resource/singleReadsProcessTestOutput";
-        boost::regex pattern("(ACGT)([A|T|C|G|N]{4,7})(TGCA)", boost::regex::ECMAScript);
+        std::regex pattern("(ACGT)([A|T|C|G|N]{4,7})(TGCA)", std::regex::ECMAScript);
         const string preceeding = "ACGT";
         const string suceeding = "TGCA";
         std::shared_ptr<BarcodeExtractor> barcodeExtractor(

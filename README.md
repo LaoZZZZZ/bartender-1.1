@@ -11,7 +11,7 @@ It currently has three functionalities.
 3. It generates count trajectories for time-course data.
 
 # Installation
- Bartender uses a gcc compiler which should be no older than gcc47. If you want use the extraction components, the boost library should be installed prior installing bartender. Installation is simple.
+ Bartender uses a gcc compiler which should be no older than gcc47. If the Bartender is run in Ubuntu operating system, please make sure the system version is 16.04 or above as the built-in GCC compiler in old Ubuntu operating system does not support regex very well, which might cause failures of bartender extractors.  Installation is simple.
  * To build bartender_single (barcode clustering): make bartender_single
  * To build bartender_extractor (barcode extractor): make bartender_extractor
  * To build bartender_combiner (multiple time point mode): make bartender_combiner
@@ -182,7 +182,7 @@ A cluster represents a **putative** "true" barcode. The size of the cluster repr
 
 The center is the consensus nucleotide sequence of all barcodes within a cluster.
 
-4. I had hard time compiling bartender because boost was not installed correctly.
+4. [Deprecated] I had hard time compiling bartender because boost was not installed correctly (Boost library is already removed from Bartender).
 
 First, download and install **boost** by following the instructions on boost official webpage http://www.boost.org/. Remember to specify the prefix (--prefix=place you want to install the BOOST) when installing BOOST via the b2 command supplied by the BOOST package. 
 

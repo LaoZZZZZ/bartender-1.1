@@ -17,18 +17,12 @@
 // version 1.7.3 : Add num_of_delimiter method to ifstream and istringstream
 //                 Fix g++ compilation errors
 
-//#define USE_BOOST_LEXICAL_CAST
-
 #ifndef MiniCSV_H
 	#define MiniCSV_H
 
 #include <string>
 #include <sstream>
 #include <fstream>
-
-#ifdef USE_BOOST_LEXICAL_CAST
-#	include <boost/lexical_cast.hpp>
-#endif
 
 #define NEWLINE '\n'
 
@@ -313,12 +307,8 @@ inline csv::ifstream& operator >> (csv::ifstream& istm, T& val)
 {
 	std::string str = istm.get_delimited_str();
 	
-#ifdef USE_BOOST_LEXICAL_CAST
-	val = boost::lexical_cast<T>(str);
-#else
 	std::istringstream is(str);
 	is >> val;
-#endif
 
 	return istm;
 }
@@ -593,12 +583,8 @@ csv::istringstream& operator >> (csv::istringstream& istm, T& val)
 {
 	std::string str = istm.get_delimited_str();
 
-#ifdef USE_BOOST_LEXICAL_CAST
-	val = boost::lexical_cast<T>(str);
-#else
 	std::istringstream is(str);
 	is >> val;
-#endif
 
 	return istm;
 }

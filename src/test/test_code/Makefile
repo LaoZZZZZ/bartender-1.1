@@ -28,7 +28,6 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -O3 -std=c++11
-LDFLAGS	= -lboost_regex -lboost_iostreams
 
 # add dependency for new unit test suite.
 SINGLEREADSPROCESSOR_SOURCES = $(TEST_DIR)/singleReadsProcessor_unittest.cpp $(USER_DIR)/sequence.cpp $(USER_DIR)/fastqpattern.cpp $(USER_DIR)/fastapattern.cpp $(USER_DIR)/barcodeextractor.cpp $(USER_DIR)/util.cpp $(USER_DIR)/pattern.cpp $(USER_DIR)/singlereadsprocessor.cpp $(USER_DIR)/kmers_dictionary.cpp $(USER_DIR)/SingleReadProcessorWithUmi.cpp $(USER_DIR)/UmiExtractor.cpp 
@@ -145,4 +144,4 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(CXX)  -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@ 
 
 bartenderUnitTests: $(OBJECTS) gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ 

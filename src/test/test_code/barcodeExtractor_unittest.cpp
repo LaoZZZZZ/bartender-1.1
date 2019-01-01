@@ -1,17 +1,17 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <boost/regex.hpp>
+#include <regex>
 #include <memory>
 #include <string>
 #include "../../barcodeextractor.h"
 #include "../../sequence.h"
 #include "gtest/gtest.h"
-#include <iostream>
+
 using barcodeSpace::BarcodeExtractor;
 using barcodeSpace::Sequence;
 using barcodeSpace::StrandDirection;
-using boost::regex;
+using std::regex;
 using std::shared_ptr;
 using std::string;
 
@@ -24,7 +24,7 @@ protected:
         const string regularExpression = "(ACGT)([A|T|C|G|N]{4,7})(TGCA)";
         const string PRECEEDING = "ACGT";
         const string SUCCEEDING = "TGCA";
-        const boost::regex pattern(regularExpression);
+        const std::regex pattern(regularExpression);
         this->barcodeextractor.reset(new BarcodeExtractor(pattern, PRECEEDING, SUCCEEDING, SPLITTED_PARTS, barcodeSpace::BOTH_DIRECTION));
     }
 };
@@ -54,7 +54,7 @@ TEST_F(BarcodeExtractorTest, exactMatchBothDirection) {
 TEST_F(BarcodeExtractorTest, inexactMatchBothDirection) {
     // reset the extractor with new regular expression.
     const string regularExpression = "(ACG.|AC.T|A.GT|.CGT)([A|T|C|G|N]{4,7})(TGCA)";
-    const boost::regex pattern(regularExpression);
+    const std::regex pattern(regularExpression);
     const string PRECEEDING = "ACGT";
     const string SUCCEEDING = "TGCA";
     const size_t SPLITTED_PARTS = 3;
@@ -88,7 +88,7 @@ TEST_F(BarcodeExtractorTest, emptyRead) {
 
 TEST_F(BarcodeExtractorTest, patternWithSpacesBothDirection) {
     const string regularExpression = "(ACG.|AC.T|A.GT|.CGT)([A|T|C|G|N]{4,7})(AC)([A|T|C|G|N]{4,7})(TGCA)";
-    const boost::regex pattern(regularExpression);
+    const std::regex pattern(regularExpression);
     const string PRECEEDING = "ACGT";
     const string SUCCEEDING = "TGCA";
     const size_t SPLITTED_PARTS = 5;
@@ -110,7 +110,7 @@ TEST_F(BarcodeExtractorTest, patternWithSpacesBothDirection) {
 TEST_F(BarcodeExtractorTest, forwardDirectionOnly) {
     // reset the extractor with new regular expression.
     const string regularExpression = "(ACG.|AC.T|A.GT|.CGT)([A|T|C|G|N]{4,7})(TGCA)";
-    const boost::regex pattern(regularExpression);
+    const std::regex pattern(regularExpression);
     const string PRECEEDING = "ACGT";
     const string SUCCEEDING = "TGCA";
     const size_t SPLITTED_PARTS = 3;
@@ -129,7 +129,7 @@ TEST_F(BarcodeExtractorTest, forwardDirectionOnly) {
 TEST_F(BarcodeExtractorTest, reverseDirectionOnly) {
     // reset the extractor with new regular expression.
     const string regularExpression = "(ACG.|AC.T|A.GT|.CGT)([A|T|C|G|N]{4,7})(TGCA)";
-    const boost::regex pattern(regularExpression);
+    const std::regex pattern(regularExpression);
     const string PRECEEDING = "ACGT";
     const string SUCCEEDING = "TGCA";
     const size_t SPLITTED_PARTS = 3;

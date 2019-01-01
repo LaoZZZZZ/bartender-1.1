@@ -7,14 +7,12 @@
 //
 
 #include "qualitytabledumper.hpp"
-#include "minicsv.h"
 
 #include <cassert>
 #include <sstream>
 #include <string>
 
 using namespace std;
-using namespace csv;
 namespace barcodeSpace {
     void QualityTableDumper::generateHeader() {
         _cash.push_back("Cluster.ID");
