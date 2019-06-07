@@ -72,9 +72,10 @@ namespace barcodeSpace {
     
     bool ClusteringDriver::clusterDrive(const std::shared_ptr<BarcodePool>& barcode_pool) {
         std::cout << "Transforming the barcodes into seed clusters" << std::endl;
+        std::array<uint64_t, 4> entropy_thres = {80, 20, 0, 0};
         // 1. Transform the barcode table into a list of clusters
         this->transform(barcode_pool);
-	    std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy({80,20,0,0})));
+	    std::unique_ptr<SeedSelector> selector(new EntropySeedSelector(_barcode_length,Entropy(entropy_thres)));
         vector<int> seeds_positions = selector->getSeedsPositions(_frequency_tracker);
         _shatter_machine.reset(new ClusterBucketer(seeds_positions, _seed_length, _step));
         
