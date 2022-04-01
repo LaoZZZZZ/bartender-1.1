@@ -10,6 +10,7 @@
 #define jointentropy_hpp
 
 #include <array>
+#include <stdint.h>
 namespace barcodeSpace {
     
     /**

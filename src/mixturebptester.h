@@ -2,6 +2,8 @@
 #define MIXTUREBPTESTER_H
 
 #include <array>
+#include <cstddef>
+#include <stdint.h>
 namespace barcodeSpace {
 // This class is designed to test if the given frequency array
 // and the position interested

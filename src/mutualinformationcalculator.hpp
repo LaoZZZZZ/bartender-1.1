@@ -13,6 +13,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <vector>
+#include <stdint.h>
 
 namespace barcodeSpace {
     // This class is designed to calculate the mutual information

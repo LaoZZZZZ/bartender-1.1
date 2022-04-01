@@ -5,6 +5,7 @@
 #include <array>
 #include <cmath>
 #include <numeric>
+#include <stdint.h>
 
 namespace barcodeSpace {
 
