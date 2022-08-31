@@ -2,7 +2,9 @@
 
 #include <algorithm>
 #include <array>
+#include <cstddef>
 #include <numeric>
+#include <stdint.h>
 namespace barcodeSpace {
 
 MixtureBPTester::MixtureBPTester(double p_value, double error_rate)
