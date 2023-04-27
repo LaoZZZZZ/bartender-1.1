@@ -10,10 +10,10 @@ def generateRexImp(sequence, start, mismatch, result):
         result = [ r + sequence[start:] for r in result]
     else:
         if mismatch >= len(sequence) - start:
-            num_of_dots = len(sequence) - start 
+            num_of_dots = len(sequence) - start
             result = [r + '.' * num_of_dots for r in result]
         elif len(sequence) - start > mismatch:
-            exact = [r + sequence[start] for r in result] 
+            exact = [r + sequence[start] for r in result]
             inexact = [r + '.' for r in result]
             if start + 1 < len(sequence):
                 result = generateRexImp(sequence, start + 1, mismatch, exact)
@@ -21,10 +21,10 @@ def generateRexImp(sequence, start, mismatch, result):
             else:
                 result = exact
                 result += inexact
-    return result					
+    return result
 
 def generateRex(sequence, mismatch):
-    pattern = '' 
+    pattern = ''
     if mismatch == 0:
         pattern = sequence
     else:
@@ -34,21 +34,21 @@ def generateRex(sequence, mismatch):
             pattern = '|'.join(result)
     return '(' + pattern + ')'
 
-# Supported pattern: ACTAG[4-7]AA[4-7]CC[4-7]TT[4-7]ACTA	
-# Another example: TAA[7]AA[7]CC[7]TT[4-7]CTA	
+# Supported pattern: ACTAG[4-7]AA[4-7]CC[4-7]TT[4-7]ACTA
+# Another example: TAA[7]AA[7]CC[7]TT[4-7]CTA
 # Another example: ACT[4-9]TT[9]CC[4-7]TTA
 # The pattern should obey the following rules:
 # 1. It could only be DNA sequence, numerical value, brackets and '-'
 # 2. All DNA sequence before the first numeric value or bracket is viewed as proceedings
 # 3. All DNA sequence right after the last numeric value or bracket is viewed as the succeedings
-# 4. The range specified by the numeric values within each pair of brackets specifies the random positions at that positions 
+# 4. The range specified by the numeric values within each pair of brackets specifies the random positions at that positions
 def parsePattern(pattern, mismatches):
     import re
     # Return values
     preceedings = ''
     succeedings = ''
     result_pattern = '\"'
-    total_sub_expressions = 0 
+    total_sub_expressions = 0
 
     candidates = '[ATCGN]'
 
@@ -72,20 +72,20 @@ def parsePattern(pattern, mismatches):
         if re.search(r'\d',parts[-1]):
             numeric_range = ','.joinparts[-1].strip().split('-')
             last += '(' + candidates
-            last += '{' + numeric_range + '})'	
+            last += '{' + numeric_range + '})'
         else:
             succeedings = parts[-1]
             if len(succeedings) > 5:
                 print("The length of succeeding sequence exceeds the maximum length(5)")
                 sys.exit(2)
-            last += generateRex(succeedings, mismatches)		
+            last += generateRex(succeedings, mismatches)
         total_sub_expressions += 1
     for p in parts[1:len(parts) - 1]:
         if re.search(r'\d', p):
             # this is a fix length randome region
             if not '-' in p:
                 int(p)
-                numeric_range = p 
+                numeric_range = p
             else:
                 length_range = p.strip().split('-')
                 if (len(length_range) != 2):
@@ -93,13 +93,13 @@ def parsePattern(pattern, mismatches):
                     sys.exit(2)
                 numeric_range = ','.join(length_range)
             result_pattern += '(' + candidates
-            result_pattern += '{' + numeric_range + '})'	
+            result_pattern += '{' + numeric_range + '})'
         else:
             result_pattern += '(' + p + ')'
         total_sub_expressions += 1
 
     result_pattern += last
-    result_pattern += '\"'			 	
+    result_pattern += '\"'
 
     return (preceedings, succeedings, total_sub_expressions, result_pattern)
 
@@ -115,15 +115,15 @@ def usage():
 def driver():
     inputfile = ''
     outprefix = ''
-    qual_cutoff = 1 
+    qual_cutoff = 1
     preceeding = ''
-    succeeding = '' 
+    succeeding = ''
     parts = 0
     mismatches = 2
     umiPosition = ''
-    umiLength = '' 
+    umiLength = ''
     # 1 means forward, 0 means both, -1 means reverse complement
-    direction = 1	
+    direction = 1
     try:
         opt,args = getopt.getopt(sys.argv[1:],"hd:p:m:u:f:o:q:",["help", "direction="])
     except getopt.GetoptError as msg:
@@ -137,14 +137,14 @@ def driver():
                 print(inputfile + " probably is not a valid file or does not exist!\n")
                 sys.exit(2)
         elif o == '-p':
-            pattern = a 
+            pattern = a
             if not pattern:
-                print("No barcode pattern was specified!") 
+                print("No barcode pattern was specified!")
                 sys.exit(2)
         elif o == '-o':
-            outprefix = a 
+            outprefix = a
             if not outprefix:
-                print("No output file was specified!") 
+                print("No output file was specified!")
                 sys.exit(2)
         elif o == '-q':
             try:
@@ -189,12 +189,12 @@ def driver():
                 else:
                     if strDirection not in ['rc', 'reverse_complement']:
                         raise ValueError
-                    direction = -1		
+                    direction = -1
             except Exception as err:
                 print("invalid direction parameter: " + a + '\n')
                 sys.exit(2)
         elif o in  ("-h","--help"):
-            print usage()
+            print(usage())
             sys.exit(0)
     if not inputfile:
         print("There is no input sequence file specified")
@@ -204,7 +204,7 @@ def driver():
         sys.exit(0)
     if not pattern:
         print("No pattern is specified")
-        sys.exit(0)			
+        sys.exit(0)
     if pattern:
         preceeding, succeeding, parts, pattern = parsePattern(pattern, mismatches)
     else:
