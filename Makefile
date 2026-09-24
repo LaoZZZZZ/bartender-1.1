@@ -13,7 +13,7 @@ INSTALLDIR	= /usr/local/bin
 
 # command
 
-RM	=rm
+RM	=rm -f
 CP	=cp
 CD	=cd
 MV	=mv
