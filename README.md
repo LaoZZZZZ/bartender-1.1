@@ -15,8 +15,12 @@ It currently has three functionalities.
  * To build bartender_single (barcode clustering): make bartender_single
  * To build bartender_extractor (barcode extractor): make bartender_extractor
  * To build bartender_combiner (multiple time point mode): make bartender_combiner
- * To build three components in one batch: make all
+ * To build three components and run the unit tests: make all
+ * To build and run the unit tests only: make test
+ * To remove production and test build artifacts: make clean
  * To install: sudo make install
+
+The unit tests are maintained in `src/test/test_code` and are built and run by the root `make test` target. The `make all` target runs the same test suite after building the three production components. Run these commands from the repository root. The test suite currently contains 42 tests.
 
 The default install directory is /usr/local/bin and is hard coded in the make file. If you want to change the install directory, you need to make a small change to the Makefile.
 
